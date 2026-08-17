@@ -84,11 +84,11 @@
       </div>
     </div>
     <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="graphic-design.html" aria-haspopup="true" aria-expanded="false">디자인·촬영</a>
+      <a class="nav__link" href="graphic-design.html" aria-haspopup="true" aria-expanded="false">디자인·촬영·마케팅</a>
       <div class="mm" data-mmpanel>
         <div class="mm__inner">
-          <p class="mm__eyebrow">디자인·촬영</p>
-          <div class="mm__grid"><a class="mm__link" href="graphic-design.html">그래픽·편집디자인</a><a class="mm__link" href="studio.html">사진·영상 촬영</a></div>
+          <p class="mm__eyebrow">디자인·촬영·마케팅</p>
+          <div class="mm__grid"><a class="mm__link" href="graphic-design.html">그래픽·편집디자인</a><a class="mm__link" href="studio.html">사진·영상 촬영</a><a class="mm__link" href="marketing.html">광고·마케팅</a></div>
         </div>
       </div>
     </div>
@@ -135,8 +135,8 @@
         <p class="navpanel__h">AI 콘텐츠</p>
         <a class="navpanel__link" href="ai-content.html">AI 활용 전문 콘텐츠</a><a class="navpanel__link" href="search-ai.html">AI 가시성</a><a class="navpanel__link" href="seo.html">SEO</a><a class="navpanel__link" href="aeo.html">AEO</a><a class="navpanel__link" href="geo.html">GEO</a><a class="navpanel__link" href="columns.html">하오웹 칼럼</a>
       </div>      <div class="navpanel__group">
-        <p class="navpanel__h">디자인·촬영</p>
-        <a class="navpanel__link" href="graphic-design.html">그래픽·편집디자인</a><a class="navpanel__link" href="studio.html">사진·영상 촬영</a>
+        <p class="navpanel__h">디자인·촬영·마케팅</p>
+        <a class="navpanel__link" href="graphic-design.html">그래픽·편집디자인</a><a class="navpanel__link" href="studio.html">사진·영상 촬영</a><a class="navpanel__link" href="marketing.html">광고·마케팅</a>
       </div>      <div class="navpanel__group">
         <p class="navpanel__h">유지보수</p>
         <a class="navpanel__link" href="maintenance.html">유지보수</a><a class="navpanel__link" href="content-operation.html">콘텐츠 운영</a>
@@ -152,13 +152,8 @@
   <div class="subhero__scrim" aria-hidden="true"></div>
   <div class="subhero__dots" aria-hidden="true"></div>
   <div class="subhero__inner subhero__inner--split">
-    <!-- 라벨 없음 — 글로벌 그룹의 대표 페이지라 라벨("글로벌")이 국문 h1("글로벌 홈페이지")과
-         겹친다. plan·search-ai·website 와 같은 처리다(2026-08-15). -->
 <p class="subhero__title" data-anim data-anim-hero>Global</p>
     <h1 class="h1__ko" data-fade data-anim-hero data-delay=".06">글로벌 홈페이지</h1>
-    <!-- ⚠ 서브타이틀과 오른쪽 문장은 **같은 행**에 둔다. 예전엔 오른쪽 문장을 히어로 직계로 두고
-           margin-bottom 으로 높이를 맞췄는데, 좁은 화면에서 CTA 높이가 달라지면 29px 어긋났다
-           (1100px 실측). 한 행으로 묶으면 폭과 무관하게 윗선이 항상 맞는다. -->
       <div class="subhero__row">
         <p class="subhero__kr" data-fade data-anim-hero>Local customers, local structure — 국가와 언어별 고객을 위한 홈페이지를 설계합니다.</p>
         <p class="subhero__aside" data-fade data-anim-hero data-delay=".16">하오웹은 베트남·중국·태국에 현지 사무실을 운영합니다. 국내 제작과 현지 커뮤니케이션을 연결합니다.</p>
@@ -172,9 +167,7 @@
   </div>
 </section>
 
-<!-- ⚠ 여기 있던 .statement 문장은 위 히어로 오른쪽으로 옮겼다(2026-08-16 세영). -->
 
-<!-- 현지 사무실 -->
 <section class="sec invert">
   <div class="container">
     <p class="eyebrow">제작 방식</p>
@@ -200,17 +193,10 @@
       </div>
     </div>
 
-    <!-- 현지어 원고 — 2026-08-15 신설. 「말씀만 해주시면」 의 글로벌 버전이다.
-         이 사실(원고를 현지어로 안 주셔도 된다)이 FAQ와 '함께 정해야 하는 일' 에 묻혀 있었다.
-         해외 진출에서 고객이 실제로 못 하는 일이 현지어 원고라, 본문으로 끌어올린다.
-         ⚠ 번역·감수는 콘텐츠 '범위' 다 — 항상 포함이 아니다. 아래 주석으로 반드시 여지를 남길 것. -->
     <div class="sechead sechead--full" style="margin-top:104px">
       <h2 class="sechead__title" data-anim="lines">현지어로 쓰지 않으셔도 됩니다.</h2>
       <p class="sechead__lead" data-anim="lines">한국어로 말씀해 주시면 그 시장 고객이 읽는 문장으로 만듭니다. 직역해서 얹지 않습니다.</p>
     </div>
-    <!-- ⛔ 본문 큰 사진(.figfull)은 2026-08-17 세영 지시로 전부 삭제했다 — "사진의 역할이 크게 없어".
-           여기 있던 것: axis-global.jpg
-           CSS `.figfull` 과 assets/img/pv/ 사진은 되살릴 때를 위해 남겨 두었다. -->
     <div class="cols" style="margin-top:64px">
       <div class="col" data-fade>
         <div class="rule"></div>
@@ -228,15 +214,9 @@
         <p class="col__body">사무실이 있는 나라는 표기와 어투를 현지에서 확인합니다.</p>
       </div>
     </div>
-    <!-- ⭐ 다국어 실적 — 2026-08-16 밤. 출처 `design.haoc.co.kr` (세영님 화면 확인·승인).
-         원문: "영어·중국어·일본어·프랑스어 등 5개국 다국어 인쇄물 제작에 대응합니다."
-         ⚠ **인쇄물** 실적이다. 홈페이지 5개국이 아니므로 무엇을 만든 건지 반드시 함께 적는다.
-         ⚠ 이 페이지가 다루는 5개국(베트남·중국·태국·일본·영문)과 **다른 목록**이다
-           (원문은 영어·중국어·일본어·프랑스어 등) — 숫자가 같다고 같은 것으로 쓰지 말 것. -->
   </div>
 </section>
 
-<!-- 국가별 -->
 <section class="sec sec--flush" style="padding-top:160px;padding-bottom:80px">
   <div class="container">
     <div class="bighead">
@@ -283,9 +263,6 @@
   </div>
 </div>
 
-<!-- 국가별 한눈 비교 — 나라마다 무엇이 다른지를 한 줄로 보여준다.
-     각 나라 페이지의 '이 시장에서만 다른 것' 섹션을 요약한 것이고, 자세한 내용은 링크로 간다.
-     ⚠ 시장 사실이라 규정·점유율은 바뀔 수 있다. 하단 주석으로 여지를 남겼다. -->
 <section class="sec sec--tight">
   <div class="container">
     <p class="eyebrow">국가별 차이</p>
@@ -415,7 +392,6 @@
   </div>
 </section>
 
-<!-- 단순 번역과의 차이 -->
 <section class="sec invert">
   <div class="container">
     <div class="sechead sechead--stack">
@@ -435,7 +411,6 @@
   </div>
 </section>
 
-<!-- 함께 검토하는 것 -->
 <section class="sec">
   <div class="container">
     <div class="sechead sechead--stack">
@@ -522,6 +497,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/site.js"></script>
+<script src="assets/js/site.js"></script>script
 </body>
 </html>
