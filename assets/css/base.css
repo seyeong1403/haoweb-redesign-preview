@@ -1,0 +1,3206 @@
+@charset "utf-8";
+/* ============================================================
+   HAOWEB — 레퍼런스(myz-studio) 골격 이식판
+   토큰·간격·타입스케일은 레퍼런스 실측값 그대로.
+   교체한 것: 로고 / 색상 / 카피 / 사진 / 연락처 / 서비스 구조
+   ============================================================ */
+
+/* ---------- 1. 폰트 ----------
+   soroweb.co.kr/v6 와 동일하게 Pretendard Variable 단일 폰트 (세영 지시 2026-08-12).
+   그 사이트가 쓰는 것과 같은 CDN·같은 버전이다. (Cormorant 도 로드되어 있으나 실제 사용 0곳이라 제외)
+   ※ 원래는 국문 SUITE + 영문 디스플레이 Chillax 2종이었다. 되돌리려면 아래 --font-en 만 바꾸면 된다. */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+/* ⭐ 2026-08-16 — 워드마크 밴드(eimokdesign 이식) **한 곳에만** 쓰는 영문 디스플레이.
+   레퍼런스 원본 폰트는 `campton` 인데 상용 유료라 쓸 수 없다(세영님 확인 후 대체 결정).
+   Poppins 는 campton 과 같은 기하학적 산세리프라 형태가 가장 가깝다.
+   ⚠ 이 폰트를 다른 곳에 쓰지 말 것 — 사이트 서체는 Pretendard 단일이 원칙이다. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+/* ---------- 2. 토큰 ---------- */
+:root {
+  /* ⭐ 색 — 2026-08-16 세영 지시로 **haoc.co.kr 톤**을 가져왔다(리디자인 폴더).
+     그 사이트의 `:root` 실측값이다. 특징은 **따뜻한 화이트**다 —
+     순검정(#000)이 아니라 먹색 #17150f, 회색도 중성이 아니라 #6e6a60,
+     보조 바탕은 흰색이 아니라 크림 #f5f1e9.
+     ⭐ 레드(#e83817)는 haoc 와 우리가 **원래 같은 값**이다 — 바뀐 건 바탕과 글자다.
+     ※ 2026-08-13 에 mkt.haoc.co.kr 톤으로 한 번 뒤집었다가 되돌린 적이 있다(README 15번).
+       그때의 '자동으로 안 따라오는 지점' 목록을 이번에 그대로 썼다. */
+  --bg: #ffffff;              /* haoc --bg */
+  --bg-soft: #f5f1e9;         /* haoc --bg-2 — 크림. 흰 바탕만 이어지면 밋밋해지는 자리에 */
+  --fg: #17150f;              /* haoc --ink — 따뜻한 먹색 */
+  --fg-2: #3d382e;            /* 본문보다 한 단계 여린 글자 */
+  --border: rgba(23,21,15,.16);
+  /* ⚠ haoc 원본은 .12 다. 이 사이트는 1px 룰이 구조를 나르므로 한 단계 진하게 잡았다
+       (2026-08-13 라이트 전환 때도 같은 이유로 올렸다 — README 15번). */
+  --muted: #6e6a60;           /* haoc --muted — 따뜻한 회색 */
+  --faint: #a9a396;           /* 더 물러나는 잔글씨 */
+  --dark: #17150f;            /* 어두운 채로 남기는 섹션(.invert 계열)의 바탕 */
+  --accent: #6e6a60;          /* 레퍼런스 올리브 자리 = 따뜻한 중간 회색 */
+  --brand: #e83817;           /* 하오 레드 — haoc 와 같은 값. CTA·핵심 강조에만 */
+  --brand-2: #f25b35;         /* haoc --accent-2 */
+  --brand-hover: #c42b0d;
+
+  /* 글꼴 — soroweb 과 동일하게 Pretendard 하나로 통일 */
+  --font-kr: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+             'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-en: var(--font-kr);          /* ← Chillax 로 되돌리려면 여기만 'Chillax', var(--font-kr) */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;  /* 현재 사용처 없음 (푸터 카피라이트를 Pretendard 로 교체) */
+
+  /* 레이아웃 — 실측: 컨테이너 1280 / 좌우 48 / 내비 좌우 32 */
+  --container: 1360px;
+  --gutter: 48px;
+  /* 레퍼런스 내비 좌우는 32였다(로고가 중앙이라 어긋남이 안 보였음).
+     로고를 왼쪽으로 옮긴 뒤로는 로고가 좌측 기준점이 되므로 본문 컬럼과 같은 48로 맞춘다. */
+  --gutter-nav: 48px;
+  --nav-h: 68px;
+
+  /* 세로 리듬 — 실측: 섹션 상하 128, works 160/80 */
+  --sec-y: 128px;
+  /* 섹션마다 같은 128 을 반복하면 스크롤 리듬이 단조롭다 → 성격별 변주 (2026-08-14) */
+  --sec-y-lg: 168px;          /* 강조 섹션 — 넓게 */
+  --sec-y-sm: 96px;           /* 카드·FAQ 섹션 — 압축 */
+  --grid-gap: 64px;
+
+  /* 타입 스케일 — 실측값 */
+  /* 2026-08-14 재조정 — 큰 제목과 본문의 격차가 너무 크고, 300 weight 와 작은 회색 글자가
+     반복돼 다크 배경에서 사이트가 힘없이 보인다는 지적. 제목은 낮추고 본문은 올렸다. */
+  --t-display: 112px;         /* 히어로 h1 · 섹션 h2 (영문 디스플레이) — 128 에서 낮춤 */
+  --t-h3: 54px;               /* 섹션 국문 제목 — 60 에서 낮춤 */
+  --t-lead: 18px;             /* 큰 본문 · 섹션 리드 */
+  --t-body: 17px;             /* 본문 — 16 에서 올림 */
+  --t-sm: 14px;
+  --t-eyebrow: 12px;          /* 레퍼런스 11.2px → 가독성 위해 12px */
+  --t-mono: 10px;             /* 현재 사용처 없음 */
+
+  /* 사진 표면 처리 — 무채색은 유지하되 밝기를 뒤집는다.
+     ⚠ 어둡게 깔던 값(brightness .58)은 다크 바탕에 사진을 녹이려던 것이다.
+        흰 바탕에서 그대로 두면 사진만 시커멓게 남는다(2026-08-13 확인 — README 15번). */
+  --img-treat: grayscale(1) brightness(1.02) contrast(1.04);
+
+  /* 버튼 모서리 (2026-08-14 세영 지시 — "버튼을 파이값으로 부드럽게").
+     ⚠ 이 사이트는 원래 radius 0 이 원칙이었다(레퍼런스 어휘). FAQ 카드·칩 16/999,
+     작업 카드 15/8, 상담 탭 20 을 전부 0 으로 깎아 온 이력이 README 6·8·9번에 있다.
+     지시에 따라 **버튼에만** 되살렸고, 카드·패널·드롭다운·입력필드는 계속 0 이다.
+     전체를 한 번에 바꾸려면 이 한 줄만 고치면 된다. 완전 알약은 999px. */
+  /* ⭐ 2026-08-16 세영 지시로 **완전 알약**이 됐다 — "모든 버튼 파이값을 최대로".
+     8px → 999px. 버튼·칩·보기전환처럼 이 토큰을 쓰는 것이 한꺼번에 바뀐다.
+     ⚠ 입력 필드(`.biz-quick input`)는 알약이면 어색해서 `--r-field` 로 떼어 냈다. */
+  --r-btn: 999px;
+  --r-field: 8px;
+  /* 카드는 면적이 커서 버튼과 같은 8px 을 주면 덜 둥글어 보인다 → 한 단계 크게 (2026-08-14) */
+  --r-card: 12px;
+}
+
+/* ⚠ 예전 `:root[data-theme='light']` 블록은 지웠다 — 이제 `:root` 자체가 밝은 팔레트다.
+   `_build.py` 는 아직 `data-theme="light"` 를 내보내지만 지금은 아무 규칙도 그 값을 보지 않는다. */
+
+/* ---------- 3. 리셋 ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-kr);
+  font-size: var(--t-body);
+  line-height: 1.5;
+  font-weight: 400;
+  word-break: keep-all;       /* 한글 단어 중간 끊김 금지 */
+  overflow-x: hidden;
+  transition: background-color .4s ease, color .4s ease;
+}
+img, picture, video, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+ul { margin: 0; padding: 0; list-style: none; }
+h1, h2, h3, h4, p, figure { margin: 0; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+::selection { background: var(--brand); color: #fff; }
+
+/* ---------- 4. 레이아웃 ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.sec { padding-block: var(--sec-y); }
+/* 스크롤 밀도에 변화를 주는 변형 (2026-08-14). 강조는 넓게, 카드·FAQ 는 압축한다. */
+.sec--wide { padding-block: var(--sec-y-lg); }
+.sec--tight { padding-block: var(--sec-y-sm); }
+.sec--flush { padding-block: 0; }
+
+/* 반전 섹션 — 레퍼런스의 bg-primary/text-primary-foreground.
+   라이트 전환 뒤로는 이쪽이 '어두운 섹션'이 된다(토큰만 뒤집혔을 뿐 규칙은 그대로다).
+   ⚠ 회색 계열 토큰을 여기서 다시 정의한다. 밝은 바탕용 `--muted`(#6e6a60)를 어두운 면에
+     그대로 쓰면 대비가 3.38:1 까지 떨어진다(2026-08-16 실측 — 본문은 4.5:1 이 필요하다).
+     변수를 스코프에서 갈아 끼우면 안쪽 규칙을 하나도 안 고쳐도 전부 따라온다. */
+.invert {
+  background: var(--fg); color: var(--bg);
+  --muted: #a9a396;      /* on #17150f → 약 7.3:1 */
+  --fg-2: #e8e4da;
+  --border: color-mix(in srgb, var(--bg) 22%, transparent);
+}
+/* interwise 이식 — 히어로가 완전히 어두워진 뒤 이어지는 섹션. (2026-08-16 세영:
+   "그걸 반영하려면 업종별 제작도 검은 바탕으로 가는 게 맞겠지" → 레퍼런스 확인 결과 맞다.
+   레퍼런스는 히어로 다음 섹션들이 계속 `rgb(0,0,0)` 검정이다.)
+   ⚠ `.invert`(배경 `--fg` = #17150f 따뜻한 먹색)와 **다른 색**이다. 히어로 오버레이가 순검정이라
+     먹색을 쓰면 두 면 사이에 경계선이 생긴다. 글자 색 규칙은 `.invert` 것을 그대로 물려받는다. */
+.sec--iwdark { background: #000; }
+/* 반전 섹션에서는 --bg 가 전경색이다. 소제목은 55% → 72% 로 올렸고(2026-08-14),
+   주석(.note)은 분리 전 .eyebrow 가 쓰던 55% 를 그대로 유지한다 — 잔글씨는 뒤로 물러나 있어야 한다. */
+/* ⭐ 2026-08-17 — 소제목을 포인트 컬러로 바꾸면서 어두운 면은 한 단계 밝은 레드로.
+   #e83817 은 검은 바탕에서 대비가 얕아 작은 글씨가 탁해 보인다. --brand-2(#f25b35)로 띄운다.
+   ⚠ 밝은 면 규칙(.eyebrow)과 짝이다. 한쪽만 고치지 말 것. */
+.invert .eyebrow { color: var(--brand-2); }
+
+/* ══ 질문 카피 `.askq` — 파이브프로식 「질문 → 결론」 (2026-08-17 세영) ═══════════
+   세영: "고객이 홈페이지를 볼 때 '여기서 맡겨야 되겠다' 가 판가름 나는 게 메인이잖아?
+          파이브프로처럼 고객에게 질문하고 결론을 내리는 형식이 좋은 거 같아.
+          질문하는 카피는 포인트 컬러로 넣고 모션도 넣어줘."
+   레퍼런스 실측(fivepro.co.kr) — 질문 h3 26px/700 · 결론 h2 47px/700, 질문이 위.
+   ⭐ 크기는 우리 것으로 잡았다(22px). 제목(--t-h3 34px)보다 작고 리드(18px)보다 커야
+     질문 → 결론의 단이 생긴다. 레퍼런스 26px 를 그대로 옮기지 않는다.
+   ⚠ 섹션 라벨(.eyebrow)을 **대체**한다. 라벨과 질문을 함께 두면 머리가 세 단이 된다.
+   ⚠ 어두운 섹션에서는 #e83817 이 탁해 보인다 — .eyebrow 와 같이 --brand-2 로 띄운다. */
+.askq {
+  font-size: 22px; font-weight: 700; line-height: 1.45;
+  letter-spacing: -.015em; color: var(--brand);
+  /* ⚠ 섹션 머리는 가운데 정렬이다(2026-08-17). 질문만 왼쪽에 남으면 어긋난다 —
+     `.eyebrow` 는 `:has(+ .sechead)` 로 골라 가운데를 줬는데 이 클래스는 그 규칙에
+     걸리지 않아 실제로 왼쪽에 붙어 나왔다. 용도가 섹션 머리 하나뿐이라 바로 준다. */
+  text-align: center;
+}
+.invert .askq { color: var(--brand-2); }
+/* 모션 — 아래에서 올라오며 열린다. 기본 [data-fade](24px/.8s)보다 짧고 빠르게 잡아
+   질문이 먼저 들어오고 제목이 뒤따르는 순서가 보이게 한다.
+   이징은 확정 레퍼런스(Plus X)의 등장값 cubic-bezier(.19,1,.22,1). */
+.askq[data-fade] { opacity: 0; transform: translateY(14px); }
+.askq[data-fade][data-played='true'] {
+  opacity: 1; transform: none;
+  transition: opacity .62s cubic-bezier(.19, 1, .22, 1),
+              transform .62s cubic-bezier(.19, 1, .22, 1);
+}
+@media (max-width: 900px) { .askq { font-size: 19px; } }
+.invert .note { color: color-mix(in srgb, var(--bg) 55%, transparent); }
+.invert .rule { background: color-mix(in srgb, var(--bg) 40%, transparent); }
+
+/* ---------- 5. 내비게이션 ---------- */
+/* ⭐ 2026-08-16 — 내비를 interwise.co.kr 실측대로 옮겼다 (세영: "로고위치 및 네비게이션 위치
+   모두 레퍼런스 사이트와 동일하게"). 전 페이지에 걸린다.
+   실측(1440 · `scratchpad/probe_nav.py`)
+     · header            h90 · 배경 투명
+     · 컨테이너 .hd-con  x36 / w1368  → 좌우 여백 36px(=2.5vw). **컨테이너 1280 을 쓰지 않는다**
+     · 로고 h1.hd-logo   x36 / y30 / 121×31
+     · 메뉴 nav.hd-gnb   우측 정렬, 항목 15.75px / w300, li 좌우 padding 20 (항목 간격 0)
+     · 햄버거            x1380 / 24×90 → 우측 끝 1404 = 1440-36 (여백과 일치) */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  padding-block: 0;
+  background: transparent;
+  transition: background-color .35s ease;
+}
+/* ⚠ 예전에는 이 세 줄이 `:root[data-theme='light']` 안에 있었는데, `_build.py` 가 내보내는 값은
+   `dark` 라 **한 줄도 적용되지 않았다**(2026-08-16 라이트 전환 때 발견 — 내비 글자가 흰 바탕에 묻혔다).
+   이제 테마가 하나뿐이므로 조건을 걷어내고 기본 규칙으로 둔다. */
+/* ⭐ 2026-08-16 세영 지시 — "네비게이션은 조금 어두운색으로 투명도 줘서 넣자. 너무 흰색이네."
+   흰 반투명(rgba(255,255,255,.88))이었다. 먹색(--dark #17150f) 반투명 + 블러로 바꾼다.
+   ⚠ 배경이 어두워졌으므로 **글자·로고도 함께 뒤집어야 한다**(아래 두 규칙).
+     배경만 바꾸면 어두운 띠에 먹색 글자가 되어 내비가 통째로 사라진다. */
+.nav.is-stuck, .nav.is-open {
+  background: rgba(23, 21, 15, .72);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+.nav.is-open { background: rgba(23, 21, 15, .92); }
+.nav.is-stuck .nav__link, .nav.is-stuck .nav__burger,
+.nav.is-open .nav__link, .nav.is-open .nav__burger { color: #fff; }
+.nav.is-stuck .nav__logo img, .nav.is-open .nav__logo img {
+  content: url('../img/logo-on-dark.png');
+}
+/* 로고 좌측 · 메뉴 우측 (interwise 실측 배치).
+   ⚠ `max-width: var(--container)` 를 되살리지 말 것 — 컨테이너(1280)를 쓰면 로고가 x128 로 밀려
+     레퍼런스(x36)와 어긋난다. 화면 폭을 쓰고 좌우 여백만 36px 준다. */
+.nav__inner {
+  width: 100%; max-width: none;
+  margin-inline: 0; padding-inline: 2.5vw;
+  height: 90px;
+  display: flex; align-items: center; gap: 40px;
+}
+/* 메뉴를 오른쪽 끝으로 민다(레퍼런스는 로고와 메뉴가 양 끝에 있다). */
+.nav__links { display: flex; align-items: center; gap: 0; margin-left: auto; }
+.nav__link {
+  font-size: 15.75px; font-weight: 300; text-transform: none;
+  letter-spacing: normal; color: var(--fg); position: relative; display: inline-block;
+  padding-block: 2px; padding-inline: 20px;   /* 실측: li 좌우 20 · 항목 간 gap 0 */
+}
+/* ⚠ 밑줄은 글자 폭에만 — 위에서 `padding-inline:20px` 이 붙어 left:0/width:100% 로 두면
+   패딩까지 그어져 항목끼리 선이 이어져 보인다. */
+.nav__link::after {
+  content: ''; position: absolute; left: 20px; bottom: 0; width: calc(100% - 40px); height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+.nav__link:hover::after, .nav__link[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
+.nav__logo { display: flex; align-items: center; height: 32px; flex: none; }
+.nav__logo img { height: 30px; width: auto; transition: transform .3s ease; }
+/* 흰 바탕이므로 로고도 라이트 배경용을 쓴다(다크용은 `logo-on-dark.png` 로 남아 있다). */
+.nav__logo img { content: url('../img/logo-on-light.png'); }
+.nav__logo:hover img { transform: rotate(-4deg); }
+.nav__burger { display: none; }
+
+/* ⭐ 어두운 히어로를 인 페이지에서는 내비를 흰 글자로 (2026-08-16 — 메인 히어로 이식).
+   히어로가 어두워지면서 검정 내비가 통째로 사라졌다(캡처로 확인).
+   ⚠ 스크롤해서 `is-stuck`(흰 배경)이 되면 **원래 색으로 되돌려야 한다** — 아래 두 번째 규칙.
+     이 되돌림이 없으면 흰 바탕에 흰 글자가 되어 같은 문제가 반대로 재발한다.
+   ⚠ `:has()` 를 쓰는 이유: 내비(`.nav`)와 히어로(`main > .hero`)가 형제가 아니라
+     일반 결합자로는 잡을 수 없다. `_build.py` 가 body 에 페이지 클래스를 붙이지 않기 때문이다. */
+/* ⚠ 서브히어로(.subhero)도 2026-08-16 부터 사진 배경이다 — 밝은 사진에서는 먹색 내비가
+   통째로 묻힌다(global 캡처에서 「홈페이지 제작」이 비행기 날개에 사라졌다). 같이 흰 글자로. */
+body:has(.hero--iw) .nav:not(.is-stuck):not(.is-open) .nav__link,
+body:has(.hero--iw) .nav:not(.is-stuck):not(.is-open) .nav__burger,
+body:has(.subhero) .nav:not(.is-stuck):not(.is-open) .nav__link,
+body:has(.subhero) .nav:not(.is-stuck):not(.is-open) .nav__burger { color: #fff; }
+body:has(.hero--iw) .nav:not(.is-stuck):not(.is-open) .nav__logo img,
+body:has(.subhero) .nav:not(.is-stuck):not(.is-open) .nav__logo img {
+  content: url('../img/logo-on-dark.png');
+}
+
+/* 2뎁스 드롭다운 — 레퍼런스에 없던 요소라 레퍼런스 어휘로만 구성:
+   2색 / radius 0 / 그림자 없음 / 1px 룰 / 괄호 라벨 / 언더라인 와이프 / 같은 이징 */
+.nav__group { display: flex; align-items: center; }
+.mm {
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: var(--bg);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1), visibility .3s;
+}
+.nav__group[data-open='true'] .mm { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+.mm__inner {
+  width: 100%; max-width: var(--container); margin-inline: auto;
+  padding: 36px var(--gutter) 44px;
+}
+.mm__eyebrow { font-size: var(--t-eyebrow); color: var(--muted); margin-bottom: 22px; }
+.mm__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px 40px; }
+.mm__link {
+  font-size: var(--t-sm); color: var(--fg); position: relative; justify-self: start;
+  padding-bottom: 2px;
+}
+.mm__link::after {
+  content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+.mm__link:hover::after, .mm__link[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
+.mm__link.is-soon, .navpanel__link.is-soon { color: var(--muted); pointer-events: none; }
+.mm__link.is-soon::after { display: none; }
+
+/* 모바일 패널 */
+.navpanel {
+  position: fixed; inset: 0; z-index: 49; background: var(--bg); color: var(--fg);
+  padding: calc(var(--nav-h) + 8px) 0 48px;
+  transform: translateY(-100%); transition: transform .5s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto; overscroll-behavior: contain;
+}
+.navpanel[data-open='true'] { transform: translateY(0); }
+.navpanel__inner { padding-inline: var(--gutter); }
+.navpanel__group { padding: 22px 0; border-top: 1px solid var(--border); }
+.navpanel__group:first-child { border-top: 0; }
+.navpanel__h { font-size: var(--t-eyebrow); color: var(--muted); margin-bottom: 14px; }
+.navpanel__link { display: block; padding: 9px 0; font-size: 17px; font-weight: 500; }
+
+/* ---------- 6. 히어로 ---------- */
+.hero {
+  position: relative; width: 100%; min-height: 100svh;
+  display: flex; overflow: hidden; background: var(--bg);
+}
+.hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* 메인 히어로 배경 사진 (2026-08-12 세영 지시).
+   나머지 페이지는 그대로 .hero__canvas 를 쓴다.
+   스크림은 상·하단이 배경색으로 완전히 스며들게 잡았다 — 이미지 원칙 "가장자리 페이드 필수". */
+.hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: var(--img-treat); }
+/* 메인 히어로 유리 오브젝트 (2026-08-13 세영 지시로 배경 사진을 대체).
+   카피 '위'(z 20 > .hero__inner 10)에 겹치되 pointer-events 를 꺼서 CTA 클릭을 막지 않는다. */
+/* ⚠ .hero__gl 은 현재 쓰는 마크업이 없다 — 2026-08-14 지시로 메인 히어로의 유리 오브젝트를 뺐다.
+   되살릴 때를 위해 규칙만 남겨 둔다(복구 방법은 _frag/index.html 상단 주석). */
+.hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; }
+.hero__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(16,16,16,.95) 0%, rgba(16,16,16,.78) 22%, rgba(16,16,16,.5) 52%, rgba(16,16,16,.86) 100%);
+}
+/* ⭐ 2026-08-16 개편 — 두 가지를 한 번에 고쳤다.
+   ① 좌측 기준선: 좌우 패딩이 16px 이라 히어로 카피만 화면 가장자리에 붙어 있었다.
+      내비 로고·본문은 128 인데 히어로만 16 이어서 **한 화면에 기준선이 둘**이었다.
+      → 컨테이너와 같은 폭·같은 좌우 여백을 쓴다.
+      ⚠ `.container` 클래스를 같이 걸지 말 것 — padding 축약이 컨테이너 패딩을 덮어
+        예전에 96px 로 밀린 적이 있다(README 함정 1번). 여기서 직접 지정한다.
+   ② 상단 공백: `justify-content` 가 없고 `.hero__title` 이 `margin-top:auto` 라
+      카피가 바닥으로 밀리고 **첫 화면 위 절반이 통째로 비어 있었다.** → 세로 중앙으로. */
+.hero__inner {
+  position: relative; z-index: 10; width: 100%;
+  max-width: var(--container); margin-inline: auto;
+  padding-block: var(--nav-h) 56px; padding-inline: var(--gutter);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.hero__cta { margin-top: 40px; }
+/* 히어로 우측 설명 — 2026-08-13 세영 지시로 세 문장으로 압축했다.
+   짧아진 만큼 양끝맞춤(justify)은 단어 사이가 벌어져 어색하다 → 왼쪽 정렬, 폭도 조금 줄인다. */
+/* ⚠ `margin-top: 20svh` 였다 — 이 한 줄이 첫 화면 위쪽을 통째로 비우고,
+   보조문장을 제목과 아무 관계 없는 자리에 띄워 놓고 있었다. 이제 제목 바로 위 우측에 붙는다. */
+.hero__note {
+  margin-left: auto; width: 100%; max-width: 400px;
+  margin-bottom: 56px; font-size: var(--t-sm); line-height: 1.5; text-align: left;
+}
+.hero__title {
+  margin-right: auto;
+  font-family: var(--font-en); font-weight: 700; text-transform: uppercase;
+  font-size: var(--t-display); line-height: .9; letter-spacing: -.035em;
+}
+/* 국문 히어로는 128px 이 과해서 88px + 한글용 자간·행간으로 따로 조정 */
+.hero__title--kr {
+  font-family: var(--font-kr); font-weight: 800; text-transform: none;
+  font-size: 88px; line-height: 1.08; letter-spacing: -.03em;
+}
+.hero__label {
+  font-size: var(--t-eyebrow); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px;
+}
+
+/* ══ 메인 히어로 — interwise.co.kr 이식 (2026-08-16 세영 지시) ══════════════════
+   세영: "메인 히어로섹션은 하오웹 폰트만 유지하고 레퍼런스의 폰트크기와 배치를 적극적으로 따라줘."
+   → 이 블록만 **타입 스케일 토큰 규칙의 예외**다. 아래 숫자는 전부 실측값이고
+     `--t-display` 같은 토큰으로 바꾸지 말 것. 서체(Pretendard)만 우리 것이다.
+
+   실측 (1440 뷰포트 · `scratchpad/probe_iw.py`)
+     · 배경      video main_video.mp4 를 풀스크린 object-fit:cover, **필터 없음**
+     · 좌우 여백 36px  = 2.5vw   ← 컨테이너 128 이 아니다. 화면 가장자리에 붙인다
+     · 윗 문장   57.6px = 4vw    / w400 / lh 69.12px(=1.2) / ls normal / 흰색 / y150 / 폭 1368
+     · 워드마크  180.19px=12.51vw/ w700 / lh 162.17px(=0.9) / ls -4.5px(=-.025em) / y747
+   px 를 vw 로 옮긴 이유: 레퍼런스가 폭 1440 에 꽉 맞춰 짜여 있어 고정 px 로 두면
+   좁은 화면에서 글자가 통째로 넘친다. 1440 에서는 실측값과 같은 수치가 나온다.
+
+   ⚠ 이 히어로는 `--bg`(흰색)가 아니라 **사진 위 흰 글자**다. 어두운 배경이 전제이므로
+     배경 이미지를 밝은 것으로 바꾸면 글자가 사라진다 — 스크림 세기를 같이 조정할 것. */
+.hero--iw { background: var(--dark); }
+/* ⭐ 배경을 화면에 고정한다 (2026-08-16 세영: "pin 까지 똑같이").
+   실측(`scratchpad/probe_pin.py`)으로 레퍼런스의 정체를 확인했다 —
+   **GSAP ScrollTrigger 의 pin 이 아니라 배경 레이어가 `position: fixed`** 이고
+   콘텐츠(`.main-inner`)는 그 위를 정상 스크롤한다:
+     div.mainVisual-wrap  position:fixed  top0 h900 → 스크롤 1300px 동안 이동 0
+     div.main-inner       relative        → 1300px 그대로 이동
+   그래서 "히어로가 고정된 채 어두워지고 글자만 올라가는" 것처럼 보인다.
+   ⚠ 세 레이어(영상·스크림·검은 막)를 **함께** fixed 로 둬야 한다. 하나만 고정하면
+     스크롤할 때 서로 어긋나 경계가 드러난다.
+   ⚠ 뒤따르는 섹션은 불투명해야 이 고정 배경을 가린다 — `.sec--iwdark` 가 그 역할이다. */
+.hero--iw .hero__img,
+.hero--iw .hero__scrim,
+.hero--iw .hero__dim {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+}
+.hero--iw .hero__img {
+  filter: none;                        /* ⚠ --img-treat(무채색)를 걸지 말 것 — 레퍼런스는 원본 그대로다 */
+  object-fit: cover;
+}
+/* ⭐⭐ 어두운 구간 — 히어로부터 업종별 제작 행까지만 (2026-08-16 세영 지시).
+   ⚠⚠ **z-index 로는 해결되지 않는다.** 한 번 z6(막은 z5)으로 올려 봤지만 메인 전체가 계속
+     어두웠다. 원인은 쌓임 순서가 아니라 **아래 섹션들이 배경색을 갖지 않는 것**이었다 —
+     투명하니 뒤에 fixed 로 깔린 검은 막이 그대로 비친다(y4000 캡처로 확인).
+     그래서 어두운 구간을 래퍼로 묶고, 구간이 끝나면 고정 배경 자체를 숨긴다(site.js). */
+.darkzone { position: relative; background: #000; color: var(--bg); }
+/* ⚠ 어두운 구간의 마지막 섹션은 아래 여백을 0 으로. 섹션 기본 padding-bottom(96px)이 남으면
+   마지막 행 아래로 검은 띠가 길게 남는다(2026-08-16 y2100 캡처). 구간의 끝은 마지막 행의 선이다. */
+.darkzone > .sec:last-child { padding-bottom: 0; }
+.darkzone .hero--iw ~ * { position: relative; z-index: 6; }
+/* 구간을 벗어나면 고정 배경을 통째로 끈다. 클래스는 initHeroDim() 이 붙였다 뗀다. */
+.darkzone.is-past .hero__img,
+.darkzone.is-past .hero__scrim,
+.darkzone.is-past .hero__dim { visibility: hidden; }
+/* ⚠⚠ 그리고 **뒤따르는 섹션에 배경색을 준다.** `is-past` 는 구간이 화면 위로 완전히 빠져야
+   발동하므로, 경계가 화면 한가운데 있는 동안에는 고정 배경이 아직 켜져 있다. 그때 아래 섹션이
+   투명하면 검은 막이 그대로 비친다(2026-08-16 y2100 캡처 — 마지막 행 아래가 통째로 검었다).
+   ⚠ 자체 배경을 가진 섹션(`.invert` 어두운 면 · `.reveal` 스크롤 리빌)은 건드리지 않는다. */
+.darkzone ~ * { position: relative; z-index: 6; }
+.darkzone ~ *:not(.invert):not(.reveal) { background: var(--bg); }
+/* 레퍼런스 영상은 그 자체로 어두워 스크림이 없다. 우리는 정지 이미지라 밝기 편차가 커서
+   글자가 앉는 위·아래만 얇게 눌러 준다(가운데는 건드리지 않아 사진이 그대로 보인다). */
+.hero--iw .hero__scrim {
+  background: linear-gradient(to bottom,
+    rgba(23,21,15,.52) 0%, rgba(23,21,15,.12) 34%, rgba(23,21,15,.16) 62%, rgba(23,21,15,.62) 100%);
+}
+/* ⭐ 스크롤하면 배경이 어두워진다 — interwise 실측 이식 (2026-08-16 세영 지시).
+   실측(`scratchpad/probe_motion.py`): 레퍼런스는 `div.main-inner` 의 **배경색 알파**가
+   스크롤에 따라 오르고, 값이 **완전한 선형**이었다.
+     scrollY   0 → rgba(0,0,0,0)      450 → rgba(0,0,0,0.75)
+             150 → rgba(0,0,0,0.25)   600 → rgb(0,0,0)   (이후 유지)
+             300 → rgba(0,0,0,0.5)
+   → alpha = min(1, scrollY / 600) · 이징 없음(scrub 선형). 값은 site.js 의 initHeroDim() 이 넣는다.
+   ⚠ 색은 **순검정(#000)** 이다. `--dark`(#17150f, 따뜻한 먹색)가 아니다 — 레퍼런스 실측값 그대로다.
+     이어지는 섹션도 같은 검정이어야 경계가 안 보인다(`.sec--iwdark`).
+   ⚠ z-index 5 = 사진 위 · 카피 아래(`.hero__inner` 가 10). 레퍼런스도 텍스트는 어두워지지 않는다. */
+.hero__dim {
+  position: absolute; inset: 0; z-index: 5;
+  background: #000; opacity: 0; pointer-events: none;
+}
+.hero--iw .hero__inner {
+  max-width: none; margin-inline: 0;   /* 컨테이너(1280)를 벗기고 화면 폭을 쓴다 */
+  padding-block: 150px 0;              /* 실측 y150 — 윗 문장 위 여백 */
+  padding-inline: 2.5vw;               /* 실측 36px */
+  justify-content: flex-start;
+  color: #fff;
+}
+/* ⚠ `--muted`(#6e6a60)는 흰 바탕용이라 어두운 히어로에서 대비가 3:1 아래로 떨어진다.
+   어두운 면 안에서는 흰색 알파로 단계를 만든다(README 의 `.invert` 와 같은 처리). */
+/* 「HAOWEB」 — 2026-08-16 세영 지시로 라벨 자리에 들어간다("작은 크기 볼드체로").
+   ⚠ `--muted`(#6e6a60)는 흰 바탕용이라 어두운 히어로에서 대비가 3:1 아래로 떨어진다.
+   어두운 면 안에서는 흰색 알파로 단계를 만든다(README 의 `.invert` 와 같은 처리). */
+.hero--iw .hero__label { color: rgba(255,255,255,.82); font-weight: 700; }
+/* 윗 문장 = h1. 국문이 정답이다(README 6번 — splitChars 가 중첩 태그를 지운다). */
+/* ⭐ 2026-08-17 세영: "글자 더 작게. 지금보다 대략 80프로 정도 크기로."
+   4vw → 3.2vw (1440 화면에서 57.6px → 46.1px). 모바일(900 이하)은 이미 26px 로
+   따로 잡혀 있고 더 줄이면 읽기 어려워져 그대로 둔다. */
+.hero__lede {
+  margin: 0; max-width: 100%;
+  font-family: var(--font-kr); font-weight: 400;
+  font-size: 3.2vw; line-height: 1.2; letter-spacing: -.02em;
+}
+/* 서브카피 — 레퍼런스에는 없는 우리 것(세영 요청). 큰 문장과 워드마크 사이에 놓이므로
+   둘 중 어느 쪽과도 크기가 겹치지 않게 작게 간다. 흰 글자라 알파로 단계를 만든다. */
+.hero__sub {
+  margin: 26px 0 0; max-width: 720px;
+  font-size: var(--t-lead); line-height: 1.65; color: rgba(255,255,255,.82);
+}
+/* 하단 초대형 워드마크. 레퍼런스는 좌우 여백에 **정확히 꽉 차게** 맞춰 놓았다(실측 w1368/1368).
+   ⚠⚠ 크기가 문구 길이에 묶여 있다. 레퍼런스 실측값 12.51vw 를 그대로 쓰면
+     우리 문구(`we make it found:`)가 **1414px 로 46px 넘쳐** 콜론이 화면 밖에서 잘렸다.
+     레퍼런스와 폰트가 달라(Poppins → Pretendard) 글자 폭이 다르기 때문에 생기는 차이다.
+   ⚠ **문구를 바꾸면 이 값을 다시 재야 한다** — `python scratchpad/measure_hero.py` 가
+     글자 실폭과 배율을 찍어 준다. 눈대중으로 고치지 말 것.
+     이력: 「we make it found:」 12.1vw → 「we make it findable:」 로 바꾸자 1544/1368 로
+           176px 넘쳐 **10.7vw** 로 다시 맞췄다(2026-08-16).
+           → 「We make you findable.」 로 또 바뀌었는데 값을 안 고쳐 **183px 넘쳐 잘려
+             있었다**(2026-08-17 실측 1535/1353). 컨테이너가 1360 으로 넓어진 것도 겹쳤다.
+             **9.4vw** 로 다시 맞췄다. 주석의 경고가 그대로 재현된 사례다. */
+.hero__mark {
+  margin: auto 0 0; padding-bottom: 2.2vh;
+  font-family: var(--font-en); font-weight: 700;
+  font-size: 9.4vw; line-height: .9; letter-spacing: -.025em;
+  white-space: nowrap;
+}
+/* 좁은 화면 — 4vw/12.1vw 를 그대로 두면 글자가 손톱만 해진다. 비율만 유지하고 크기를 올린다.
+   ⚠ 워드마크의 `nowrap` 을 **반드시 푼다.** 레퍼런스 모바일도 여러 줄로 접는다
+     (실측: "we are / creative: / *interwise" 3줄). 안 풀면 한 줄이 화면을 넘어
+     우리 문구는 "we make it foun" 에서 잘렸다(390 캡처로 확인). */
+@media (max-width: 900px) {
+  .hero--iw .hero__inner { padding-block: 108px 0; padding-inline: 5vw; }
+  .hero__lede { font-size: 26px; line-height: 1.35; }
+  .hero__sub { font-size: var(--t-body); margin-top: 20px; }
+  .hero__mark { font-size: 14vw; white-space: normal; line-height: 1.02; }
+}
+
+/* 서브페이지 히어로 — 사진 + 도트 + 대형 영문 타이틀 */
+/* 100svh 는 카피에 비해 빈 공간이 너무 많았다 → 82svh (2026-08-14). 메인 히어로는 100svh 유지. */
+.subhero { position: relative; width: 100%; height: 82svh; min-height: 560px; overflow: hidden; background: var(--bg); }
+/* ⚠ 아래 두 줄(.subhero__img · .subhero__scrim)은 **현재 쓰는 마크업이 없다.**
+   2026-08-14 세영 지시로 서브히어로 27곳의 사진과 스크림을 전부 걷어냈다.
+   되돌릴 때를 위해 규칙만 남겨 둔다 — 조각에 아래 두 줄을 .subhero__dots 앞에 다시 넣으면 된다.
+     <img class="subhero__img" src="assets/img/파일.jpg" alt="">
+     <div class="subhero__scrim" aria-hidden="true"></div>
+   ※ 스크림 색이 rgba(16,16,16,…) = 배경(--bg #101010)과 같은 값이라, 사진이 없으면
+     어떤 알파를 줘도 결과가 배경색 그대로다. 사진과 한 몸이라 같이 걷어냈다. */
+/* ⭐ 2026-08-16 세영 지시로 **실사 배경을 되살렸다** (myz-studio 서브페이지 이식).
+   ⚠ `--img-treat`(무채색)를 걸지 말 것 — 레퍼런스는 `filter: none` 으로 원본 색을 그대로 쓴다.
+     색감이 이 디자인의 핵심이라(따뜻한 베이지·뉴트럴) 흑백으로 만들면 다른 물건이 된다. */
+.subhero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: none; }
+.subhero__dots {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(var(--fg) 1px, transparent 1px);
+  background-size: 14px 14px;
+  -webkit-mask-image: radial-gradient(ellipse 34% 42% at 50% 48%, #000 10%, transparent 72%);
+          mask-image: radial-gradient(ellipse 34% 42% at 50% 48%, #000 10%, transparent 72%);
+  opacity: .5;
+}
+/* ⚠ 레퍼런스에는 스크림이 없다(오버레이 0 · filter none). 그런데 우리는 **국문 h1 과 설명이
+   히어로 안에** 있어서(레퍼런스는 스크롤 뒤에 있다) 밝은 사진 위에서 흰 글자가 사라진다.
+   그래서 글자가 앉는 아래쪽만 눌러 준다 — 위쪽은 사진을 그대로 보여 준다.
+   ⚠ 예전 값은 rgba(16,16,16,…)(옛 다크 --bg)이라 지금 톤과 맞지 않았다. */
+.subhero__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(23,21,15,.78) 0%, rgba(23,21,15,.46) 38%, rgba(23,21,15,.12) 68%, rgba(23,21,15,.42) 100%);
+}
+/* 메인 히어로와 같은 이유로 고쳤다(2026-08-16) — 좌측 기준선 16 → 컨테이너와 동일,
+   바닥 정렬(flex-end) → 세로 중앙. 서브히어로 27곳에 한 번에 걸린다. */
+/* ⭐ 레퍼런스는 카피가 **화면 아래쪽**에 모여 있다(대형 영문 y705, 뷰포트 900 기준).
+   가운데 정렬이던 것을 아래 정렬로 바꾼다. 좌측 여백은 하오웹 컨테이너를 유지한다
+   (레퍼런스는 16px 이지만 우리 내비·본문 기준선이 이미 잡혀 있다 — _TODO 컨테이너 규칙). */
+.subhero__inner {
+  position: relative; z-index: 10; height: 100%;
+  max-width: var(--container); margin-inline: auto;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-block: var(--nav-h) 56px; padding-inline: var(--gutter);
+}
+/* ⭐ myz-studio 서브페이지 실측 이식 (2026-08-16 세영: "타이틀 위치도 레퍼런스와 비슷하게")
+     원본: x16 y705 · 128px / w700 / line-height 89.6px(=0.7) / letter-spacing -10.24px(=-0.08em)
+           색 크림 #FFFFE3 **알파 0.7** · uppercase · 화면 **좌하단**
+   ⚠ 서체는 하오웹 것(Pretendard)을 쓴다 — 세영님이 이번 지시에서 폰트를 지정하지 않았고,
+     사이트 서체 단일 원칙이 있다(워드마크 밴드만 예외). 크기·자간·행간·색·위치는 실측 그대로. */
+.subhero__title {
+  font-family: var(--font-en); font-weight: 700; text-transform: uppercase;
+  font-size: 128px; line-height: .7; letter-spacing: -.08em;
+  color: rgba(255, 255, 227, .7);
+  /* 원래는 `color-mix(#f4f4f2 70%)` 였다 — 사진 위에 얹히는 것을 전제로 한 값.
+     2026-08-14 에 사진을 빼면서 캔버스 히어로(.hero__title)의 흰색 제목보다 흐려 보여
+     색 선언을 없애고 --fg 를 상속하게 했다. 이제 40개 히어로의 제목 무게가 같다. */
+}
+/* ⚠ 이 세 줄은 밝은 글자(#f4f4f2)로 못 박혀 있었다 — 다크 바탕 전제다.
+   흰 바탕에서는 글자가 사라지므로 토큰으로 돌린다(2026-08-16 라이트 전환). */
+/* ⚠ 사진 위에 얹히므로 밝은 글자여야 한다 — 토큰(--fg-2·--muted)은 흰 바탕용이라
+   사진 위에서 대비가 무너진다. 스크림이 아래쪽을 눌러 주는 것을 전제로 흰색 알파를 쓴다. */
+.subhero__kr { margin-top: 18px; font-size: var(--t-lead); font-weight: 400; line-height: 1.6; color: rgba(255,255,255,.86); max-width: 660px; }
+.subhero__crumb { font-size: var(--t-eyebrow); letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.66); margin-bottom: 12px; }
+/* 국문 제목 — 2026-08-15 신설.
+   ⭐ h1 이 전 페이지 영문 한 단어(About·Shop…)라 검색·AI 가 읽을 국문 키워드가 0개였다.
+     AI 가시성을 파는 사이트에서 이건 그냥 둘 수 없다.
+   ⚠ 영문 대문에 span 을 끼워 넣는 방법은 못 쓴다 — site.js 의 splitChars() 가 h1 의
+     innerHTML 을 textContent 로 납작하게 만든 뒤 글자 단위로 재조립해서 중첩 태그가 사라진다.
+     그래서 영문은 <p> 로 내리고(클래스가 그대로라 화면은 동일) 이 국문 줄을 <h1> 으로 올렸다. */
+/* ⚠ `--fg`(먹색)는 흰 바탕용이다. 2026-08-16 에 서브히어로가 사진 배경이 되면서
+   사진 위에서 이 글자가 묻혔다 → 히어로 안에서만 흰색으로 덮는다(본문의 h1__ko 는 그대로). */
+.h1__ko { margin-top: 16px; font-size: var(--t-lead); font-weight: 700; letter-spacing: -.01em; color: var(--fg); }
+.subhero .h1__ko { color: #fff; }
+
+/* ══ 서브히어로 — 화면 꽉 채우기 + 좌하단/우측 2열 (2026-08-16 세영 지시) ═══════════
+   세영: "레퍼런스는 히어로 이미지가 화면 전체에 깔리는데 지금 아래에 흰 부분이 보여."
+        "타이틀과 서브타이틀을 레퍼런스처럼 왼쪽 아래로, 그 아래 문장은 서브타이틀과 높이를
+         맞춰 오른쪽에 배치."
+   ⚠ 지금은 **글로벌 페이지에서만** 쓴다(세영: "글로벌만 먼저 해서 보여줘").
+     확인되면 나머지 서브히어로에 같은 클래스를 붙이면 된다. */
+.subhero--full { height: 100svh; }
+/* ⚠ 한때 영문 타이틀만 화면 왼쪽 끝(x16)으로 빼 봤다(레퍼런스가 그렇다). **되돌렸다** —
+   2026-08-16 세영: "그냥 이번 수정 전으로 다시 하오웹 컨테이너에 맞춰요."
+   이유: 레퍼런스는 국문 제목이 히어로 밖(스크롤 뒤)에 있어 한 화면에 기준선이 하나였는데,
+   우리는 h1 이 국문이라 히어로 안에 있다 → 영문 x16 / 국문 x128 로 **한 화면에 기준선이 둘**이
+   되어 어긋나 보였다(_TODO 에 오래 적혀 있던 문제와 같은 성격).
+   되살리려면 아래 한 줄을 쓰면 된다:
+     margin-left: calc(16px - var(--gutter) - max(0px, (100vw - var(--container)) / 2)); */
+/* ⭐ 서브타이틀과 오른쪽 문장을 **한 행**에 둔다.
+   ⚠ 처음엔 오른쪽 문장을 히어로 직계로 두고 margin-bottom(111px)으로 높이를 맞췄는데,
+     그 값이 **CTA 묶음 높이에 의존**해서 좁은 화면(1100px)에서 29px 어긋났다.
+     한 행으로 묶으면 폭이 바뀌어도 윗선이 항상 맞는다 — 값으로 맞추지 말고 구조로 맞춘다. */
+.subhero__row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 64px; align-items: start;
+  margin-top: 18px;               /* 원래 .subhero__kr 이 갖고 있던 위 여백을 행으로 올린다 */
+}
+/* ⚠ 이 한 줄이 없으면 두 문장이 **18px 어긋난다.** `.subhero__kr` 의 margin-top:18px 이
+   행 안에서 자기만 밀어내기 때문이다(1440·1100 양쪽에서 같은 18px 차이로 확인). */
+.subhero__row .subhero__kr { margin-top: 0; }
+/* 2뎁스는 `subhero__row`(2열)를 벗겨 문장을 세로로 쌓는다(2026-08-17 세영 — 1뎁스와
+   차이를 주려고 글로벌 2뎁스 배치로 통일). 그때 오른쪽에 있던 문장이 `__inner` 직속이
+   되므로 여기서 간격을 준다. 1뎁스는 여전히 row 안이라 이 규칙에 걸리지 않는다. */
+.subhero__inner > .subhero__aside { margin-top: 14px; }
+.subhero__aside { font-size: var(--t-lead); line-height: 1.6; color: rgba(255, 255, 255, .86); }
+@media (max-width: 900px) {
+  .subhero--full { height: auto; min-height: 100svh; }
+  .subhero__row { grid-template-columns: 1fr; gap: 22px; }
+  .subhero__aside { font-size: var(--t-body); }
+  /* ⚠ 모바일은 카피가 많아 100svh 를 넘긴다. 바닥 정렬만 두면 제목이 내비 바로 아래 붙는다
+     → 위쪽에 숨 쉴 자리를 준다(2026-08-16 390 캡처로 확인). */
+  .subhero--full .subhero__inner { padding-block: calc(var(--nav-h) + 40px) 48px; }
+}
+/* 사진 위에 얹히는 히어로 안쪽 요소들 — 흰 바탕용 토큰을 그대로 쓰면 사진에 묻힌다.
+   (hospital 캡처에서 「이미 홈페이지가 있다면…」 주석과 보조 버튼 글자가 사라졌다.) */
+.subhero .note { color: rgba(255, 255, 255, .72); }
+.subhero .btn:not(.btn--brand) {
+  color: #fff; border-color: rgba(255, 255, 255, .46);
+}
+.subhero .btn:not(.btn--brand):hover { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+
+/* ---------- 7. 섹션 공통 ---------- */
+/* 섹션 소제목 — 제목 위에 붙는 짧은 라벨 (RENEWAL · AI VISIBILITY · 자가 점검 …)
+   2026-08-14 세영: "너무 작고 눈에 안 띈다" → 12px 보통 → 14px 볼드. */
+.eyebrow {
+  /* ⭐ 2026-08-17 세영: "제목 위 소제목을 조금 강조하고 싶어. 폰트 조금 더 크게, 포인트 컬러."
+     14px → 15px, 색은 무채색 72% → 브랜드 레드.
+     ⚠ 밝은 면과 어두운 면(.invert)에 모두 쓰이는 클래스다. 레드 #e83817 은 어두운 바탕에서
+       대비가 떨어져 아래 .invert 규칙에서 한 단계 밝은 --brand-2 로 바꾼다. 둘을 함께 볼 것.
+     ⚠ 이 색은 하오 레드(--brand)다. 값을 직접 쓰지 말고 토큰으로 둔다.
+     (이전 값: 14px / color-mix(--fg 72%) — 2026-08-14 세영 지시로 잡았던 값) */
+  font-size: 15px; line-height: 1.5; color: var(--brand);
+  font-weight: 700; letter-spacing: .01em;
+}
+/* 본문 아래 잔글씨 주석 — 원래 `.eyebrow` 를 같이 쓰다가 위 변경 때 분리했다(2026-08-14, 31곳).
+   ⚠ 면책·부연 **문장**이라 굵어지면 안 된다. "…보장하지 않습니다" 류가 굵게 나오면 경고문이 된다.
+   값은 분리 전 `.eyebrow` 그대로다. */
+.note {
+  font-size: var(--t-eyebrow); line-height: 1.5; color: var(--muted);
+  letter-spacing: .01em;
+}
+.rule { height: 1px; width: 100%; background: var(--border); }
+
+/* 제목 + 우측 리드 (레퍼런스: h3 60px 좌 / 본문 448px 우) */
+.sechead { display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; gap: 48px; }
+.sechead__title { font-size: var(--t-h3); line-height: 1.12; font-weight: 700; letter-spacing: -.025em; max-width: 640px; }
+/* 리드는 본문(17)보다 한 단계 큰 18 — 섹션 설명이 일반 본문과 같은 무게로 읽히면 위계가 없다 */
+.sechead__lead { width: 100%; max-width: 448px; font-size: var(--t-lead); line-height: 1.6; }
+
+/* 대형 영문 제목 + 우측 리드 (레퍼런스 Works / Our Team) */
+.bighead { display: flex; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 48px; }
+.bighead__title {
+  font-family: var(--font-en); font-size: var(--t-display); line-height: .95;
+  font-weight: 700; letter-spacing: -.035em; white-space: nowrap;
+}
+.bighead__lead { width: 100%; max-width: 448px; font-size: var(--t-body); line-height: 1.5; }
+/* 영문 대제목 옆 국문 제목 — 2026-08-15.
+   Work·How We Build 처럼 제목이 영문 한 단어인 섹션에 국문 타이틀을 주기 위한 자리다.
+   ⚠ 영문 제목 안에 넣을 수 없다 — site.js 의 splitLines()/splitChars() 가 innerHTML 을
+     textContent 로 납작하게 만들어 중첩 태그를 지운다(h1 국문화 때와 같은 함정). */
+.bighead__right { width: 100%; max-width: 448px; }
+.bighead__right .bighead__lead { max-width: none; }
+.bighead__ko { font-size: var(--t-lead); font-weight: 700; line-height: 1.45; letter-spacing: -.01em; margin-bottom: 14px; }
+/* 검색·AI 노출 목업 — 2026-08-15. 대표님 참고(web.haoc.co.kr)의 '검색 결과 / AI 답변' 카드를
+   우리 토큰으로 다시 만든 것. 캡처 이미지가 아니라 CSS 로 그린다 —
+   ⚠ 실제 검색 결과 스크린샷을 쓰면 만들어 낸 성과 증거가 된다. 여기 예시는 전부 ○○·△△ 로
+     가려 둔 가상의 화면이고, 아래 주석에도 예시임을 반드시 적는다.
+   비율·간격은 .panels 와 같은 2열 그리드를 따른다. */
+.mockrow { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.mockrow--rev .mockrow__txt { order: 2; }
+
+/* ── 큰 사진 + 글 2열 `.figrow` (2026-08-17 세영: "이미지는 가능하면 크게")
+   `.mockrow` 와 같은 골격이지만 오른쪽이 가상 화면 목업이 아니라 **사진**이다.
+   사진이 화면의 절반을 차지하므로 카드 안에 작게 넣는 것보다 훨씬 크게 보인다.
+   ⚠ 비율은 4:3 으로 고정하고 object-fit:cover 로 채운다 — 우리 자산이 제각각이라
+     비율을 안 잡으면 행마다 높이가 달라진다.
+   ⚠ `--rev` 는 order 로 좌우만 바꾼다. 읽는 순서(DOM)는 글이 먼저다. */
+/* 컨테이너 폭을 다 쓰는 큰 사진 한 장. 섹션 머리가 가운데 정렬이라 2열보다 이쪽이 맞고,
+   세영님이 말한 "가능하면 크게" 에 가장 가깝다(폭 1264 · 16:9). */
+.figfull { margin-top: 56px; border-radius: 22px; overflow: hidden; aspect-ratio: 16 / 9; background: color-mix(in srgb, var(--fg) 6%, transparent); }
+.figfull img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s ease; }
+.figfull:hover img { transform: scale(1.03); }
+.invert .figfull { background: color-mix(in srgb, var(--bg) 10%, transparent); }
+@media (max-width: 900px) { .figfull { margin-top: 36px; aspect-ratio: 4 / 3; } }
+
+.figrow { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.figrow + .figrow { margin-top: 88px; }
+.figrow--rev .figrow__txt { order: 2; }
+.figrow__fig { border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 3; background: color-mix(in srgb, var(--fg) 6%, transparent); }
+.figrow__fig img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
+.figrow:hover .figrow__fig img { transform: scale(1.04); }
+.invert .figrow__fig { background: color-mix(in srgb, var(--bg) 10%, transparent); }
+@media (max-width: 900px) {
+  .figrow { grid-template-columns: 1fr; gap: 28px; }
+  .figrow + .figrow { margin-top: 56px; }
+  /* ⚠ 한 줄로 접히면 order 를 반드시 푼다 — 안 그러면 사진이 글 위로 올라가 순서가 뒤집힌다. */
+  .figrow--rev .figrow__txt { order: 0; }
+}
+.mock {
+  border: 1px solid var(--border); border-radius: var(--r-card);
+  padding: 22px 22px 26px; background: color-mix(in srgb, var(--fg) 4%, transparent);
+}
+.mock__head { display: flex; justify-content: space-between; align-items: baseline;
+  font-size: var(--t-sm); font-weight: 700; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.mock__head i { font-style: normal; font-weight: 500; letter-spacing: .1em; color: var(--muted); }
+.mock__q { margin-top: 18px; padding: 13px 16px; border: 1px solid var(--border); border-radius: 999px;
+  font-size: var(--t-sm); color: var(--muted); }
+.mock__row { margin-top: 16px; padding: 14px 16px; border-radius: 8px; }
+.mock__row--top { background: color-mix(in srgb, var(--brand) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand) 45%, transparent); }
+.mock__rank { font-size: 12px; font-weight: 700; color: var(--brand); letter-spacing: .08em; }
+.mock__t { margin-top: 5px; font-size: var(--t-sm); font-weight: 700; line-height: 1.5; }
+.mock__row--top .mock__t { color: var(--brand); }
+.mock__u { margin-top: 5px; font-size: 12px; color: var(--muted); word-break: break-all; }
+.mock__ask { margin-top: 18px; margin-left: auto; width: fit-content; max-width: 88%;
+  padding: 12px 16px; border-radius: 999px; background: var(--brand); color: #fff;
+  font-size: var(--t-sm); font-weight: 600; }
+.mock__ans { margin-top: 14px; padding: 16px; border-radius: 8px;
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+  font-size: var(--t-sm); line-height: 1.7; }
+.mock__ans b { color: var(--brand); }
+.mock__src { margin-top: 12px; font-size: 12px; color: var(--muted); }
+.invert .mock, .invert .mock__q, .invert .mock__head { border-color: color-mix(in srgb, var(--bg) 20%, transparent); }
+.invert .mock { background: color-mix(in srgb, var(--bg) 4%, transparent); }
+.invert .mock__head i, .invert .mock__q, .invert .mock__u, .invert .mock__src { color: color-mix(in srgb, var(--bg) 55%, transparent); }
+.invert .mock__ans { background: color-mix(in srgb, var(--bg) 6%, transparent); }
+@media (max-width: 900px) {
+  .mockrow { grid-template-columns: 1fr; gap: 36px; }
+  .mockrow--rev .mockrow__txt { order: 0; }
+}
+
+/* 노출 → 결과 등식 — 2026-08-15 세영(대표님 참고 이미지).
+   목업이 '이렇게 노출된다' 까지만 말하고 끝나 "그래서 뭐가 좋아지나" 가 비어 있었다.
+   위의 두 목업(검색 상위노출 / AI 답변 노출)을 그대로 받아 문의로 잇는 자리다.
+   ⚠ 수치·퍼센트는 넣지 않는다. 근거가 없고, 넣는 순간 성과 보장이 된다. */
+.eqrow { display: flex; align-items: stretch; justify-content: center; gap: 18px; flex-wrap: wrap; }
+.eqbox { flex: 1 1 220px; max-width: 300px; padding: 30px 24px; text-align: center;
+  border: 1px solid var(--border); border-radius: var(--r-card); }
+.eqbox--out { background: var(--brand); border-color: var(--brand); }
+.eqbox__t { font-size: var(--t-lead); font-weight: 700; }
+.eqbox__d { margin-top: 8px; font-size: var(--t-sm); color: var(--muted); }
+.eqbox--out .eqbox__t, .eqbox--out .eqbox__d { color: #fff; }
+.eqbox--out .eqbox__d { color: rgba(255,255,255,.82); }
+.eqop { align-self: center; font-size: 22px; font-weight: 700; color: var(--muted); }
+.invert .eqbox { border-color: color-mix(in srgb, var(--bg) 22%, transparent); }
+.invert .eqbox__d, .invert .eqop { color: color-mix(in srgb, var(--bg) 55%, transparent); }
+.invert .eqbox--out { border-color: var(--brand); }
+.invert .eqbox--out .eqbox__t { color: #fff; }
+@media (max-width: 760px) { .eqbox { max-width: none; } .eqop { width: 100%; } }
+
+/* 업종 포트폴리오 — 이미지 들어갈 자리 (2026-08-15 세영).
+   자료를 아직 못 찾아 못 넣는 것뿐이므로 '자리만' 비워 둔다.
+   ⚠ 공개 동의 같은 단서는 붙이지 않는다. 가상의 고객사명·가짜 캡처도 만들지 않는다.
+   ⚠ 비율은 portfolio.html 의 .work__thumb 와 같은 1:1 이다. 사진이 들어오면
+     이 자리에 background-image 만 얹으면 되고, 나중에 .work 그리드로 바꿔도 어긋나지 않는다. */
+.pfslot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.pfslot__item { width: 100%; }
+.pfslot__thumb {
+  position: relative; width: 100%; padding-bottom: 100%;
+  border: 1px dashed var(--border); border-radius: var(--r-card);
+  background-size: cover; background-position: center top;
+}
+.pfslot__thumb::after {
+  content: attr(data-label); position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--t-eyebrow); letter-spacing: .1em; color: var(--muted);
+}
+.pfslot__cap { margin-top: 16px; font-size: var(--t-sm); color: var(--muted); }
+.invert .pfslot__thumb { border-color: color-mix(in srgb, var(--bg) 26%, transparent); }
+.invert .pfslot__thumb::after, .invert .pfslot__cap { color: color-mix(in srgb, var(--bg) 50%, transparent); }
+@media (max-width: 860px) { .pfslot { grid-template-columns: 1fr; gap: 16px; } }
+
+/* 마지막 CTA 의 리드 한 줄 — 지금까지 한 문장뿐이라 무엇을 하라는 건지가 얇았다. */
+.oneline__lead { margin: 20px auto 0; max-width: 640px; font-size: var(--t-lead); line-height: 1.6; color: var(--muted); }
+
+/* 중앙 정렬 문장 블록 (레퍼런스 intro) */
+/* 히어로 다음 핵심 문장 — 페이지의 두 번째 헤드라인 역할인데 일반 본문처럼 약했다.
+   20px/300/1.25 · 512px → 26px/500/1.45 · 760px (2026-08-14). 문구는 그대로다. */
+.statement { max-width: 760px; margin-inline: auto; padding-inline: 32px; }
+.statement p { font-size: 26px; line-height: 1.45; font-weight: 500; letter-spacing: -.015em; }
+
+/* 3열 그리드 — 상단 1px 룰 + 라벨 + 본문 */
+.cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); }
+.cols--2 { grid-template-columns: repeat(2, 1fr); gap: 48px; }
+.cols--4 { grid-template-columns: repeat(4, 1fr); gap: 44px; }
+.cols--5 { grid-template-columns: repeat(5, 1fr); gap: 36px; }
+.col { position: relative; padding-top: 48px; }
+.col > .rule { position: absolute; top: 0; left: 0; }
+.col__label { display: flex; align-items: center; gap: 24px; height: 32px; }
+/* 컬럼 제목(현재 상태 · 다시 만들 구조 …) — 400 → 700 (2026-08-14 세영 지시) */
+.col__label span { font-size: 20px; letter-spacing: .04em; font-weight: 700; }
+.col__label svg { width: 30px; height: 30px; flex: none; }
+.col__body { margin-top: 16px; font-size: var(--t-body); line-height: 1.75; font-weight: 400; }
+
+/* ── `.cols--rre` — rre.com 어휘로 만든 시안 (2026-08-16) ─────────────────
+   실측: `.global_grid` 1249px · 행 padding 24/16/24/32 · 행 안 gap 16 ·
+         라벨 32px/1.2 w400 · 색 rgb(7,2,10) · GSAP+ScrollTrigger.
+   ⭐ 지금 `.col` 과 가장 다른 점은 **선이 이어진다**는 것이다. 우리는 칸마다 선을 따로 얹고
+      열 사이 gap(44px)에서 선이 끊겨 '카드 여러 장'으로 읽힌다. RRE 는 칸이 맞붙어
+      선이 가로로 관통해 **표 한 장**으로 읽힌다 — 정보가 훨씬 정돈돼 보이는 이유가 이것이다.
+   ⚠ 글자 크기·서체는 하오웹 토큰 그대로다(레퍼런스 32px 를 옮기지 않는다). */
+.cols--rre {
+  gap: 0;
+  border-top: 1px solid var(--fg);          /* 표의 머리선 — 한 단계 진하게 */
+}
+.cols--rre .col {
+  padding: 26px 32px 34px;
+  border-bottom: 1px solid var(--border);
+  transition: background-color .35s cubic-bezier(.4,0,.2,1);
+}
+.cols--rre .col + .col { border-left: 1px solid var(--border); }
+/* ⚠ **각 행의 첫 칸**이 기준선에서 밀리면 안 된다. `:first-child` 로 잡으면 1행 첫 칸에만
+   먹어서 2행부터 32px 씩 안쪽으로 들어간다(2026-08-16 실측 128 vs 155).
+   열 수를 알아야 '행의 첫 칸'을 집을 수 있어 변형마다 따로 적는다. */
+.cols--rre.cols--2 .col:nth-child(2n+1),
+.cols--rre.cols--4 .col:nth-child(4n+1),
+.cols--rre.cols--5 .col:nth-child(5n+1),
+.cols--rre:not(.cols--2):not(.cols--4):not(.cols--5) .col:nth-child(3n+1) {
+  padding-left: 0; border-left: 0;
+}
+/* 칸마다 얹던 개별 선은 표에서 필요 없다 — 셀 경계가 그 역할을 한다. */
+.cols--rre .col > .rule { display: none; }
+.cols--rre .col__label { height: auto; align-items: baseline; }
+.cols--rre .col__label span { font-size: var(--t-lead); font-weight: 700; letter-spacing: -.01em; }
+.cols--rre .col__body { margin-top: 12px; color: var(--muted); }
+/* 호버 — RRE 는 행에 얹히는 얕은 면으로 반응한다. 레드를 쓰지 않는다. */
+.cols--rre .col:hover { background: color-mix(in srgb, var(--fg) 4%, transparent); }
+.invert .cols--rre { border-top-color: var(--bg); }
+.invert .cols--rre .col:hover { background: color-mix(in srgb, var(--bg) 7%, transparent); }
+
+/* ⚠ 좁은 화면에서는 `.cols` 가 1열이 된다. 그때 `:nth-child(4n+1)` 규칙(4열 기준)이 어긋나
+   2번째 칸부터 왼쪽에 세로선이 남는다(2026-08-16 모바일 캡처에서 잡음).
+   1열에서는 세로 구분선 자체가 의미가 없으니 전부 끈다. */
+@media (max-width: 900px) {
+  .cols--rre .col,
+  .cols--rre .col + .col { padding-inline: 0; border-left: 0; }
+}
+
+/* 항목 리스트 (레퍼런스 service 리스트) */
+.deflist { margin-top: 28px; display: flex; flex-direction: column; gap: 22px; }
+.deflist dt { font-size: var(--t-lead); font-weight: 400; }
+.deflist dd { margin: 6px 0 0; font-size: var(--t-sm); line-height: 1.65; color: var(--muted); }
+/* 번호 변형 (2026-08-13) — 제안서 01~07 처럼 '순서가 정보인' 목록에만 쓴다.
+   번호 → 항목 이름 → 설명 세 단계가 크기로 갈린다(26 / 18 / 13). */
+.deflist--num dt { display: flex; align-items: baseline; gap: 16px; }
+.deflist--num dt b {
+  flex: none; min-width: 34px;
+  font-family: var(--font-en); font-size: 26px; font-weight: 700;
+  letter-spacing: -.02em; line-height: 1; color: var(--muted);
+}
+.deflist--num dd { margin-left: 50px; }
+.invert .deflist--num dt b { color: color-mix(in srgb, var(--bg) 45%, transparent); }
+
+/* 작은 변형 — 단계 카드 안에 들어가는 확인·산출물 목록용 */
+.deflist--sm { margin-top: 16px; gap: 10px; }
+.deflist--sm dt { font-size: var(--t-sm); font-weight: 600; }
+.deflist--sm dd { margin-top: 3px; font-size: var(--t-sm); }
+
+/* 번호 단계 (레퍼런스 HOW WE BUILD 대응) */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gap); }
+.steps--5 { grid-template-columns: repeat(5, 1fr); gap: 36px; }
+.steps--8 { grid-template-columns: repeat(4, 1fr); row-gap: 56px; }
+.step { position: relative; padding-top: 48px; }
+.step > .rule { position: absolute; top: 0; left: 0; }
+.step__no { font-family: var(--font-en); font-size: 20px; letter-spacing: .02em; color: var(--muted); }
+.step__t { margin-top: 12px; font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+.step__d { margin-top: 12px; font-size: var(--t-sm); line-height: 1.7; font-weight: 400; color: var(--muted); }
+
+/* ---------- 7b. 칼럼 본문 (장문 읽기) ----------
+   레퍼런스에 장문 페이지가 없어 새로 만들되 값은 전부 레퍼런스 실측에서 가져왔다:
+   본문 최대폭 690 = .reveal__p 의 max-width, 본문 18px = --t-lead, 소제목 28px = .split__quote */
+.article { max-width: 690px; margin-inline: auto; }
+.article__title { font-size: 40px; line-height: 1.3; font-weight: 700; letter-spacing: -.025em; max-width: 900px; }
+.article__h { font-size: 28px; line-height: 1.3; font-weight: 600; letter-spacing: -.02em; margin-top: 76px; }
+.article__h:first-child { margin-top: 0; }
+.article p { margin-top: 20px; font-size: var(--t-lead); line-height: 1.85; font-weight: 400; }
+.article__items { margin-top: 44px; display: flex; flex-direction: column; gap: 44px; }
+.article__items .step { padding-top: 28px; }
+.article__items .step__t { font-size: 20px; }
+.article__items .step__d { font-size: var(--t-body); line-height: 1.8; color: var(--fg); }
+.invert .article__items .step__d { color: var(--bg); }
+.article .deflist { margin-top: 32px; }
+.article .deflist dt { font-size: var(--t-body); }
+
+/* ---------- 8. 리스트 행 (레퍼런스 works-reveal) ---------- */
+.rows { border-bottom: 1px solid var(--border); }
+.row { position: relative; border-top: 1px solid var(--border); overflow: hidden; }
+.row__face { position: relative; z-index: 1; background: var(--bg); }
+.row__link {
+  width: 100%; max-width: var(--container); margin-inline: auto;
+  display: flex; align-items: center; gap: 16px;
+  padding: 60px 40px; min-height: 192px;
+}
+.row__cat { font-size: var(--t-eyebrow); color: var(--muted); width: 150px; flex: none; }
+.row__title { flex: 1; font-size: 44px; font-weight: 600; letter-spacing: -.02em; text-align: center; line-height: 1.15; }
+.row__meta { width: 150px; flex: none; text-align: right; font-size: 13px; color: var(--muted); }
+.row__over {
+  position: absolute; inset: 0; z-index: 2; display: flex; align-items: center;
+  background: var(--fg); color: var(--bg);
+  transform: translateY(101%); transition: transform .5s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+.row:hover .row__over, .row:focus-within .row__over { transform: translateY(0); }
+.row__marquee { display: flex; width: max-content; animation: marquee 18s linear infinite; }
+.row__marquee > span {
+  font-family: var(--font-en); font-size: 56px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: -.03em; padding-right: 48px; white-space: nowrap;
+}
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---------- 9. 스크롤 고정 이미지 리빌 ---------- */
+/* 레퍼런스 실측은 500lvh(고정된 채 화면 4개분)였으나 pin 이 너무 길다는 지적을 받아
+   300lvh(화면 2개분)로 줄였다 (2026-08-14 세영).
+   site.js 의 진행도 p 는 (offsetHeight - innerHeight) 로 정규화되므로 마스크 성장 곡선·
+   배경 페이드·1px 룰·본문(.68)·공정 표시(.9) 타이밍이 전부 자동으로 따라온다 — JS 는 그대로다.
+   더 줄이려면 260lvh 까지는 마스크가 커지는 과정이 읽힌다. 그 아래로는 순간이동처럼 보인다. */
+/* ⭐ 2026-08-16 — myz-studio 리빌을 다시 실측해 맞췄다 (세영: "미묘하게 달라").
+   실측(scratchpad/myz_reveal.py · mz_rv*.png)에서 나온 세 가지 차이:
+     ① 바탕이 **크림**이다. 우리는 `--fg`(먹색)라 화면이 통째로 어두웠다.
+     ② 마스크 안 사진에 **필터가 없다**(filter:none, opacity:1). 우리는 무채색+어둡게였다.
+     ③ 레퍼런스에는 **흐린 배경 사진이 없다.** 로고 밖은 순수한 크림색이다.
+        우리는 `.reveal__bg { opacity:.1 }` 로 사진을 깔고 있어 바탕이 지저분했다.
+   ⚠ 바탕은 **흰색**이다. 레퍼런스는 크림(#ffffe3)이지만 2026-08-16 세영 지시로 하오웹 톤에 맞췄다
+     ("레퍼런스에는 배경이 크림색이었지만 우리는 하오웹에 맞게 흰색으로"). 나머지는 실측 그대로다. */
+/* ⚠ 높이도 레퍼런스와 맞춘다 — myz 는 4500px(=500vh) 이고 우리는 300lvh(2700) 였다.
+   같은 곡선이라도 구간이 짧으면 그만큼 빨리 지나가 '훅 커지는' 것처럼 보인다. */
+.reveal { position: relative; height: 500lvh; background: var(--bg); }
+.reveal__stick { position: sticky; top: 0; height: 100svh; width: 100%; overflow: hidden; }
+/* ⚠ 레퍼런스에 대응물이 없다. 되살리면 로고 밖 바탕에 사진이 비쳐 크림면이 탁해진다. */
+.reveal__bg { display: none; }
+/* 사진은 원본 그대로 — 필터를 걸면 레퍼런스와 다른 물건이 된다. */
+.reveal { --img-treat: none; }
+.reveal--color { --img-treat: none; }
+.reveal__bg img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-treat); }
+.reveal__frame {
+  position: absolute; inset: 0; overflow: hidden;
+  /* 레퍼런스와 같은 기계 — 브랜드 도형으로 사진을 오려내고 중앙 기준으로 키운다.
+     레퍼런스는 로고타입 path, 우리는 'HAO' 대문자(벡터 텍스트)라 몇 배로 키워도 선명하다.
+     도형·크기는 site.js 가 스크롤 진행도에 맞춰 갱신한다. */
+  clip-path: url(#hao-mask);
+  -webkit-clip-path: url(#hao-mask);
+}
+.maskdefs { position: absolute; left: -9999px; top: 0; }
+.reveal__frame img { position: absolute; top: 50%; left: 50%; translate: -50% -50%; width: 100%; height: 100%; object-fit: cover; filter: var(--img-treat); }
+/* 스크림은 프레임이 아니라 '본문'에 붙인다 — 본문이 뜰 때만 같이 떠서
+   마스크가 도형으로 읽히는 앞 구간의 대비를 죽이지 않는다.
+   끝 구간에는 사진이 화면을 덮으므로, 우리 사진(다크) 위에서는 밝은 글자 + 어두운 스크림이 맞다. */
+/* ⚠ 값이 `rgba(16,16,16,…)`(옛 다크 --bg)였다. 바탕이 크림으로 바뀐 지금은 색만 지금 톤으로
+   맞춘다 — 리빌 끝에는 사진이 화면을 덮으므로 아래쪽을 눌러야 흰 글자가 읽힌다. */
+.reveal__copy::before {
+  content: ''; position: absolute; left: 50%; translate: -50% 0; width: 100vw;
+  top: -240px; bottom: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(to top, rgba(23,21,15,.95) 0%, rgba(23,21,15,.86) 40%, rgba(23,21,15,.58) 70%, rgba(23,21,15,0) 100%);
+}
+.reveal__copy {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding-bottom: 90px; opacity: 0; transition: opacity .5s ease;
+}
+.reveal__copy[data-in='true'] { opacity: 1; }
+.reveal__copy .rule { margin-bottom: 88px; }
+/* 리빌 끝 구간에만 뜨는 공정 표시 (2026-08-13) —
+   긴 스크롤이 장식이 아니라 '고객 자료가 홈페이지가 되는 과정'이라는 뜻과 이어지게 한다.
+   아이콘 없이 지금 쓰는 타이포와 화살표만. 마지막 '문의'에서 레드가 한 번 켜진다. */
+.reveal__flow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; margin-bottom: 34px; }
+.reveal__flow span {
+  /* 이 줄은 사진에서 가장 밝은 구간 위에 뜬다 — 스크림이 옅은 자리라 글자를 충분히 밝게 둔다 */
+  font-size: var(--t-sm); font-weight: 600; letter-spacing: .02em;
+  color: color-mix(in srgb, #f4f4f2 88%, transparent);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1);
+}
+.reveal__flow span + span::before { content: '→'; margin-right: 12px; opacity: .55; }
+.reveal__flow span:last-child { color: var(--brand); }
+.reveal__flow span:last-child::before { color: color-mix(in srgb, #f4f4f2 88%, transparent); }
+.reveal__flow[data-in='true'] span { opacity: 1; transform: none; }
+.reveal__flow span:nth-child(2) { transition-delay: .12s; }
+.reveal__flow span:nth-child(3) { transition-delay: .24s; }
+.reveal__flow span:nth-child(4) { transition-delay: .36s; }
+.reveal__grid { display: flex; gap: 48px; align-items: flex-start; }
+.reveal__t { font-size: 52px; line-height: 1.18; font-weight: 700; letter-spacing: -.03em; color: #f4f4f2; flex: none; width: 500px; }
+.reveal__p { font-size: var(--t-body); line-height: 1.65; color: #f4f4f2; max-width: 690px; font-weight: 400; }
+
+/* ---------- 10. 마지막 CTA 한 문장 ---------- */
+/* 레퍼런스(myz)는 300lvh sticky 였다. 170lvh 로 한 번 줄였지만(2026-08-12) 여전히
+   "범위가 너무 넓다"는 지적을 받아 **sticky 를 아예 걷어냈다** (2026-08-14 세영 —
+   "레퍼런스대로 안 해도 되니까 범위를 줄여줘").
+
+   sticky + 100svh 구조는 두 가지를 동시에 잡아먹고 있었다:
+     ① 스크롤 170vh (데스크톱 1530px)  ② 내용이 한 줄 + 버튼뿐인데 **빈 화면 하나를 통째로** 차지
+   이제 평범한 섹션이고, 높이는 내용이 정한다. 42개 페이지 공통이라 사이트 전체가 짧아진다.
+
+   ⚠ 클래스명 `__stick` 은 42개 조각에 박혀 있어 그대로 뒀다 — 이름만 남았고 sticky 아니다.
+   되돌리려면 아래 두 줄을 `height: 170lvh` + `position: sticky; top: 0; height: 100svh` 로. */
+.oneline { position: relative; background: var(--bg); }
+.oneline__stick {
+  /* 마무리 CTA 라 일반 섹션(--sec-y)보다 조금만 넉넉하게 */
+  padding: calc(var(--sec-y) * 1.35) 24px;
+  display: flex; align-items: center; justify-content: center;
+}
+.oneline__t { font-size: 32px; font-weight: 500; line-height: 1.3; letter-spacing: -.015em; text-align: center; max-width: 1000px; }
+
+/* ---------- 11. 플랜 카드 ---------- */
+/* ⭐⭐ 2026-08-17 세영: 미리보기 사이트(seyeong1403.github.io/haoweb-preview)의 플랜 카드
+   **디자인 형태만** 가져오되 **색은 흰 바탕으로**. 모션은 가져오지 않는다.
+   그전에는 먹색 카드(background:var(--fg))에 흰 글자였다.
+
+   실측(haoweb-preview · 뷰포트 1280)
+     카드     폭 370 · 반경 **22px** · 여백 38/32/34 · 테두리 1px rgba(흰,.14) · 바탕 rgba(흰,.02)
+     추천카드 테두리 **2px 브랜드 레드(#e83817)** · 여백 37/31/33 (테두리 1px 늘어난 만큼 뺀다)
+     배지     12.5px/700 ls .02em
+     제목     25px/800 ls -.03em
+     규모라벨 13px/600 · 값 **27px/800 ls-.03em 레드** · 주석 13px/400
+     항목     14.2px/400 lh1.5 · 체크 ✓ 14px 레드
+     트랙 gap 22.77px
+   ⚠ 흰 바탕으로 뒤집었으므로 레퍼런스의 `rgba(255,255,255,α)` 는 전부 `--fg` 알파로 바꾼다.
+     알파 값(.14 / .12 / .78 / .5 / .42)은 그대로 옮긴다.
+   ⚠ 추천 카드의 여백을 1px 줄이지 않으면 테두리가 2px 이 되면서 카드 하나만 커진다. */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 23px; align-items: start; }
+.plan {
+  position: relative; display: flex; flex-direction: column;
+  background: color-mix(in srgb, var(--fg) 2%, var(--bg));
+  color: var(--fg);
+  border: 1px solid color-mix(in srgb, var(--fg) 14%, transparent);
+  border-radius: 22px; padding: 38px 32px 34px;
+}
+/* 추천 — 레퍼런스는 배경을 바꾸지 않고 테두리만 레드로 두껍게 한다. */
+.plan--rec { border: 2px solid var(--brand); padding: 37px 31px 33px; }
+.plan__name {
+  font-family: var(--font-en); font-size: 25px; font-weight: 800; letter-spacing: -.03em;
+  line-height: 1; display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+}
+.plan__rec { font-size: var(--t-eyebrow); letter-spacing: .1em; color: var(--brand); font-family: var(--font-kr); }
+/* 제작 범위를 먼저 읽히게 (2026-08-13) — Basic/Premium/Enterprise 라는 이름보다
+   '몇 페이지짜리 일인가'가 고객의 실제 판단 기준이다.
+   ⭐ 레퍼런스는 이 값을 **브랜드 레드**로 둔다 — 카드에서 가장 먼저 읽히는 자리다. */
+.plan__scale {
+  margin-top: 22px; padding-top: 20px; font-size: 13px;
+  border-top: 1px solid color-mix(in srgb, var(--fg) 12%, transparent);
+  color: color-mix(in srgb, var(--fg) 50%, transparent);
+}
+.plan__scale b {
+  display: block; font-family: var(--font-en); font-size: 34px; font-weight: 800;
+  letter-spacing: -.03em; line-height: 1.2; color: var(--brand);
+}
+.plan__scale i { display: block; margin-top: 8px; font-style: normal; font-size: var(--t-eyebrow); font-weight: 600; letter-spacing: .16em; }
+.plan__scale s { display: block; margin-top: 5px; text-decoration: none; font-size: 13px; color: color-mix(in srgb, var(--fg) 42%, transparent); }
+/* 보조 문구(또는 복합 구조)가 한 카드에만 있어서 그 카드의 (포함 범위)만 내려간다 → 한 줄분을 미리 확보한다 */
+.plan__scale { min-height: 108px; }
+/* 기준 금액 — 2026-08-15 신설. 플랜 카드에 숫자가 하나도 없어서 사이트가 반복하는
+   "가격을 숨기지 않습니다" 와 화면이 어긋나 있었다. */
+.plan__price { margin-top: 20px; padding-top: 20px; border-top: 1px solid color-mix(in srgb, var(--fg) 12%, transparent); }
+.plan__price b { display: block; font-size: 24px; font-weight: 700; letter-spacing: -.02em; color: var(--fg); }
+.plan__price i { display: block; margin-top: 7px; font-style: normal; font-size: 13px; color: color-mix(in srgb, var(--fg) 50%, transparent); }
+.plan__eyebrow {
+  margin-top: 26px; padding-top: 20px; font-size: var(--t-eyebrow);
+  border-top: 1px solid color-mix(in srgb, var(--fg) 12%, transparent);
+  color: color-mix(in srgb, var(--fg) 50%, transparent);
+}
+.plan__list { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 14.2px; line-height: 1.5; color: color-mix(in srgb, var(--fg) 78%, transparent); }
+/* 체크 표시 — 레퍼런스는 항목마다 레드 ✓ 를 앞에 둔다. 마크업을 건드리지 않으려고
+   `<li>` 의 ::before 로 넣고, 줄이 접혀도 글자가 체크 아래로 파고들지 않게 들여쓴다. */
+.plan__list li { position: relative; padding-left: 21px; }
+.plan__list li::before {
+  content: '✓'; position: absolute; left: 0; top: 0;
+  font-size: 14px; line-height: 1.5; color: var(--brand);
+}
+/* 어두운 섹션(.invert) 안에서는 카드도 어두운 면 위에 놓인다 — 알파 기준을 뒤집는다. */
+.invert .plan {
+  background: color-mix(in srgb, var(--bg) 4%, transparent);
+  color: var(--bg);
+  border-color: color-mix(in srgb, var(--bg) 16%, transparent);
+}
+.invert .plan__scale,
+.invert .plan__eyebrow { border-top-color: color-mix(in srgb, var(--bg) 14%, transparent); color: color-mix(in srgb, var(--bg) 54%, transparent); }
+.invert .plan__price { border-top-color: color-mix(in srgb, var(--bg) 14%, transparent); }
+.invert .plan__price b { color: var(--bg); }
+.invert .plan__price i,
+.invert .plan__scale s { color: color-mix(in srgb, var(--bg) 46%, transparent); }
+.invert .plan__list { color: color-mix(in srgb, var(--bg) 80%, transparent); }
+.invert .plan__scale b,
+.invert .plan__list li::before { color: var(--brand-2); }
+
+/* ---------- 12. CTA / 버튼 ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  /* 14px/500 은 본문과 구분이 안 됐다 → 15px/600 (2026-08-14) */
+  padding: 18px 36px; font-size: 15px; font-weight: 600; letter-spacing: .01em;
+  border: 1px solid var(--border); border-radius: var(--r-btn); color: var(--fg);
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+/* ⭐ 2026-08-16 세영 지시 — "커서를 올리면 하오웹의 포인트 컬러인 레드로 변하게 전부 수정".
+   원래는 먹색(`--fg`)으로 반전됐다. 이제 어떤 버튼이든 hover 는 브랜드 레드 한 가지다.
+   ⚠ 레드 위 흰 글자는 4.19:1 이라 본문 기준(4.5:1)에 못 미친다. 버튼 글자는 15px/600 이라
+     큰 글자 기준(3:1)은 넘는다 — 색을 바꾸지 않는 한 더 올릴 수 없다(_TODO 에 기록된 사항). */
+.btn:hover { background: var(--brand); color: #fff; border-color: var(--brand); }
+.btn--brand { background: var(--brand); border-color: var(--brand); color: #fff; }
+/* 이미 레드인 버튼은 hover 에서 한 단계 짙어진다(같은 색이면 반응이 없어 보인다). */
+.btn--brand:hover { background: var(--brand-hover); border-color: var(--brand-hover); color: #fff; }
+.btn--block { width: 100%; }
+.btns { display: flex; flex-wrap: wrap; gap: 12px; }
+/* 버튼도 가운데로 — 2026-08-17 세영. 섹션 머리를 중앙정렬로 통일하니 버튼만
+   왼쪽에 남아 어긋났다.
+   ⚠ **섹션 컨테이너 직속만** 건다. 처음에 `.btns` 전체에 걸었더니 왼쪽 정렬로
+     설계된 블록에서 버튼만 가운데로 튀었다 — 실제로 두 곳에서 그렇게 나왔다.
+       · 서브히어로(`.biz-herocta`) : 제목·설명·note 가 전부 왼쪽인데 버튼만 가운데
+       · 진단 2열의 왼쪽 열(`.biz-diag__aside`) : 입력창·주 버튼이 왼쪽인데 끝 버튼만 가운데
+     둘 다 왼쪽 정렬이 레퍼런스 실측대로다(히어로는 파이브프로에서도 left).
+   ⚠ 164곳 중 47곳은 이미 인라인 `justify-content:center` 가 붙어 있다. 같은 값이라
+     무해하지만, 나중에 왼쪽으로 되돌릴 때는 그 인라인도 함께 지워야 한다. */
+.container > .btns { justify-content: center; }
+
+/* ---------- 13. 폼 (레퍼런스 contact) ---------- */
+/* 좌 대형 타이틀 / 우 폼 — 레퍼런스 실측 비율 (약 600 : 435, 간격 145) */
+.split { display: grid; grid-template-columns: 1.36fr 1fr; gap: 145px; align-items: start; }
+.split__title { font-family: var(--font-en); font-size: var(--t-display); line-height: 1; font-weight: 700; letter-spacing: -.035em; }
+.split__quote { margin-top: 34px; font-size: 28px; font-weight: 400; line-height: 1.4; color: var(--muted); }
+.split__body { margin-top: 30px; font-size: var(--t-body); line-height: 1.8; font-weight: 400; max-width: 520px; }
+.form__step { font-size: var(--t-eyebrow); color: var(--muted); letter-spacing: .1em; }
+.form__q { margin-top: 6px; font-size: 26px; font-weight: 400; letter-spacing: -.01em; }
+.form__group { margin-top: 44px; }
+.form__label { font-size: var(--t-sm); font-weight: 600; }
+.form__hint { margin-top: 6px; font-size: 13px; color: var(--muted); }
+.opt { display: flex; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--border); cursor: pointer; align-items: flex-start; }
+.opt input { appearance: none; width: 15px; height: 15px; flex: none; margin-top: 3px; border: 1px solid var(--muted); background: transparent; }
+.opt input:checked { background: var(--brand); border-color: var(--brand); }
+.opt > span { display: block; }
+.opt__t { display: block; font-size: var(--t-sm); font-weight: 600; }
+.opt__d { display: block; margin-top: 5px; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.field { margin-top: 18px; }
+.field label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.field input, .field textarea, .field select {
+  width: 100%; padding: 14px 0; background: transparent; color: var(--fg);
+  border: 0; border-bottom: 1px solid var(--border); font: inherit; font-size: var(--t-sm);
+}
+.field textarea { min-height: 120px; resize: vertical; }
+.form__note { margin-top: 28px; font-size: 12px; line-height: 1.7; color: var(--muted); }
+/* 접수 준비 중 고지 — 2026-08-15 신설.
+   ⚠ 지금까지 "온라인 접수는 준비 중입니다" 안내가 **제출 버튼을 누른 뒤에야** 나타났다.
+     방문자는 업종·목표·연락처·동의까지 다 채우고 나서야 전화하라는 말을 봤다.
+     그래서 폼 앞으로 끌어냈다. .form__note(12px 흐림)로는 눈에 안 들어와 별도 스타일을 둔다.
+   ⚠ 온라인 접수가 열리면 이 스타일과 세 페이지의 .form__alert,
+     site.js 의 initForm() 을 **함께** 걷어낼 것. 한 곳만 지우면 앞뒤가 어긋난다. */
+.form__alert {
+  margin-bottom: 32px; padding: 20px 22px; font-size: var(--t-sm); line-height: 1.7;
+  border: 1px solid var(--border); border-left: 3px solid var(--brand); border-radius: var(--r-btn);
+}
+.invert .form__alert { border-color: color-mix(in srgb, var(--bg) 22%, transparent); border-left-color: var(--brand); }
+
+/* ---------- 14. 푸터 ----------
+   soroweb.co.kr 의 푸터 효과를 이식했다 (2026-08-12 세영 지시).
+   원본 실측: `.footer { position: sticky; bottom: 0 }` 로 푸터를 화면 하단에 깔아두고
+   본문이 그 위를 덮으며 지나간다. 스크롤이 끝에 닿아야 푸터가 드러난다.
+   상단 아치는 원본이 폭 1440 에 가운데가 약 30px 높은 아주 완만한 타원이었다.
+   ※ 원본은 브랜드 컬러(주황) + 영상 오버레이지만, 하오웹은 "레드는 CTA·핵심에만" 원칙이라
+     기존 반전 배경(밝은 바탕 + 어두운 글자)을 그대로 두고 구조 효과만 가져왔다. */
+main { position: relative; z-index: 1; background: var(--bg); }   /* 본문이 푸터를 덮는다 */
+/* overflow:hidden 이 없으면 아래 ::before 의 좌우 2% 가 문서 폭을 늘려
+   전 페이지에 가로 넘침(1440 기준 29px)이 생긴다. 원본 soro 에도 이 선언이 있다. */
+.footer { position: sticky; bottom: 0; z-index: 0; overflow: hidden; background: var(--fg); color: var(--bg); }
+/* 상단 아치 — 원본은 **가운데가 아래로 오목**하다(픽셀 실측: 좌우 끝 대비 가운데가 48px 낮음).
+   푸터에 border-top-radius 를 주면 반대(볼록)가 되므로,
+   본문 배경색 조각을 푸터 위에 얹고 그 아래쪽을 둥글게 깎아 오목하게 만든다. */
+.footer::before {
+  content: ''; position: absolute; z-index: 1; pointer-events: none;
+  left: -2%; top: -1px; width: 104%; height: 72px;
+  background: var(--bg);
+  border-bottom-left-radius: 50% 72px;
+  border-bottom-right-radius: 50% 72px;
+}
+.footer__inner { width: 100%; max-width: var(--container); margin-inline: auto; padding: 64px var(--gutter); }
+.footer__mark {
+  font-family: var(--font-en); font-weight: 200; text-transform: uppercase;
+  font-size: 178px; line-height: .95; letter-spacing: -.02em;
+  display: flex; justify-content: space-between; overflow: hidden;
+}
+.footer__mark span { display: inline-block; transition: transform .35s cubic-bezier(.4,0,.2,1), font-weight .35s ease; }
+/* 본문 워드마크 밴드 — 레퍼런스 로고타입 밴드 자리 (풀블리드·솔리드) */
+.wordband { color: var(--fg); font-weight: 600; font-size: min(17vw, 230px); padding-inline: 16px; line-height: .98; }
+.footer__grid { padding-top: 48px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+.footer__h { font-size: var(--t-eyebrow); color: color-mix(in srgb, var(--bg) 55%, transparent); }
+.footer__list { margin-top: 16px; display: flex; flex-direction: column; gap: 2px; }
+.footer__list a, .footer__info div { font-size: var(--t-sm); }
+.footer__nav2 { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px 24px; }
+.footer__info { margin-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+.footer__info dt { font-size: var(--t-eyebrow); color: color-mix(in srgb, var(--bg) 50%, transparent); }
+.footer__info dd { margin: 3px 0 0; font-size: var(--t-sm); }
+.footer__ul { position: relative; display: inline-block; }
+.footer__ul::after {
+  content: ''; position: absolute; left: 0; bottom: -2px; width: 100%; height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+.footer__ul:hover::after { transform: scaleX(1); transform-origin: left; }
+.footer__bottom { border-top: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); margin-top: 32px; padding-top: 24px; }
+/* 원래 모노스페이스(10px/자간 .096em)였다 → Pretendard 로 교체 (2026-08-12 세영 지시).
+   모노 메트릭에 맞춰 잡았던 값이라 그대로 두면 어색해서, 크기는 12px 로 올리고
+   자간은 .096em → .04em 으로 좁혔다. 사이트에서 모노스페이스를 쓰던 유일한 곳이다. */
+.footer__bottom p {
+  font-family: var(--font-kr); font-size: 12px; letter-spacing: .04em;
+  text-transform: uppercase; color: color-mix(in srgb, var(--bg) 40%, transparent);
+}
+
+/* ---------- 15. 등장 모션 ---------- */
+.ta-char, .ta-line { display: inline-block; will-change: transform, opacity; }
+[data-anim] .ta-char { opacity: 0; transform: translateX(20px); }
+[data-anim][data-played='true'] .ta-char { opacity: 1; transform: none; transition: opacity .7s cubic-bezier(0,0,.2,1), transform .7s cubic-bezier(0,0,.2,1); }
+.ta-mask { display: block; overflow: hidden; }
+[data-anim] .ta-mask .ta-line { opacity: 0; transform: translateY(105%); }
+[data-anim][data-played='true'] .ta-mask .ta-line { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1); }
+[data-fade] { opacity: 0; transform: translateY(24px); }
+[data-fade][data-played='true'] { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  [data-anim] .ta-char, [data-anim] .ta-mask .ta-line, [data-fade] { opacity: 1 !important; transform: none !important; }
+  .tstep { opacity: 1 !important; transform: none !important; }
+  .timeline__line i::after { animation: none; }
+  .work__item { opacity: 1 !important; transform: none !important; }
+  .work__name span { opacity: 1 !important; }
+}
+
+/* ---------- 16. 고정 상담 탭 ----------
+   sanggong.co.kr 의 #freeConsult (우측 고정 세로 탭 + 슬라이드 패널) 에서
+   '구조와 비율'만 가져왔다 — 탭 70×150 · 라벨 14px/800 을 한 글자씩 세로로 · 화면 우측 수직 중앙.
+   표면은 전부 하오웹 토큰으로 재렌더했다:
+     radius 20px→0 · 청록 그라디언트→--brand 단색 · 그림자 제거 · 이징은 사이트 공통 cubic-bezier(.4,0,.2,1).
+   ※ 상담 폼 패널은 넣지 않았다. 접수 백엔드와 개인정보처리방침이 확정되기 전이라
+     입력만 받고 못 받는 상태가 되기 때문이다(_TODO §1). 확정되면 이 탭을 패널형으로 확장하면 된다. */
+:root {
+  --ctab-w: 70px;
+  --ctab-h: 150px;
+  --ctab-bg: var(--brand);
+  --ctab-bg-hover: var(--brand-hover);
+  --ctab-fg: #fff;
+  --ctab-z: 40;               /* nav 50 · navpanel 49 아래 — 메뉴를 열면 탭이 가려진다 */
+}
+.ctab {
+  position: fixed; right: 0; top: 50%; z-index: var(--ctab-z);
+  width: var(--ctab-w); min-height: var(--ctab-h);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  padding: 18px 0;
+  /* 화면 오른쪽 끝에 붙어 있으므로 왼쪽 두 모서리만 깎는다 — 네 모서리를 다 깎으면
+     화면 밖으로 나간 오른쪽이 떠 보인다. 원본 sanggong 도 `20px 0 0 20px` 이었다. */
+  border-radius: var(--r-btn) 0 0 var(--r-btn);
+  background: var(--ctab-bg); color: var(--ctab-fg); text-decoration: none;
+  transform: translate(100%, -50%);      /* 기본은 화면 밖 — 스크롤하면 site.js 가 꺼낸다 */
+  /* 화면 밖으로만 밀면 그 자리에 링크가 그대로 남는다 — 탭 키로 안 보이는 링크에 들어가고
+     검수 도구도 '화면 밖 요소'로 잡는다. 다 나간 뒤 visibility 로 완전히 끈다. */
+  visibility: hidden;
+  transition: transform .45s cubic-bezier(.4,0,.2,1), background-color .3s cubic-bezier(.4,0,.2,1),
+              visibility 0s linear .45s;
+}
+.ctab[data-show='true'] {
+  transform: translate(0, -50%); visibility: visible;
+  transition: transform .45s cubic-bezier(.4,0,.2,1), background-color .3s cubic-bezier(.4,0,.2,1),
+              visibility 0s;
+}
+.ctab:hover, .ctab:focus-visible { background: var(--ctab-bg-hover); }
+.ctab:focus-visible { outline: 2px solid var(--ctab-fg); outline-offset: -7px; }
+/* ⚠ 우하단 플로팅 상담 버튼(.fab)은 2026-08-16 세영 지시로 걷어냈다.
+   되살리려면 커밋 `186f113` 의 이 자리 규칙과 `_build.py` 의 `fab_html()` 을 함께 가져올 것. */
+.ctab__label { display: flex; flex-direction: column; align-items: center; }
+.ctab__label i {
+  font-style: normal; font-size: var(--t-sm); font-weight: 800;
+  line-height: 18px; letter-spacing: .01em;
+}
+.ctab__full { display: none; }      /* 세로 탭에는 안 들어간다 — 모바일 하단 바에서만 쓴다 */
+.ctab__arr { font-size: var(--t-sm); line-height: 1; transition: transform .3s cubic-bezier(.4,0,.2,1); }
+.ctab:hover .ctab__arr, .ctab:focus-visible .ctab__arr { transform: translateX(3px); }
+
+/* ---------- 17. 단계 타임라인 ----------
+   haoc.co.kr 의 `.timeline` 을 CDP 로 실측해 이식했다 (2026-08-12 세영 지시).
+   구조·간격·모션 타이밍은 원본 그대로:
+     그리드 + 절대배치 진행선(높이 2) · 배지 56 원형 · padding-top 56 · 점은 top -61 로 선 위에 올림
+     IntersectionObserver threshold .15 → 250ms 뒤 시작, 스텝마다 420ms 스태거 (site.js)
+     이징도 원본 값 cubic-bezier(.16,1,.3,1) 을 쓴다 (사이트 공통 이징과 다른 유일한 곳)
+   색만 하오웹 원칙으로 바꿨다 — 원본은 배지 5개가 전부 레드지만
+   여기서는 선·점·배지가 전부 무채색이고 **레드는 진행선 끝을 따라가는 점 하나뿐**이다. */
+.timeline {
+  position: relative; display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 36px; padding-top: 56px;
+}
+.timeline--4 { grid-template-columns: repeat(4, 1fr); gap: var(--grid-gap); }
+.timeline--3 { grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); }
+.timeline__line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--border); }
+.timeline__line i {
+  position: relative; display: block; height: 100%; width: 0;
+  background: var(--fg); transition: width .25s linear;
+}
+/* 원본은 진행선 끝에 별도의 글로우 점을 띄우지만, 그 점이 단계 점 밑으로 깔린다.
+   여기서는 '지금 도달한 단계'의 점 자체를 레드로 바꾼다 (site.js 가 is-tip 을 옮겨 붙인다).
+   이 컴포넌트에서 레드는 이 점 하나뿐이다. */
+.tstep.is-tip::before {
+  background: var(--brand); border-color: var(--brand);
+  animation: tipPulse 1.4s ease-in-out infinite;
+}
+/* 다음 줄로 이어지는 타임라인(8단계처럼 2줄로 끊은 경우)의 마지막 점은 레드로 두지 않는다.
+   맥동하는 레드 점이 화면에 둘이면 '지금 진행 위치'라는 뜻이 흐려진다. */
+.timeline--mid .tstep.is-tip::before {
+  background: var(--fg); border-color: var(--fg); animation: none;
+}
+.tstep {
+  position: relative; display: flex; flex-direction: column;
+  opacity: .28; transform: translateY(16px);
+  transition: opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1);
+}
+/* 설명 줄 수가 칸마다 달라도(1줄/2줄) 아래 OUTPUT 룰이 같은 선에서 시작하게 —
+   칸 높이는 그리드가 이미 맞춰 주므로 설명이 남는 높이를 먹는다. */
+.tstep__d { flex: 1; }
+.tstep::before {                        /* 선 위에 얹히는 점 */
+  content: ''; position: absolute; top: -61px; left: 2px; width: 12px; height: 12px;
+  border-radius: 50%; background: var(--bg); border: 2px solid var(--border);
+  transition: background .3s, border-color .3s, transform .3s cubic-bezier(.16,1,.3,1);
+}
+.tstep.is-on { opacity: 1; transform: none; }
+.tstep.is-on::before { background: var(--fg); border-color: var(--fg); transform: scale(1.25); }
+.tstep__no {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 60px; height: 60px; border-radius: 50%; margin-bottom: 16px;
+  font-family: var(--font-en); font-size: 20px; font-weight: 800; letter-spacing: .02em;
+  color: var(--muted); border: 2px solid var(--border); background: transparent;
+  transition: color .3s, border-color .3s, background .3s;
+}
+.tstep.is-on .tstep__no {
+  color: var(--bg); background: var(--fg); border-color: var(--fg);
+  animation: noPop .55s cubic-bezier(.16,1,.3,1);
+}
+/* 기존 .step__t(22) · .step__d(14) 보다 한 단계씩 키웠다 (2026-08-12 세영 지시).
+   키우면서 제목이 1줄인 칸과 2줄인 칸이 섞여 설명 시작선이 어긋난다 → 2줄분을 확보해 맞춘다. */
+.tstep__t { font-size: 24px; font-weight: 600; letter-spacing: -.015em; line-height: 1.35; min-height: 2.7em; }
+.tstep__d { margin-top: 12px; font-size: var(--t-body); line-height: 1.7; font-weight: 400; color: var(--muted); }
+/* 단계마다 실제로 남는 것 (2026-08-13) — 새 카드를 만들지 않고 1px 룰 아래 한 줄로 붙인다.
+   'OUTPUT' 은 eyebrow 급 영문, 값은 본문 색이라 단계 설명(muted)보다 한 단계 앞에 읽힌다. */
+.tstep__out { margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--border); }
+.tstep__out i {
+  display: block; margin-bottom: 7px; font-style: normal;
+  font-family: var(--font-en); font-size: var(--t-eyebrow); font-weight: 700;
+  letter-spacing: .16em; color: var(--muted);
+}
+.tstep__out span { font-size: var(--t-sm); line-height: 1.6; }
+.invert .tstep__out { border-color: color-mix(in srgb, var(--bg) 25%, transparent); }
+.invert .tstep__out i { color: color-mix(in srgb, var(--bg) 55%, transparent); }
+
+/* 반전 섹션 — .invert 안에서는 --bg 가 전경색이다 (.rule 과 같은 규칙) */
+.invert .timeline__line { background: color-mix(in srgb, var(--bg) 25%, transparent); }
+.invert .timeline__line i { background: var(--bg); }
+.invert .tstep::before { background: var(--fg); border-color: color-mix(in srgb, var(--bg) 30%, transparent); }
+.invert .tstep.is-on::before { background: var(--bg); border-color: var(--bg); }
+.invert .tstep__no { color: color-mix(in srgb, var(--bg) 55%, transparent); border-color: color-mix(in srgb, var(--bg) 30%, transparent); }
+.invert .tstep.is-on .tstep__no { color: var(--fg); background: var(--bg); border-color: var(--bg); }
+.invert .tstep__d { color: color-mix(in srgb, var(--bg) 60%, transparent); }
+/* 진행 위치 점은 반전 섹션에서도 레드 (위의 .invert .is-on 규칙을 이겨야 하므로 뒤에 둔다) */
+.invert .tstep.is-tip::before { background: var(--brand); border-color: var(--brand); }
+.invert .timeline--mid .tstep.is-tip::before { background: var(--bg); border-color: var(--bg); }
+
+@keyframes tipPulse {
+  0%, 100% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--brand) 18%, transparent); }
+  50%      { box-shadow: 0 0 0 11px color-mix(in srgb, var(--brand) 6%, transparent); }
+}
+@keyframes noPop {
+  0%   { transform: scale(.6); }
+  55%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- 18. 작업 카드 그리드 ----------
+   interwise.co.kr 의 `.port-list` 를 실측 이식했다 (2026-08-12 세영 지시).
+   폰트와 포인트 컬러는 가져오지 않았다(요청). 구조·비율·모션은 원본 값 그대로:
+     flex-wrap · gap 18 · 4열 calc((100% - 54px)/4) · figure padding-bottom 100%(정사각)
+     텍스트는 하단 20 / 좌 25 절대배치, 업체명 24px·600, 메타 14px
+     오버레이 2겹(.7→투명50% / .9→투명90%)을 opacity .4s 로 크로스페이드
+   호버: 썸네일이 원형(border-radius 50%)으로 + 업체명 위를 흰 바가 쓸고(1s) 0.4s 뒤 글자 등장
+   ※ 원본은 좁은 화면에서 카드에 radius 15/8 을 주지만 하오웹은 radius 0 원칙이라 각지게 뒀다.
+     호버 원형은 이 컴포넌트의 정체성이라 그대로 살렸다. */
+/* 컨테이너 안에 두고도 화면 좌우로 꽉 채운다 (원본 interwise 는 좌우 32만 남긴다).
+   레퍼런스의 리스트 행(.rows)도 원래 컨테이너 밖 전체 폭이었으므로 사이트 문법에 어긋나지 않는다.
+   body 에 overflow-x:hidden 이 있어 100vw 로 인한 가로 스크롤은 생기지 않는다. */
+.fullbleed { width: 100vw; max-width: 100vw; margin-left: 50%; transform: translateX(-50%); }
+.work.fullbleed { padding-inline: var(--gutter); }
+
+/* 보기 전환 — 카드 / 목록 */
+/* 스위치 우측 끝을 카드 그리드 우측 끝에 맞춘다 (그리드가 전체 폭이라 컨테이너 기준이면 어긋난다) */
+.viewsw-wrap {
+  display: flex; justify-content: flex-end; margin-top: 32px;
+  width: 100vw; max-width: 100vw; margin-left: 50%; transform: translateX(-50%);
+  padding-inline: var(--gutter);
+}
+/* overflow:hidden 이 있어야 눌린 버튼의 꽉 찬 배경이 둥근 모서리에 맞춰 잘린다 —
+   없으면 테두리만 둥글고 안쪽 배경은 각져서 모서리에 삼각형이 비어 보인다. */
+.viewsw { display: inline-flex; border: 1px solid var(--border); border-radius: var(--r-btn); overflow: hidden; }
+.viewsw__btn {
+  width: 48px; height: 44px; display: grid; place-items: center;
+  background: transparent; border: 0; color: var(--muted); cursor: pointer;
+  transition: background .3s cubic-bezier(.4,0,.2,1), color .3s cubic-bezier(.4,0,.2,1);
+}
+.viewsw__btn + .viewsw__btn { border-left: 1px solid var(--border); }
+.viewsw__btn svg { width: 18px; height: 18px; }
+.viewsw__btn[aria-pressed='true'] { background: var(--fg); color: var(--bg); }
+.viewsw__btn:focus-visible { outline: 2px solid var(--brand); outline-offset: -4px; }
+[data-view='grid'] .rows { display: none; }
+[data-view='list'] .work { display: none; }
+
+.work { display: flex; flex-wrap: wrap; gap: 18px; }
+.work__item { width: calc((100% - 54px) / 4); overflow: hidden; }
+.work__link { display: block; width: 100%; height: 100%; position: relative; }
+.work__link::before, .work__link::after {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1; transition: opacity .4s ease; pointer-events: none;
+}
+.work__link::before { background: linear-gradient(to top, rgba(0,0,0,.7), transparent 50%); }
+.work__link::after { opacity: 0; background: linear-gradient(to top, rgba(0,0,0,.9), transparent 90%); }
+.work__thumb {
+  margin: 0; width: 100%; height: auto; padding-bottom: 100%;
+  background-size: cover; background-position: center top; background-repeat: no-repeat;
+  background-color: var(--border);
+  transition: border-radius .4s ease;
+}
+.work__text {
+  position: absolute; bottom: 20px; left: 25px; width: calc(100% - 50px);
+  z-index: 10; transition: .4s ease;
+}
+.work__name { margin: 0; font-size: 24px; font-weight: 600; color: #fff; }
+.work__name i { position: relative; font-style: normal; }
+.work__name i::after { content: ''; position: absolute; top: 0; height: 100%; z-index: 1; background: #fff; }
+.work__name span { opacity: 0; }
+.work__meta { margin: 15px 0 0; font-size: var(--t-sm); font-weight: 400; color: #fff; }
+/* 실제로 운영 중인 사이트라는 표시 (2026-08-13) — 성과 수치 대신 '지금 열린다'는 사실만.
+   링크가 전부 외부 사이트라 화살표가 새 창으로 나간다는 신호도 같이 한다. */
+.work__live {
+  margin-left: 10px; font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  color: rgba(255,255,255,.7); white-space: nowrap;
+}
+.work__item:hover .work__live, .work__item:focus-within .work__live { color: #fff; }
+
+.work__item:hover .work__thumb { border-radius: 50%; }
+.work__item:hover .work__link::before { opacity: 0; }
+.work__item:hover .work__link::after { opacity: 1; }
+.work__item:hover .work__name i::after,
+.work__item:focus-within .work__name i::after { animation: workMask 1s cubic-bezier(.77,0,.175,1) forwards; }
+.work__item:hover .work__name span,
+.work__item:focus-within .work__name span {
+  opacity: 1; transition: opacity .3s ease-in-out; transition-delay: .4s;
+}
+.work__item:focus-within .work__thumb { border-radius: 50%; }
+
+/* 등장 — 원본 .motion-1 실측값 (translateY 30 + 페이드, 1s ease) */
+.work__item { transform: translateY(30px); opacity: 0; transition: transform 1s ease, opacity 1s ease; }
+.work[data-on='true'] .work__item { transform: none; opacity: 1; }
+
+@keyframes workMask {
+  0%   { left: 0; width: 0; }
+  50%  { width: 100%; }
+  100% { right: 0; width: 0; }
+}
+
+/* 섹션 안에서 한 번 크게 말하는 문장 (리뉴얼 섹션의 핵심 카피 등).
+   .oneline__t 는 마지막 CTA 전용(32px 얇은 글씨)이라 일반 섹션에서 쓸 수 없어 따로 둔다. */
+.bigsay {
+  margin: 72px 0 0; font-size: clamp(30px, 3.8vw, 54px); font-weight: 700;
+  line-height: 1.25; letter-spacing: -.03em;
+}
+.bigsay em { font-style: normal; color: var(--brand); }
+.bigsay__sub {
+  margin: 28px 0 0; max-width: 780px;
+  font-size: var(--t-body); line-height: 1.8; font-weight: 300; color: var(--muted);
+}
+/* ※ .bigsay 에는 data-anim="lines" 를 쓰지 말 것 —
+   줄 분해가 <br> 과 <em> 같은 인라인 태그를 잃어버린다. data-fade 를 쓴다. */
+
+/* ---------- 18b. BEFORE / AFTER (리뉴얼 DEMO) ----------
+   실제 브라우저 화면 변화를 보여주되, 이미지가 아니라 DOM 으로 만든다.
+   그래야 화면 안의 문구까지 검색·AI 가 읽는다 — 하오웹이 파는 것과 같은 원리다.
+   ※ 가상의 기업이며 점수·퍼센트 같은 임의 수치는 쓰지 않는다. */
+.ba { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); margin-top: 72px; }
+.ba__tag {
+  display: inline-flex; align-items: center; gap: 8px; margin: 0 0 16px;
+  font-size: var(--t-sm); font-weight: 700; letter-spacing: .06em;
+}
+.ba__tag b { font-weight: 800; }
+.ba__tag span {
+  font-size: 11px; font-weight: 600; letter-spacing: .1em;
+  padding: 3px 7px; border: 1px solid currentColor; opacity: .6;
+}
+.ba--after .ba__tag { color: var(--brand); }
+
+/* 사이트맵 — 가짜 홈페이지 화면을 그리는 대신 정보구조 자체를 보여준다.
+   (2026-08-13: 주소창까지 그린 브라우저 목업을 걷어내고 이걸로 교체했다.
+    저완성도 가짜 UI 는 사이트 전체 완성도를 떨어뜨린다.) */
+.sitemap { border-top: 1px solid var(--border); }
+.sitemap__row {
+  padding: 15px 0; border-bottom: 1px solid var(--border);
+  font-family: var(--font-en); font-size: var(--t-lead); font-weight: 600; letter-spacing: .02em;
+}
+.sitemap__row--sub { padding-left: 26px; font-weight: 500; color: var(--muted); }
+.sitemap__row--sub::before { content: '→'; margin-right: 10px; opacity: .5; }
+.ba--after .sitemap__row--sub { color: var(--fg); }
+.ba--after .sitemap__row--sub::before { color: var(--brand); opacity: 1; }
+
+.ba__notes { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.ba__notes li { display: flex; gap: 10px; font-size: var(--t-sm); line-height: 1.6; color: var(--muted); }
+.ba__notes li::before { content: '—'; flex: none; opacity: .5; }
+.ba--after .ba__notes li::before { content: '→'; color: var(--brand); opacity: 1; }
+
+.ba__result {
+  margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border);
+  font-size: var(--t-lead); line-height: 1.75; font-weight: 300; max-width: 900px;
+}
+.ba__result em { font-style: normal; color: var(--brand); font-weight: 600; }
+
+/* ---------- 18c. CHECK → REBUILD → GROW ----------
+   여러 서비스(진단·리뉴얼·AI 가시성·콘텐츠 운영)를 고객 여정 세 단계로 묶는 상위 프레임.
+   기존 'Rebuild 4단계' 타임라인은 이 중 REBUILD 안쪽 공정이다. */
+.crg { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); margin-top: 88px; }
+.crg__item { position: relative; padding-top: 48px; }
+.crg__item > .rule { position: absolute; top: 0; left: 0; }
+.crg__no { margin: 0; font-size: var(--t-sm); letter-spacing: .06em; color: var(--muted); }
+.crg__key {
+  margin: 14px 0 0; font-family: var(--font-en); font-size: clamp(30px, 3.2vw, 44px);
+  font-weight: 700; letter-spacing: -.03em; line-height: 1;
+}
+.crg__t { margin: 20px 0 0; font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
+.crg__d { margin: 12px 0 0; font-size: var(--t-body); line-height: 1.7; font-weight: 400; color: var(--muted); }
+.crg__link { display: inline-block; margin-top: 20px; font-size: var(--t-sm); font-weight: 600; }
+
+/* ---------- 18d. AI VISIBILITY 체험형 ----------
+   SEO·AEO·GEO 를 3열 카드로 설명하는 대신, 한 화면에서 장면이 바뀌는 방식.
+   금지된 표현(네온 네트워크·AI 뇌·데이터 파티클) 대신 **실제로 보여준다** —
+   검색 결과 / 질문과 답변 / 회사·서비스·사례·근거의 관계. */
+/* ⚠ `align-items: start` 였다 — 좌측 탭 기둥(실측 469px)이 우측 패널(259px)보다 길어서
+   **우측 아래가 175px 비어 있었다**(2026-08-16 실측). 탭을 눌러 패널이 바뀌면 그 빈 자리 크기도
+   매번 달라진다. 우측만 세로 중앙에 두면 남는 자리가 위아래로 나뉘어 균형이 잡힌다.
+   ⚠ 좌측 탭 기둥은 위에서부터 쌓여야 하므로 `start` 를 유지한다(두 열을 통째로 center 하면
+     탭과 제목 줄이 어긋난다). */
+.viz { display: grid; grid-template-columns: 320px 1fr; gap: var(--grid-gap); align-items: start; margin-top: 80px; }
+.viz > .viz__tabs { align-self: start; }
+.viz > :not(.viz__tabs) { align-self: center; }
+.viz__tabs { display: grid; }
+.viz__tab {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  background: transparent; border: 0; border-top: 1px solid var(--border);
+  padding: 26px 0; color: var(--muted);
+  transition: color .3s cubic-bezier(.4,0,.2,1);
+}
+.viz__tab b {
+  display: block; font-family: var(--font-en); font-size: 30px; font-weight: 700;
+  letter-spacing: -.02em; line-height: 1; color: var(--fg);
+  transition: color .3s cubic-bezier(.4,0,.2,1);
+}
+.viz__tab i { display: block; margin-top: 10px; font-style: normal; font-size: var(--t-body); font-weight: 600; }
+.viz__tab s { display: block; margin-top: 8px; text-decoration: none; font-size: var(--t-sm); line-height: 1.6; font-weight: 400; }
+.viz__tab[aria-pressed='true'] { color: var(--fg); }
+.viz__tab[aria-pressed='true'] b { color: var(--brand); }
+.viz__tab:focus-visible { outline: 2px solid var(--brand); outline-offset: -4px; }
+
+/* 무대는 '박스'가 아니라 상·하 룰이다 (2026-08-13).
+   사방 테두리를 두면 설명 패널처럼 읽히고, 패널마다 항목 수가 달라 아래가 비어 보인다.
+   좌우를 열면 노드의 1px 룰이 무대 폭 그대로 이어져 사이트의 다른 rule 들과 같은 언어가 된다. */
+.viz__stage { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 34px 0; }
+.viz__panel { display: none; }
+.viz__panel[data-on='true'] { display: block; }
+.viz__cap { margin: 0 0 22px; font-size: var(--t-sm); color: var(--muted); letter-spacing: .04em; }
+
+/* 구조 시각화 — SEO·AEO·GEO 세 패널이 **같은 언어**를 쓴다.
+   2026-08-13: 가짜 검색결과 화면과 질문·답변 카드를 걷어냈다.
+   검색 UI 를 흉내 내지 않고, 정보가 어떻게 발견되고 이어지는지만 라인과 타이포로 보여준다. */
+.viz__from { margin: 20px 0 0; font-size: var(--t-sm); line-height: 1.7; color: var(--brand); }
+.viz__tree { display: grid; gap: 2px; font-size: var(--t-body); }
+/* 노드 구분선은 border 가 아니라 ::before 다 — 위에서 아래로 '그려지는' 진행 모션을 주기 위해서다.
+   JS 가 없거나 모션이 꺼져 있으면 그냥 1px 선으로 보인다(기본값이 scaleX(1)). */
+.viz__node { position: relative; display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; padding: 15px 0; }
+.viz__node::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--border); transform: scaleX(1); transform-origin: left;
+}
+.viz__node--root b { font-size: var(--t-lead); }
+.viz__node p {
+  flex: 1 1 100%; margin: 8px 0 0 110px;
+  font-size: var(--t-sm); line-height: 1.75; font-weight: 300; color: var(--muted);
+}
+.viz__node > span:first-child { flex: none; width: 96px; font-size: var(--t-sm); color: var(--muted); letter-spacing: .04em; }
+.viz__node--root > span:first-child { color: var(--brand); }
+.viz__node--sub { padding-left: 28px; }
+.viz__node--sub > span:first-child { width: 68px; }
+.viz__node b { font-weight: 600; }
+.viz__node em { font-style: normal; font-weight: 300; color: var(--muted); }
+
+/* 순차 연결 모션 (2026-08-13) — "정보가 연결된다"를 선 자체로 말한다.
+   선이 위에서 아래로 그려지고, 지나가는 구간에서만 레드가 잠깐 켜졌다 꺼진다.
+   글로우·펄스·파티클 없음. 재생 시점은 두 가지뿐이다:
+     · 섹션이 화면에 들어왔을 때 (site.js 가 data-seen 을 붙인다)
+     · 탭을 바꿀 때 (패널이 display:none → block 이면 CSS 애니메이션이 다시 시작된다)
+   JS 가 없거나 모션이 꺼져 있으면 애니메이션 자체가 붙지 않고 정적 상태로 다 보인다. */
+.viz[data-seen='true'] .viz__panel[data-on='true'] .viz__cap {
+  animation: vizFade .45s cubic-bezier(.16,1,.3,1) both;
+}
+.viz[data-seen='true'] .viz__panel[data-on='true'] .viz__node {
+  animation: vizFade .5s cubic-bezier(.16,1,.3,1) both; animation-delay: var(--d, 0s);
+}
+.viz[data-seen='true'] .viz__panel[data-on='true'] .viz__node::before {
+  animation: vizRule .5s cubic-bezier(.16,1,.3,1) both; animation-delay: var(--d, 0s);
+}
+/* 지금 지나가는 단계 표시 — 루트는 원래 레드라 제외한다(애니메이션이 정적 규칙을 이긴다) */
+.viz[data-seen='true'] .viz__panel[data-on='true'] .viz__node:not(.viz__node--root) > span:first-child {
+  animation: vizPass .9s linear both; animation-delay: var(--d, 0s);
+}
+.viz[data-seen='true'] .viz__panel[data-on='true'] .viz__from {
+  animation: vizFade .5s cubic-bezier(.16,1,.3,1) both; animation-delay: var(--fd, .78s);
+}
+.viz__tree > :nth-child(1) { --d: .06s; }
+.viz__tree > :nth-child(2) { --d: .19s; }
+.viz__tree > :nth-child(3) { --d: .32s; }
+.viz__tree > :nth-child(4) { --d: .45s; }
+.viz__tree > :nth-child(5) { --d: .58s; }
+.viz__tree > :nth-child(6) { --d: .71s; }
+[data-viz-panel='aeo'] .viz__from { --fd: .92s; }
+[data-viz-panel='geo'] .viz__from { --fd: 1.18s; }
+
+@keyframes vizFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes vizRule {
+  0%   { transform: scaleX(0); background: var(--brand); }
+  72%  { background: var(--brand); }
+  100% { transform: scaleX(1); background: var(--border); }
+}
+@keyframes vizPass { 0%, 45% { color: var(--brand); } 100% { color: var(--muted); } }
+
+/* ---------- 18e. 진단 결과 샘플 ----------
+   진단을 '상담'이 아니라 '결과가 나오는 것'으로 보이게 한다.
+   ※ 점수·퍼센트는 만들지 않는다. 판단은 세 가지 말로만 한다. */
+.dgr { margin-top: 64px; border-top: 1px solid var(--border); }
+.dgr__row {
+  display: flex; align-items: baseline; gap: 24px;
+  padding: 22px 0; border-bottom: 1px solid var(--border);
+}
+.dgr__no { flex: none; width: 34px; font-family: var(--font-en); font-size: var(--t-sm); font-weight: 700; color: var(--muted); }
+.dgr__body { flex: 1; min-width: 0; }
+.dgr__en {
+  margin: 0 0 7px; font-family: var(--font-en); font-size: 12px;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+}
+.dgr__t { margin: 0; font-size: var(--t-lead); font-weight: 600; letter-spacing: -.01em; }
+.dgr__d { margin: 8px 0 0; font-size: var(--t-sm); line-height: 1.7; color: var(--muted); }
+.dgr__badge {
+  flex: none; font-size: 12px; font-weight: 700; letter-spacing: .02em;
+  padding: 7px 12px; border: 1px solid var(--border); color: var(--muted);
+}
+.dgr__badge--warn { border-color: var(--brand); color: var(--brand); }
+.dgr__badge--ok { border-color: var(--fg); color: var(--fg); }
+.invert .dgr, .invert .dgr__row { border-color: color-mix(in srgb, var(--bg) 25%, transparent); }
+.invert .dgr__no, .invert .dgr__d, .invert .dgr__en { color: color-mix(in srgb, var(--bg) 60%, transparent); }
+.invert .dgr__badge { border-color: color-mix(in srgb, var(--bg) 30%, transparent); color: color-mix(in srgb, var(--bg) 65%, transparent); }
+.invert .dgr__badge--ok { border-color: var(--bg); color: var(--bg); }
+/* 메인 리뉴얼 구간에 넣는 축약형 — 항목 이름과 판단만 보여준다.
+   설명 줄(.dgr__d)은 넣지 않는다. 전체는 diagnosis.html 에 있고, 여기서는 '무엇을 보는지'만 말한다. */
+.dgr--mini { margin-top: 40px; max-width: 920px; }
+.dgr--mini .dgr__row { padding: 17px 0; }
+
+/* ---------- 18f. 3 DIRECTIONS 와이어프레임 ----------
+   "서로 다른 3가지 방향"을 말로만 설명하지 않고 레이아웃 차이로 보여준다.
+   이미지가 아니라 CSS 블록이라 가볍고, 라벨 텍스트는 그대로 읽힌다.
+   ※ 완성 시안이 아니라 '방향'이라는 걸 오해하지 않도록 회색 블록 수준으로만 그린다. */
+.dirs { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); margin-top: 88px; }
+.dir__frame {
+  aspect-ratio: 4 / 3; padding: 16px; margin-bottom: 28px;
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 7px;
+  transition: border-color .35s cubic-bezier(.4,0,.2,1);
+}
+.dir:hover .dir__frame { border-color: var(--fg); }
+.wf { display: block; flex: none; background: color-mix(in srgb, var(--fg) 15%, transparent); }
+.wf--nav   { height: 5px; width: 46%; }
+.wf--title { height: 13px; width: 76%; }
+.wf--title2{ height: 13px; width: 54%; }
+.wf--big   { height: 30px; width: 88%; }
+.wf--big2  { height: 30px; width: 62%; }
+.wf--visual{ flex: 1; min-height: 0; background: color-mix(in srgb, var(--fg) 22%, transparent); }
+.wf--cta   { height: 17px; width: 40%; background: var(--brand); }
+.wf--line  { height: 4px; width: 100%; }
+.wf-row { display: flex; gap: 7px; flex: none; transition: gap .4s cubic-bezier(.4,0,.2,1); }
+.wf-row--grow { flex: 1; min-height: 0; }
+.wf-row > .wf { flex: 1; width: auto; }
+.wf-row--grow > .wf { height: auto; }
+
+/* 블록에 무엇이 들어가는 자리인지 (2026-08-13) — 회색 덩어리만 있으면 초기 와이어프레임처럼 보인다.
+   완성 화면을 흉내 내지 않도록 라벨은 아주 작게, 자리 이름만. min-height 가 height 를 이기므로
+   얇은 막대(nav 5px · line 4px)도 라벨이 붙는 순간 글자 높이만큼만 벌어진다. */
+.wf[data-l] {
+  min-height: 17px; display: flex; align-items: flex-start;
+  padding: 3px 6px; overflow: hidden;
+}
+.wf[data-l]::after {
+  content: attr(data-l);
+  font-size: 10px; font-weight: 600; letter-spacing: .08em; line-height: 1.1;
+  color: color-mix(in srgb, var(--fg) 62%, transparent); white-space: nowrap;
+}
+.wf--cta[data-l]::after { color: #fff; }
+
+.invert .dir__frame { border-color: color-mix(in srgb, var(--bg) 25%, transparent); }
+.invert .dir:hover .dir__frame { border-color: var(--bg); }
+.invert .wf { background: color-mix(in srgb, var(--bg) 18%, transparent); }
+.invert .wf--visual { background: color-mix(in srgb, var(--bg) 26%, transparent); }
+.invert .wf--cta { background: var(--brand); }
+.invert .wf[data-l]::after { color: color-mix(in srgb, var(--bg) 62%, transparent); }
+.invert .wf--cta[data-l]::after { color: #fff; }
+/* 라벨이 붙은 막대와 같은 줄에 있는 막대는 높이를 맞춘다 — 한쪽만 두꺼우면 어긋나 보인다 */
+.dir--c .wf-row > .wf { min-height: 17px; }
+
+/* 방향마다 다른 미세 반응 (2026-08-13) — 성격이 움직임에서도 갈리게 한다.
+   A 정렬(막대가 그리드에 맞춰 늘어남) · B 진행(레드 바가 좌→우) · C 인상(비주얼 미세 확대).
+   hover 가 있는 입력장치에서만 — 터치에서는 상태가 눌린 채 남는다. */
+.dir__frame { overflow: hidden; }
+.wf { transition: width .45s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1); }
+@media (hover: hover) {
+  .dir--a:hover .wf--nav   { width: 74%; }
+  .dir--a:hover .wf--title { width: 100%; transition-delay: .06s; }
+  .dir--a:hover .wf-row    { gap: 11px; }
+  .dir--b:hover .wf--cta   { width: 100%; }
+  .dir--b:hover .wf--cta:last-child { transition-delay: .1s; }
+  .dir--c:hover .wf--visual { transform: scale(1.03); }
+}
+
+/* ---------- 19. FAQ 아코디언 ----------
+   haoc.co.kr/qna.html 의 Q&A 구조를 이식했다 (2026-08-12 세영 지시).
+   아코디언은 원본과 같이 **네이티브 <details>/<summary>** 다 — JS 없이 열리고
+   키보드·스크린리더가 그대로 동작한다. 카테고리 칩만 JS 로 거른다.
+   표면은 하오웹 기준으로 조정: radius 16/999 → 0, 그림자 제거, 배경은 토큰.
+   레드는 '열린 항목'에만 쓴다(테두리 · Q 배지). */
+.qcats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 48px; }
+.chip {
+  font: inherit; font-size: var(--t-sm); font-weight: 600;
+  color: var(--muted); background: transparent;
+  border: 1px solid var(--border); border-radius: var(--r-btn);
+  padding: 11px 18px; cursor: pointer;
+  transition: color .25s cubic-bezier(.4,0,.2,1), border-color .25s cubic-bezier(.4,0,.2,1),
+              background .25s cubic-bezier(.4,0,.2,1);
+}
+.chip:hover { border-color: var(--fg); color: var(--fg); }
+.chip b { font-weight: 700; opacity: .5; margin-left: 5px; }
+.chip[aria-pressed='true'] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.chip[aria-pressed='true'] b { opacity: .7; }
+.chip:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.faq { margin-top: 40px; display: grid; gap: 12px; }
+.faq__item { border: 1px solid var(--border); border-radius: var(--r-card); padding: 0 26px; transition: border-color .3s; }
+.faq__item[hidden] { display: none; }
+.faq__item summary {
+  list-style: none; display: flex; align-items: baseline; gap: 16px;
+  padding: 22px 0; font-size: var(--t-lead); font-weight: 600; cursor: pointer;
+  transition: color .25s cubic-bezier(.4,0,.2,1);
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary:hover { color: var(--brand); }
+.faq__item summary:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; }
+/* 서브페이지 FAQ 는 마크업에 'Q' 글자를 넣지 않는다(콘텐츠 불변 원칙) — 비어 있으면 CSS 로 그린다.
+   faq.html 의 기존 마크업은 텍스트로 'Q' 를 갖고 있어 그대로 동작한다. (2026-08-14) */
+.faq__q:empty::before { content: 'Q'; }
+.faq__q {
+  flex: none; align-self: center; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--border); color: var(--fg);
+  font-family: var(--font-en); font-size: var(--t-sm); font-weight: 800;
+  display: grid; place-items: center;
+  transition: background .3s, color .3s;
+}
+.faq__item summary i {          /* 쉐브론 — 원본과 같이 2px 테두리를 45° 회전 */
+  margin-left: auto; flex: none; align-self: center; width: 11px; height: 11px;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: rotate(45deg); transition: transform .3s cubic-bezier(.4,0,.2,1); opacity: .5;
+}
+.faq__item[open] { border-color: var(--brand); }
+.faq__item[open] summary { color: var(--brand); }
+.faq__item[open] .faq__q { background: var(--brand); color: #fff; }
+.faq__item[open] summary i { transform: rotate(-135deg); opacity: 1; }
+.faq__a { padding: 0 0 26px 46px; }
+.faq__a p { margin: 0; color: var(--muted); line-height: 1.85; font-size: var(--t-body); max-width: 760px; }
+
+
+/* ---------- 19b. 표현 변주 컴포넌트 (2026-08-14) ----------
+   문제: 서브페이지가 전부 `sechead + cols--2 + 상단 1px 룰 + deflist` 한 가지로만 조판돼
+   내용이 달라도 페이지를 복제한 것처럼 보였다. 콘텐츠는 그대로 두고 **표현만** 나눈다.
+
+     대상·Pain Point  → .cardgrid   (컴팩트 카드)
+     서비스 구성·특징  → .panels     (비대칭 패널)
+     Journey          → .timeline   (기존 유지 — 카드화하지 않는다)
+     FAQ              → .faq        (기존 아코디언 재사용)
+
+   ⚠ 카드와 패널은 **서로 달라 보여야** 한다. 둘 다 박스로 만들면 반복이 카드 반복으로 바뀔 뿐이다.
+     카드 = 셀이 맞붙은 헤어라인 그리드 / 패널 = 떨어진 블록 + 세로 오프셋. */
+
+/* ── 카드 그리드 — 셀 사이가 1px 헤어라인으로 맞붙는다.
+   라운드·그림자를 쓰지 않고 사이트의 1px 룰 언어를 그대로 이어받는 방식이라
+   "모든 것을 박스로 감싼" 느낌이 나지 않는다. gap:1px + 배경색 대비로 선을 만든다. */
+/* ⚠ 처음엔 `gap:1px + 컨테이너 배경색` 으로 헤어라인을 만들었는데, 항목 수가 열 수의 배수가
+   아니면 **빈 칸에 컨테이너 배경이 그대로 드러나 회색 블록**이 남았다(항목 5개/3열에서 발견).
+   각 카드에 outline 을 주는 방식으로 바꿨다 — 이웃한 outline 이 1px 간격에서 겹쳐 한 줄로 보이고,
+   카드가 없는 자리에는 아무것도 그려지지 않는다. */
+/* ⚠ 원래는 `gap:1px` + 카드 outline 으로 셀을 맞붙여 헤어라인 그리드를 만들었다.
+   2026-08-14 에 카드에도 라운드를 넣기로 하면서 **그 방식을 못 쓰게 됐다** —
+   맞붙은 상태로 모서리를 깎으면 카드마다 틈이 벌어져 지저분해진다.
+   그래서 카드를 떼어 놓고(gap 14) 각자 테두리를 갖는 방식으로 바꿨다. */
+.cardgrid {
+  margin-top: 56px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.cardgrid--2 { grid-template-columns: repeat(2, 1fr); }
+.cardgrid--4 { grid-template-columns: repeat(4, 1fr); }
+.card {
+  position: relative; background: var(--bg);
+  border: 1px solid var(--border); border-radius: var(--r-card);
+  padding: 26px 24px 28px;          /* 컴팩트 — 글자보다 여백이 커 보이면 안 된다 */
+  display: flex; flex-direction: column; gap: 10px;
+  transition: background .32s cubic-bezier(.4,0,.2,1);
+}
+/* 번호는 CSS 카운터다 — 마크업의 글자를 늘리지 않는다(콘텐츠 불변 원칙).
+   조각에 이미 번호가 텍스트로 들어있는 경우엔 .cardgrid--numbered 로 카운터를 끈다. */
+.cardgrid { counter-reset: card; }
+.card::before {
+  counter-increment: card; content: counter(card, decimal-leading-zero);
+  font-family: var(--font-en); font-size: var(--t-sm); font-weight: 700;
+  letter-spacing: .06em; color: var(--muted);
+  transition: color .32s cubic-bezier(.4,0,.2,1);
+}
+.cardgrid--numbered .card::before { content: none; }
+.card__no {                          /* 조각에 실제로 있던 번호를 감쌀 때 */
+  font-family: var(--font-en); font-size: var(--t-sm); font-weight: 700;
+  letter-spacing: .06em; color: var(--muted);
+  transition: color .32s cubic-bezier(.4,0,.2,1);
+}
+.card__t { font-size: var(--t-body); font-weight: 600; line-height: 1.45; letter-spacing: -.01em; }
+.card__d { margin: 2px 0 0; font-size: var(--t-sm); line-height: 1.65; color: var(--muted); }
+/* 상단에서 좌→우로 그어지는 얇은 레드 룰 — 색만 바뀌는 hover 를 피하려고 '선의 진행'을 쓴다 */
+/* 상단 레드 룰 — 카드가 둥글어졌으므로 모서리 안쪽에서 시작하고 끝도 둥글게 처리한다.
+   그렇지 않으면 직선 막대가 둥근 모서리 밖으로 삐져나온다. */
+.card::after {
+  content: ''; position: absolute; left: var(--r-card); top: -1px; height: 2px; width: 0;
+  background: var(--brand); border-radius: 2px;
+  transition: width .42s cubic-bezier(.4,0,.2,1);
+}
+@media (hover: hover) {
+  .card:hover { background: color-mix(in srgb, var(--fg) 6%, var(--bg)); }
+  .card:hover::after { width: calc(100% - var(--r-card) * 2); }
+  .card:hover::before, .card:hover .card__no { color: var(--brand); }
+}
+.card:focus-within { background: color-mix(in srgb, var(--fg) 6%, var(--bg)); }
+/* 반전(밝은) 섹션 — .invert 안에서는 --bg 가 전경색이다 */
+.invert .card { background: var(--fg); border-color: color-mix(in srgb, var(--bg) 18%, transparent); }
+@media (hover: hover) {
+  .invert .card:hover { background: color-mix(in srgb, var(--bg) 5%, var(--fg)); }
+}
+.invert .card::before, .invert .card__no { color: color-mix(in srgb, var(--bg) 55%, transparent); }
+.invert .card__d { color: color-mix(in srgb, var(--bg) 62%, transparent); }
+
+/* ── 패널 — 서비스 구성·특징용 (19페이지 25곳 · panel 52개).
+   ⭐⭐ 2026-08-17 세영: "왼쪽 내용이 길고 오른쪽 내용이 짧아서 어색해. 길이 맞춰주고
+      파이브프로 카드 디자인으로 일괄 수정."
+   원래는 **일부러 비대칭**이었다(1.4:1 비율 + 세로 오프셋 56px). 50:50 반복을 깨는 게
+   목적이었는데, 실제 화면에서는 두 칸의 글 길이까지 달라 한쪽만 뜬 것처럼 보였다.
+   → **폭을 1:1 로, 높이는 stretch 로 맞추고**, 겉모습은 아래 `.cols--card` 와 같은
+     파이브프로 실측 카드로 통일한다(반경 15 · 여백 45/28/30 · 테두리 #e9e9e9 ·
+     그림자 rgba(0,0,0,.08) 0 0 15px · gap 30/20).
+   ⚠ 윗선(border-top 2px)과 세로 오프셋은 카드가 되면서 필요 없어져 걷어낸다. */
+.panels {
+  margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr;
+  gap: 30px 20px; align-items: stretch;
+}
+.panels--even { grid-template-columns: 1fr 1fr; }
+/* 큰 패널을 오른쪽에 두는 변형 — 한 페이지에 패널이 여럿이면 같은 비율이 반복돼 보인다.
+   order 로 시각 순서만 바꾸므로 읽는 순서(DOM)는 그대로다. (2026-08-14) */
+/* 좌우를 바꾸는 변형 — 읽는 순서(DOM)는 그대로 두고 시각 순서만 뒤집는다. (2026-08-14)
+   ⚠ 폭이 1:1 이 됐으므로 비율과 세로 오프셋은 없앤다. */
+.panels--rev { grid-template-columns: 1fr 1fr; }
+.panels--rev > .panel:first-child { order: 2; margin-top: 0; }
+.panels--rev > .panel:last-child { order: 1; margin-top: 0; }
+.panels--rev > .panel--sub { margin-top: 0; }
+/* 파이브프로 카드 — `.cols--card` 와 같은 실측값을 쓴다. 둘이 달라 보이면 안 된다. */
+.panel {
+  position: relative;
+  padding: 45px 28px 30px;
+  background: #fff;
+  border: 1px solid #e9e9e9;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, .08) 0 0 15px;
+}
+/* 예전 변형 둘은 이제 카드 하나로 합쳐진다 — 클래스는 조각에 남아 있어도 무해하다. */
+.panel--sub { margin-top: 0; padding-top: 45px; border-top-width: 1px; border-top-color: #e9e9e9; }
+.panel--fill { padding: 45px 28px 30px; border-radius: 15px; background: #fff; }
+.panel__label { font-size: var(--t-sm); font-weight: 700; letter-spacing: .02em; color: var(--muted); }
+.panel__t { margin-top: 10px; font-size: 22px; font-weight: 600; line-height: 1.4; letter-spacing: -.015em; }
+.panel__body { margin-top: 14px; font-size: var(--t-body); line-height: 1.75; }
+/* 어두운 섹션 — 검은 바탕에서는 그림자가 안 보인다. 면을 띄우고 테두리를 낮춘다. */
+.invert .panel,
+.invert .panel--sub,
+.invert .panel--fill {
+  background: color-mix(in srgb, var(--bg) 7%, transparent);
+  border-color: color-mix(in srgb, var(--bg) 14%, transparent);
+  box-shadow: none;
+}
+.invert .panel__label { color: color-mix(in srgb, var(--bg) 58%, transparent); }
+
+/* ── sechead 변형 — A형(좌 제목 / 우 설명)만 반복되지 않게 두 가지를 더 둔다.
+   B형 = 한 컬럼 좌측 정렬(eyebrow → 제목 → 설명), C형 = 제목 전체 폭 + 설명을 우측으로. */
+.sechead--stack { flex-direction: column; align-items: flex-start; gap: 18px; }
+.sechead--stack .sechead__title { max-width: 820px; }
+.sechead--stack .sechead__lead { max-width: 640px; }
+.sechead--full { flex-direction: column; align-items: stretch; gap: 22px; }
+.sechead--full .sechead__title { max-width: none; }
+.sechead--full .sechead__lead { max-width: 560px; margin-left: auto; text-align: left; }
+
+/* ══ 섹션 머리 중앙정렬 — 파이브프로 이식 (2026-08-17 세영) ═══════════════
+   세영: "제목과 리드문을 파이브프로처럼 중간정렬로 전부 통일하자."
+
+   실측 (fivepro.co.kr · 뷰포트 1280)
+     제목 h2 47px/700 · `text-align:center` · 박스폭 1200 · **실텍스트폭 500~743**
+     리드 h3 22px     · `text-align:center` · 박스폭 1200 · **실텍스트폭 344~462**
+   ⭐ 박스는 전체 폭이지만 글은 그만큼 넓게 흐르지 않는다 — 레퍼런스는 `<br>` 로
+     줄을 직접 끊고 문장 자체가 짧다(제목 27~50자 · 리드 24~35자).
+   ⭐ 우리 글은 리드가 길다(중앙값 48자 · 최대 103자 · `<br>` 0개). 그래서 폭을
+     풀면 한 줄이 1264px 까지 늘어나 읽기 나빠진다 — 실제로 그렇게 나왔다.
+     대신 **기존 폭을 그대로 두고 가운데로만 옮긴다.** 우리 리드 기본 폭 448 은
+     레퍼런스 실텍스트폭(344~462)과 이미 같은 범위라, 이게 오히려 실측에 맞다.
+
+   ⚠ 히어로 제목은 레퍼런스에서도 왼쪽이다(h2 60px `left`). 카드 안 제목도 `start`.
+     그래서 `.sechead` 계열에만 건다 — 히어로·카드는 건드리지 않는다.
+   ⚠ 위 세 변형(A·B·C형)을 덮어쓰는 자리라 반드시 그 아래에 둔다.
+   ⭐ 되돌리려면 이 블록만 지우면 된다. 마크업은 하나도 바꾸지 않았다(185곳). */
+.sechead,
+.sechead--stack,
+.sechead--full {
+  flex-direction: column; align-items: center; text-align: center; gap: 22px;
+}
+/* 리드 폭을 448 하나로 통일한다 — 변형마다 448/640/560 으로 갈려 있어
+   섹션마다 줄바꿈 위치가 달랐다. 448 이 레퍼런스 실측치에 가장 가깝다. */
+.sechead .sechead__lead,
+.sechead--stack .sechead__lead,
+.sechead--full .sechead__lead {
+  max-width: 448px; margin-inline: auto; text-align: center;
+}
+/* 섹션 머리 바로 위의 소제목도 함께 가운데로 — 이것만 왼쪽에 남으면 어긋나 보인다.
+   ⚠ `.eyebrow` 는 177곳에 쓰이고 맥락이 제각각이다(GET STARTED, 다음 칼럼,
+     mockrow 안의 01·SEO). 그래서 **바로 뒤에 섹션 머리가 오는 것만** 고른다. */
+.eyebrow:has(+ .sechead), .eyebrow:has(+ .bighead) { text-align: center; }
+
+/* bighead(영문 대형 제목 + 오른쪽 설명)도 같이 가운데로 — 2026-08-17 세영 확인.
+   두 시안을 나란히 보고 고르셨다. sechead 와 같은 리듬이 되도록 gap 도 22 로 맞춘다.
+   ⚠ `white-space: nowrap` 은 그대로 둔다 — 제목이 최장 16자(Prospect Journey)라
+     컨테이너 안에 들어가고, 영문 대형 타이포가 한 줄로 보여야 하는 컴포넌트다.
+   ⚠ 리드 폭도 섹션 머리와 같은 448 로 맞춘다(원래 448/560 으로 갈려 있었다). */
+.bighead { flex-direction: column; align-items: center; text-align: center; gap: 22px; }
+.bighead__right { max-width: 448px; margin-inline: auto; }
+.bighead__lead { max-width: 448px; margin-inline: auto; }
+
+/* .bigsay 도 제목+리드문 한 쌍이다(index·shop 4곳). 클래스 이름이 달라 위 규칙에
+   안 걸렸는데, 아래 버튼만 가운데로 오면서 어긋났다 — 함께 가운데로. */
+.bigsay { text-align: center; }
+.bigsay__sub { margin-inline: auto; text-align: center; }
+
+/* ── FAQ 열림/닫힘 부드럽게. 네이티브 <details> 는 높이 애니메이션이 없다 —
+   지원 브라우저에서만 높이를 보간하고, 아니면 지금처럼 즉시 열린다(동작은 동일). */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  .faq__item::details-content {
+    height: 0; overflow: hidden; opacity: 0;
+    transition: height .38s cubic-bezier(.4,0,.2,1), opacity .3s, content-visibility .38s allow-discrete;
+  }
+  .faq__item[open]::details-content { height: auto; opacity: 1; }
+}
+
+
+/* ── 패널 안의 목록은 본문 목록보다 촘촘하게. 패널이 세로로 늘어지면 비대칭이 안 읽힌다. */
+.panel .deflist { margin-top: 18px; gap: 13px; }
+.panel .deflist dt { font-size: var(--t-body); }
+.panel--fill .deflist { margin-top: 16px; }
+
+/* ── Journey 다듬기 (2026-08-14) — 카드화하지 않고 타임라인의 완성도만 올린다.
+   ① 도달한 단계의 점을 조금 키우고 레드 링을 남긴다 ② 번호 배지가 채워질 때 살짝 올라온다
+   ③ 마우스를 올린 단계는 점·번호·제목이 함께 반응한다(색만 바뀌지 않게 위치도 움직인다). */
+.tstep__no { transition: color .34s cubic-bezier(.16,1,.3,1), background .34s cubic-bezier(.16,1,.3,1),
+             border-color .34s cubic-bezier(.16,1,.3,1), transform .34s cubic-bezier(.16,1,.3,1); }
+.tstep.is-on .tstep__no { transform: translateY(-2px); }
+.tstep.is-tip::before { transform: scale(1.45); }
+.tstep__t { transition: transform .34s cubic-bezier(.16,1,.3,1); }
+@media (hover: hover) {
+  .timeline .tstep:hover::before { transform: scale(1.55); border-color: var(--brand); }
+  .timeline .tstep:hover .tstep__t { transform: translateX(4px); }
+  .timeline .tstep:hover .tstep__no { transform: translateY(-4px); }
+}
+/* 진행선이 채워지는 속도 — 단계 스태거(420ms)와 어울리게 */
+.timeline__line i { transition: width .52s cubic-bezier(.16,1,.3,1); }
+
+/* ── 링크 목록(deflist) 안의 항목에 아주 작은 진입 반응. 색만 바꾸지 않고 좌측으로 민다. */
+@media (hover: hover) {
+  .panel .deflist > div { transition: transform .3s cubic-bezier(.4,0,.2,1); }
+  .panel .deflist > div:hover { transform: translateX(5px); }
+}
+
+/* ---------- 20. 반응형 ---------- */
+@media (max-width: 1260px) {
+  :root { --t-display: 92px; --t-h3: 46px; --sec-y: 96px; --grid-gap: 44px; }
+  .row__title { font-size: 34px; }
+  .reveal__t { font-size: 42px; width: 380px; }
+  .footer__mark { font-size: 118px; }
+  .steps, .steps--8, .cols--4 { grid-template-columns: repeat(2, 1fr); row-gap: 56px; }
+  .steps--5, .cols--5 { grid-template-columns: repeat(3, 1fr); row-gap: 48px; }
+  /* 여러 행으로 접히면 가로 진행선이 끊긴다 — 이 폭부터는 선·점을 접고 카드만 남긴다
+     (원본 haoc 도 1000px 이하에서 같은 처리를 한다) */
+  .work__item { width: calc((100% - 36px) / 3); }     /* 3열 */
+  .timeline, .timeline--3, .timeline--4 { grid-template-columns: repeat(2, 1fr); gap: 56px 40px; padding-top: 0; }
+
+  /* 표현 변주 컴포넌트 (2026-08-14) */
+  .cardgrid, .cardgrid--4 { grid-template-columns: repeat(2, 1fr); }
+  .panels { grid-template-columns: 1fr; gap: 20px; }
+  .panel--sub { margin-top: 0; }
+  .sechead--full .sechead__lead { margin-left: 0; }
+  .timeline__line { display: none; }
+  .tstep::before { display: none; }
+  .tstep { opacity: 1 !important; transform: none !important; }
+}
+
+@media (max-width: 900px) {
+  :root { --gutter: 24px; --gutter-nav: 24px; --sec-y: 80px; --grid-gap: 40px; --t-display: 64px; --t-h3: 34px; }
+  /* 모바일은 본문이 화면 폭을 꽉 채워서 우측 세로 탭이 글자를 덮는다.
+     같은 링크를 하단 고정 바로 바꾼다 — 가리는 면적이 없고 터치 영역도 커진다. */
+  .ctab {
+    top: auto; bottom: 0; right: 0; left: 0;
+    width: 100%; min-height: 52px;
+    flex-direction: row; gap: 8px; padding: 0;
+    border-radius: 0;          /* 화면 하단에 좌우로 꽉 찬 바라 모서리를 깎을 자리가 없다 */
+    transform: translateY(100%);
+  }
+  .ctab[data-show='true'] { transform: none; }
+  .ctab:focus-visible { outline-offset: -4px; }
+  .ctab__label { display: none; }
+  .ctab__full { display: block; font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
+  .ctab__arr { font-size: 15px; }
+  .ctab:hover .ctab__arr, .ctab:focus-visible .ctab__arr { transform: translateX(3px); }
+  .nav__links { display: none; }
+  .nav__burger { display: block; width: 28px; height: 28px; color: var(--fg); margin-left: auto; position: relative; z-index: 51; }
+  .nav__burger svg { width: 100%; height: 100%; }
+  .nav__burger .ic-close, .nav__burger[aria-expanded='true'] .ic-menu { display: none; }
+  .nav__burger[aria-expanded='true'] .ic-close { display: block; color: var(--fg); }
+  .cols, .cols--2, .cols--4, .cols--5, .plans, .steps, .steps--5, .steps--8 { grid-template-columns: 1fr; gap: 44px; }
+  /* 타임라인은 원본(haoc)도 좁은 화면에서는 선·점을 숨기고 모션을 끈다.
+     하오웹은 문구가 길어 2열 대신 1열로 간다. 번호 배지는 그대로 남긴다. */
+  .timeline, .timeline--3, .timeline--4 { grid-template-columns: 1fr; gap: 44px; padding-top: 0; }
+
+  .cardgrid, .cardgrid--2, .cardgrid--4 { grid-template-columns: 1fr; }
+  .card { padding: 22px 20px 24px; }
+  .panel, .panel--sub, .panel--fill { padding: 32px 22px 26px; }
+  .tstep__t { min-height: 0; }        /* 1열이라 줄맞춤이 필요 없다 */
+  /* 작업 카드 — 원본과 같이 2열로 좁히고 텍스트를 줄인다 */
+  .work { gap: 10px; }
+  .work__item { width: calc((100% - 10px) / 2); }
+  .work__text { bottom: 15px; left: 10px; width: calc(100% - 20px); }
+  .work__name { font-size: 15px; }
+  .work__meta { margin-top: 10px; font-size: 12px; }
+  /* BEFORE/AFTER — 좁은 화면에서는 위아래로 쌓는다 */
+  .ba { grid-template-columns: 1fr; gap: 56px; }
+  .crg { grid-template-columns: 1fr; gap: 48px; }
+  .dirs { grid-template-columns: 1fr; gap: 48px; }
+  .viz { grid-template-columns: 1fr; gap: 40px; }
+  .dgr__row { flex-wrap: wrap; gap: 12px 16px; }
+  .dgr__body { flex: 1 1 100%; order: 2; }
+  .dgr__badge { order: 1; margin-left: auto; }
+  .viz__stage { padding: 20px 0; min-height: 0; }
+  .reveal__flow { gap: 9px; margin-bottom: 22px; }
+  .reveal__flow span { font-size: 13px; }
+  .reveal__flow span + span::before { margin-right: 9px; }
+  .plan__scale b { font-size: 28px; }
+  .deflist--num dt b { font-size: 22px; min-width: 30px; }
+  .deflist--num dd { margin-left: 46px; }
+  .viz__node > span:first-child { width: 72px; }
+  .viz__node--sub { padding-left: 16px; }
+  .viz__node p { margin-left: 0; }
+  .sitemap__row { font-size: var(--t-body); }
+  /* FAQ — 좁은 화면에서는 답변 들여쓰기를 없앤다(원본도 같다) */
+  .faq__item { padding: 0 18px; }
+  .faq__item summary { font-size: var(--t-body); gap: 12px; }
+  .faq__a { padding-left: 0; }
+  .timeline__line { display: none; }
+  .tstep::before { display: none; }
+  .tstep { opacity: 1 !important; transform: none !important; }
+  .sechead, .bighead { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .bighead__title { white-space: normal; }
+  .hero__title--kr { font-size: 42px; }
+  /* 모바일에도 같은 12svh 공백이 있었다 — 보조문장과 제목 사이에 260px 구멍이 뚫려 있던 원인. */
+.hero__note { margin-bottom: 36px; max-width: 100%; text-align: left; }
+  .subhero__title { font-size: 56px; }
+  .subhero__kr { font-size: 16px; }
+  .row__link { flex-direction: column; align-items: flex-start; gap: 10px; padding: 34px 24px; min-height: 0; }
+  .row__cat, .row__meta { width: auto; text-align: left; }
+  .row__title { font-size: 24px; text-align: left; }
+  .row__over { display: none; }
+  .reveal { height: 220lvh; }   /* 데스크톱 500→300 에 맞춰 함께 줄임 (2026-08-14) */
+  .reveal__grid { flex-direction: column; gap: 20px; }
+  .reveal__t { font-size: 30px; width: auto; }
+  .reveal__copy { padding-bottom: 48px; }
+  .reveal__copy .rule { margin-bottom: 40px; }
+  /* sticky 를 걷어내 높이를 내용이 정하므로 모바일 전용 높이(150lvh)는 필요 없어졌다 (2026-08-14) */
+  .footer::before { height: 34px; border-bottom-left-radius: 50% 34px; border-bottom-right-radius: 50% 34px; }
+  .oneline__t { font-size: 22px; }
+  .split { grid-template-columns: 1fr; gap: 56px; }
+  .split__quote { font-size: 20px; }
+  .footer__mark { font-size: 62px; }
+  .footer__grid { grid-template-columns: 1fr 1fr; row-gap: 40px; }
+  .footer__inner { padding: 48px var(--gutter); }
+  .statement { padding-inline: 0; }
+  .statement p { font-size: 17px; }
+  .article__title { font-size: 26px; }
+  .article__h { font-size: 22px; margin-top: 52px; }
+  .article p { font-size: 16px; line-height: 1.8; }
+}
+
+@media (max-width: 480px) {
+  :root { --gutter: 20px; --gutter-nav: 20px; --t-display: 48px; }
+  .hero__title--kr { font-size: 34px; }
+  .footer__mark { font-size: 44px; }
+  .footer__grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- 21. 병원 페이지 전용 — BEFORE DESIGN (WACUS 이식, 2026-08-14) ----------
+   ⚠ `hospital.html` 의 한 섹션 전용. 공통 컴포넌트(.sechead/.card/.timeline/.panel…)는 건드리지 않았다.
+
+   기준: wacuskorea.com 의 Web Engineering / Maintenance / Online Marketing 3블록 구간을
+   헤드리스로 직접 접속해 실측했다(추측 아님).
+     블록 높이 674 · 좌 컬럼 540 / 이미지 810 (1440 폭에서 좌우 여백 45, 사이 간격 0)
+     제목 45px / w400 / lh 49.5(1.1) / Aldrich / #171717   ← 폰트만 하오웹 Pretendard 로
+     라벨 13.5px / w400 / #FC5A22                          ← 포인트 컬러만 하오웹 --brand 로
+     설명 15px / w400 / lh 24(1.6) / ls -1.024px / Pretendard(원본도 Pretendard)
+     제목 y 대비 라벨 y = +522 → 좌 컬럼은 위아래로 벌린 배치(space-between)
+     밝은 바탕 · radius 0 · 그림자 없음 · 블록 사이 1px 룰
+   바꾼 것은 지시된 네 가지뿐이다: 콘텐츠 / 폰트 / 포인트 컬러 / 이미지.
+   ⚠ 크기는 레퍼런스 px 를 그대로 쓰지 않는다 — 하오웹 타입 토큰으로 환산해서 쓴다(2026-08-14 지시).
+     45 -> --t-h3(54) · 15 -> --t-body(17) · 13.5 -> --t-sm(14) · 리드 -> --t-lead(18) */
+.hospital-analysis {
+  background: var(--fg); color: var(--bg);
+  padding: 120px 0 0;
+}
+.hospital-analysis__wrap { padding-inline: var(--gutter); }   /* 하오웹 48 ≒ WACUS 45 */
+
+/* ── 인트로 — WACUS 의 'Strategy NN' 상단 전략 메시지 자리 (작은 컬러 라벨 + 굵은 국문 문장) */
+.hospital-analysis__intro { max-width: 900px; padding-bottom: 96px; }
+.hospital-analysis__eyebrow {
+  font-size: var(--t-sm); font-weight: 400; letter-spacing: .04em; color: var(--brand);
+}
+.hospital-analysis__title {
+  margin: 18px 0 0; font-size: var(--t-h3); font-weight: 700; line-height: 1.2; letter-spacing: -.03em;
+}
+.hospital-analysis__lead {
+  margin: 20px 0 0; font-size: var(--t-lead); font-weight: 400; line-height: 1.6; letter-spacing: -.02em;
+  color: color-mix(in srgb, var(--bg) 66%, transparent); max-width: 620px;
+}
+
+/* ── 3블록 — 좌 40% 텍스트 / 우 60% 이미지, 블록당 674 */
+.hospital-analysis__row {
+  display: grid; grid-template-columns: 40% 60%; align-items: stretch;
+  min-height: 674px; border-top: 1px solid color-mix(in srgb, var(--bg) 14%, transparent);
+}
+.hospital-analysis__row:last-of-type { border-bottom: 1px solid color-mix(in srgb, var(--bg) 14%, transparent); }
+.hospital-analysis__col {
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 90px 56px 90px 0;
+}
+.hospital-analysis__en {
+  font-size: var(--t-h3); font-weight: 400; line-height: 1.1; letter-spacing: -.02em;
+  color: var(--bg);
+}
+.hospital-analysis__meta { max-width: 520px; }
+.hospital-analysis__label {
+  font-size: var(--t-sm); font-weight: 400; line-height: 1.6; letter-spacing: .01em; color: var(--brand);
+}
+.hospital-analysis__desc {
+  margin: 10px 0 0; font-size: var(--t-body); font-weight: 400; line-height: 1.6; letter-spacing: -.02em;
+  color: var(--bg);
+}
+.hospital-analysis__fig { position: relative; overflow: hidden; }
+.hospital-analysis__fig img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.02);
+  transition: transform .9s cubic-bezier(.16,1,.3,1);
+}
+@media (hover: hover) {
+  .hospital-analysis__row:hover .hospital-analysis__fig img { transform: scale(1.06); }
+}
+
+/* 등장 — WACUS 는 블록이 화면에 들어올 때 텍스트가 올라오고 이미지가 아래에서 열린다 */
+.hospital-analysis__col > * { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+.hospital-analysis__col > *:nth-child(2) { transition-delay: .1s; }
+.hospital-analysis__fig { clip-path: inset(100% 0 0 0); transition: clip-path 1s cubic-bezier(.16,1,.3,1); }
+.hospital-analysis__row[data-in="true"] .hospital-analysis__col > * { opacity: 1; transform: none; }
+.hospital-analysis__row[data-in="true"] .hospital-analysis__fig { clip-path: inset(0 0 0 0); }
+
+@media (max-width: 1260px) {
+  .hospital-analysis { padding-top: 88px; }
+  .hospital-analysis__intro { padding-bottom: 64px; }
+  .hospital-analysis__row { grid-template-columns: 1fr; min-height: 0; }
+  .hospital-analysis__col { padding: 56px 0 40px; gap: 40px; }
+  .hospital-analysis__fig { height: 62vw; max-height: 460px; margin-bottom: 56px; }
+}
+@media (max-width: 900px) {
+  .hospital-analysis { padding-top: 72px; }
+  .hospital-analysis__col { padding: 44px 0 32px; gap: 30px; }
+  .hospital-analysis__fig { height: 68vw; margin-bottom: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hospital-analysis__col > * { opacity: 1; transform: none; }
+  .hospital-analysis__fig { clip-path: none; }
+  .hospital-analysis__fig img { transform: none; }
+}
+
+
+/* ============================================================
+   20. 병원 페이지 전용 (2026-08-14) — 레퍼런스 6곳 구조·모션 이식
+   ------------------------------------------------------------
+   무엇을 어디서 가져왔는지 (전부 CDP 로 실제 렌더를 실측했다):
+     newsight.co.kr/medi-homepage  → .biz-bands  풀블리드 가로 밴드 6줄
+                                     (h192 · 상단 1px 룰 · 작은 라벨 + 큰 제목 · hover 배경 .3s)
+     bravomedi.co.kr               → .biz-open   스크롤에 따라 차오르는 진행 축(AOS·growUp)
+     soijeong.com/cms-medical      → .biz-grid    5열 기능 그리드 + 좌우 교차 블록
+                                     (WOW fadeInUp 1s + data-wow-delay 순차)
+     nodelix.kr/병원-seo-최적화     → .biz-search 좌 대형 제목 + 우 statement 박스,
+                                     그 아래 4열 라벨 카드 → 3열 카드
+     crossdesign.co.kr             → .biz-diag   STEP 행(번호 열 72px + 내용 열) + 태그 칩
+     urdv.net                      → .biz-diag__aside  좌측 고정 + 우측 카드 스택
+
+   ⚠ 공통 컴포넌트(.card/.panel/.timeline/.sechead…)는 한 줄도 건드리지 않는다.
+   ⚠ 크기는 전부 하오웹 토큰에서 파생한다. 레퍼런스 px 를 그대로 옮기지 않는다
+      (newsight 제목 27px·nodelix 25px 등은 참고만 하고, 우리는 --t-h3 배수로 잡았다).
+   ⚠ 모션은 JS 가 [data-hin] 에 data-in="true" 를 붙여 발동한다.
+      요소가 없으면 initHospital() 이 즉시 반환하고, JS 가 죽어도 화면이 비지 않도록
+      **기본 상태를 opacity:0 으로 두지 않고** html.js-hin 이 붙었을 때만 숨긴다.
+   ============================================================ */
+
+/* 색 — 다크 섹션과 .invert(밝은) 섹션 양쪽에서 같은 마크업이 쓰인다 */
+.biz-bands, .biz-open, .biz-grid, .biz-flow,
+.biz-search, .biz-diag, .biz-incl, .biz-quick {
+  --hline: var(--border);
+  --hmuted: var(--muted);
+  --hsoft: color-mix(in srgb, var(--fg) 5%, transparent);
+}
+.invert .biz-bands, .invert .biz-open, .invert .biz-grid,
+.invert .biz-flow, .invert .biz-search, .invert .biz-diag,
+.invert .biz-incl, .invert .biz-quick {
+  --hline: color-mix(in srgb, var(--bg) 22%, transparent);
+  --hmuted: color-mix(in srgb, var(--bg) 62%, transparent);
+  --hsoft: color-mix(in srgb, var(--bg) 4%, transparent);
+}
+
+/* 진입 모션 공통 — JS 가 살아 있을 때만 숨긴다(캡처가 빈 화면으로 찍히는 사고 방지) */
+.js-hin [data-hin] .hin { opacity: 0; transform: translateY(28px); }
+[data-hin][data-in='true'] .hin {
+  opacity: 1; transform: none;
+  transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+}
+/* 순차 — soijeong 의 data-wow-delay(0.1s 간격)를 그대로 옮겼다 */
+[data-hin][data-in='true'] .hin:nth-child(1) { transition-delay: .00s; }
+[data-hin][data-in='true'] .hin:nth-child(2) { transition-delay: .10s; }
+[data-hin][data-in='true'] .hin:nth-child(3) { transition-delay: .20s; }
+[data-hin][data-in='true'] .hin:nth-child(4) { transition-delay: .30s; }
+[data-hin][data-in='true'] .hin:nth-child(5) { transition-delay: .40s; }
+[data-hin][data-in='true'] .hin:nth-child(6) { transition-delay: .50s; }
+[data-hin][data-in='true'] .hin:nth-child(7) { transition-delay: .60s; }
+[data-hin][data-in='true'] .hin:nth-child(8) { transition-delay: .70s; }
+
+/* ── A. 분석 밴드 (newsight) ─────────────────────────────────
+   원본은 풀블리드 밴드가 위에서 아래로 쌓이고, 각 줄 위에 1px 룰이 있다.
+   원본 hover 는 배경색만 바뀌는데(.3s ease), 우리는 사이트 언어인
+   '좌→우로 그어지는 레드 룰'을 얹어 진입에도 모션이 남게 했다. */
+/* ══ 워드마크 밴드 — eimokdesign.com 이식 (2026-08-16 세영 지시) ═══════════════════
+   세영: "이번에는 예외로 레퍼런스 사이트의 폰트와 폰트크기까지 동일하게" ·
+         "EIMOK은 HAOWEB, DESIGN은 RENEWAL" · "글자 아래 비치는 이미지는 포트폴리오 캡처본"
+
+   실측 (1440 · scratchpad/find_eimok.py · eimok_struct.py)
+     .txt_section   1440×910 · position:relative · overflow:hidden
+     <video ei.mp4> 배경                        → 우리는 포트폴리오 캡처 띠(work-strip.jpg)
+     .text_wrap     absolute · z2 · **mix-blend-mode: lighten**
+     .txt_bg        background:#fff · overflow:hidden
+     .text1/.text2  440px / w700 / line-height 550px·528px / color #000 / font campton
+
+   ⭐ 효과의 정체 = `mix-blend-mode: lighten` 하나다.
+     lighten 은 아래위 두 색 중 **밝은 쪽**을 남긴다 →
+       흰 바탕(255) vs 사진  → 흰색이 이김 → 바탕은 흰색 그대로
+       검정 글자(0) vs 사진  → 사진이 이김 → 글자 자리에만 사진이 비친다
+     ⚠⚠ 그래서 **글자는 #000, 바탕은 #fff 여야 한다.** 브랜드 색이나 회색을 쓰면 효과가 깨진다.
+        (포인트 컬러를 하오웹 것으로 바꾸는 규칙이 여기엔 적용되지 않는 이유다.)
+     ⚠ 폰트만 예외 — campton 이 상용이라 Poppins 로 대체했다(세영 확인). 크기 440/700 은 실측 그대로.
+
+   모션: 두 줄이 스크롤에 따라 **서로 반대 방향**으로 흐른다(실측 확인 —
+     text1 이 +369→-1409 로 갈 때 text2 는 -369→+1409). 값은 site.js 의 initWordband() 가 넣는다. */
+.txtsec {
+  position: relative; overflow: hidden;
+  height: 910px;                    /* 실측 */
+  padding: 0;                       /* .sec 의 상하 여백을 쓰지 않는다 — 원본은 섹션 자체가 이 높이다 */
+}
+/* 배경 — 캡처 한 장이 화면을 덮고 **위로 흐르다** 다음 장으로 넘어간다.
+   ⚠ 여러 장을 격자로 이어 붙이면 글자마다 다른 사진이 박혀 **쪼개져 보인다**(2026-08-16 세영 지적).
+     레퍼런스는 영상 한 편이 두 줄에 그대로 비친다 — 그 등가물이 "한 장씩 전환"이다.
+   ⚠ 두 줄이 같은 사진을 공유해야 한다. 줄마다 배경을 따로 두지 말 것.
+
+   ⭐⭐ **어둡게 하는 처리가 반드시 필요하다** (2026-08-16 세영 지적 —
+     "홈페이지 화면 캡쳐는 흰바탕이 많아서 순간 글자가 안 보일 수도 있어.
+      레퍼런스의 이목디자인 글자도 자세히 보면 약간 어둡게 처리되어 있음").
+     실측으로 그 정체를 확인했다:
+        div.video_bg { background: rgb(0,0,0) }   ← 검은 바탕
+        video        { opacity: 0.7 }             ← 그 위에 영상을 70%
+     검은 바탕에 0.7 로 얹으니 결과적으로 **30% 어두워진다.** 같은 방식으로 옮겼다.
+     ⚠ 이 처리가 없으면 흰 바탕이 많은 홈페이지 캡처에서 글자가 흰 배경과 같아져 사라진다
+       (lighten 은 밝은 쪽을 남기므로 사진이 흰색이면 글자 자리도 흰색이 된다).
+   ⚠ 그래서 `.txtsec__bgs` 의 검은 배경을 지우지 말 것 — 어둡게 만드는 것은 opacity 가 아니라
+     **검은 바탕과의 합성**이다. */
+.txtsec__bgs { position: absolute; inset: 0; overflow: hidden; background: #000; }
+/* 세로로 긴 풀페이지 캡처를 쓴다 — 위로 흐르려면 섹션보다 길어야 한다.
+   height:auto 로 원본 비율을 지키고(잘리지 않게), 넘치는 부분은 부모가 자른다. */
+.txtsec__bg {
+  position: absolute; top: 0; left: 0; width: 100%; height: auto; min-height: 100%;
+  object-fit: cover; object-position: top center;
+  opacity: 0; transition: opacity 1.1s ease;
+}
+.txtsec__bg.is-on { opacity: .7; animation: txtsecUp 26s linear infinite; }
+/* 위로 흐른다. 캡처마다 길이가 달라 %로 잡는다 — 짧은 그림도 끝까지 다 보여 준다. */
+@keyframes txtsecUp {
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(-100% + 910px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .txtsec__bg.is-on { animation: none; }
+}
+/* ⚠ 이 래퍼가 blend 를 건다. 자식에 걸면 흰 바탕까지 같이 blend 되어 사진이 통째로 비친다. */
+.txtsec__wrap { position: absolute; inset: 0; z-index: 2; mix-blend-mode: lighten; }
+.txtsec__inner {
+  width: 100%; height: 100%; background: #fff; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+}
+/* ⚠ line-height 는 **1** 이어야 한다. 실측에서 각 줄 요소 높이가 폰트 크기와 같은 440 이었고
+   (두 줄 880 + 위아래 15 = 섹션 910), 1.06 을 줬더니 두 줄 합이 932 라 섹션을 넘쳐
+   아랫줄이 잘리고 아래 여백이 비었다(2026-08-16 캡처). */
+/* ⭐ 스크롤이 아니라 **항상 흐른다**(2026-08-16 세영 지적으로 바로잡음).
+   실측: 일정 속도 87.2px/s · 화면 폭(1440)만큼 가면 순환 · 이징 없음(linear).
+   duration 은 site.js 가 화면 폭에 맞춰 넣는다 — 폭이 달라도 초당 이동 거리를 같게 유지한다. */
+.txtsec__line {
+  font-family: 'Poppins', var(--font-kr);
+  font-size: 440px; font-weight: 700; line-height: 1;
+  color: #000; text-align: center; white-space: nowrap;
+  will-change: transform;
+  animation: txtsecFlowL 16.5s linear infinite;
+}
+.txtsec__line[data-wb="-1"] { animation-name: txtsecFlowR; }
+@keyframes txtsecFlowL { from { transform: translateX(0); }      to { transform: translateX(-100vw); } }
+@keyframes txtsecFlowR { from { transform: translateX(0); }      to { transform: translateX(100vw); } }
+@media (prefers-reduced-motion: reduce) { .txtsec__line { animation: none; } }
+/* 좁은 화면 — 440px 을 그대로 두면 한 글자도 안 들어온다. 비율만 유지해 줄인다. */
+@media (max-width: 1200px) { .txtsec { height: 620px; } .txtsec__line { font-size: 300px; } }
+@media (max-width: 900px)  { .txtsec { height: 380px; } .txtsec__line { font-size: 170px; } }
+@media (max-width: 560px)  { .txtsec { height: 260px; } .txtsec__line { font-size: 112px; } }
+
+/* ══ 업종별 제작 행 — myz-studio.com Works 이식 (2026-08-16 세영 지시) ══════════════
+   세영: "업종별 제작은 myz-studio.com 이 사이트의 첨부한 부분을 가져온다.
+          다만 폰트 크기는 현재 하오웹 유지. 동그랗게 들어간 이미지는 무료사이트에서 서치해 넣는다."
+
+   원본 구조(로컬 클론 `Desktop\myz-studio-clone\site\index.html` 소스에서 확인)
+     <div class="works-reveal border-t last:border-b">
+       <div class="… bg-background text-foreground">        ← 기본 행
+         <a class="max-w-7xl mx-auto flex items-center gap-4 px-4 md:px-10 py-7 md:py-15">
+           (development) │ 제목 │ 2026.04.25
+       <div class="absolute inset-0 translate-y-[101%] bg-foreground text-background">  ← 마퀴 레이어
+         <div class="h-full w-fit flex"> .marquee-part × N
+             <div class="text-4xl font-light mx-20">영문</div><img class="w-24 h-24 rounded-full">
+
+   실측값
+     · 컨테이너 max-w-7xl(1280) · px 40 · 행 padding-block 60(모바일 28) · gap 16
+     · 라벨 0.7em / font-thin  · 제목 mx-10(40) truncate 중앙  · 우측 12px
+     · 마퀴 텍스트 mx-20(80) font-light · 원형 이미지 96×96 rounded-full
+     · 전환 GSAP `{duration:.6, ease:"expo"}` → CSS cubic-bezier(.16,1,.3,1)
+     · 흐름 `gsap.to(track,{x:-partWidth, duration:15, ease:"none", repeat:-1})`
+     · 파트 개수 `Math.max(4, ceil(innerWidth/partWidth)+2)`
+   ⚠ 글자 크기만 하오웹 토큰이다(세영 지시) — 원본 md:text-7xl(72) 대신 `--t-h3`(54).
+     마퀴 텍스트는 원본 비율(제목의 0.5배)만 지켜 27px 로 환산했다.
+
+   ⭐ 모션의 핵심 = **마우스가 들어온 방향에서 밀려 올라온다.**
+     원본은 커서 위치와 행의 위/아래 변까지의 거리를 비교해 방향을 정하고(`x()` 함수),
+     **마퀴 컨테이너와 트랙을 서로 반대 방향으로 배치했다가 동시에 0 으로** 보낸다
+     (`.set(i,{y:±101%}).set(n,{y:∓101%}).to([i,n],{y:"0%"})`) → 겹쳐 미끄러지는 이중 효과.
+     방향 판정과 값 주입은 site.js 의 initBizRows() 가 한다. */
+/* ⚠ `.wrows` 는 `.container` **밖**에 둔다 — 원본은 행이 화면 끝까지 가고 안쪽 링크만
+   max-w-7xl 로 가운데 모인다. 컨테이너 안에 넣었더니 좌우에 검은 여백이 남았다(캡처로 확인).
+   섹션 머리(eyebrow·제목·리드)는 하오웹 컨테이너 그대로다. */
+.wrows {
+  margin-top: 72px;
+  border-top: 1px solid var(--wline);
+  --wline: #606055;          /* myz 실측 `--border` */
+  --wmq-bg: #ffffe3;         /* myz 실측 `--foreground` — 마퀴가 뒤집히면 이 색이 바탕이 된다 */
+  --wmq-fg: #10100e;         /* myz 실측 `--background` */
+}
+.wrow {
+  position: relative; display: block; overflow: hidden;
+  border-bottom: 1px solid var(--wline);
+  color: inherit; text-decoration: none;
+}
+.wrow__base {
+  display: flex; align-items: center; gap: 16px;
+  width: 100%; max-width: var(--container); margin-inline: auto;
+  padding: 60px 40px;
+}
+.wrow__label {
+  flex: none; font-size: .7em; font-weight: 100;
+  color: color-mix(in srgb, currentColor 62%, transparent);
+}
+/* ⚠ 제목은 `--t-h3`(하오웹) 이다. 원본 72px 을 그대로 옮기지 말 것(세영 지시). */
+.wrow__title {
+  flex: 1; min-width: 0; margin-inline: 40px;
+  font-size: var(--t-h3); font-weight: 600; line-height: 1;
+  text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.wrow__meta { flex: none; font-size: var(--t-eyebrow); font-family: var(--font-en); }
+
+/* 마퀴 레이어 — 평소엔 아래(101%)에 숨어 있다. 값은 JS 가 덮어쓴다. */
+.wrow__mq {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  transform: translateY(101%);
+  background: var(--wmq-bg); color: var(--wmq-fg);
+}
+/* ⚠⚠ 계층이 하나 더 있는 이유 — 원본은 GSAP 이라 트랙 하나에 x(흐름)와 y(진입)를 따로 줄 수 있다.
+   CSS 는 `transform` 이 한 속성이라 둘을 같은 요소에 주면 **나중 것이 앞의 것을 지운다**
+   (흐름이 멈추거나 진입이 안 먹는다). 그래서 세로 이동은 `.wrow__shift`, 가로 흐름은
+   `.wrow__track` 으로 나눠 맡긴다. 합치지 말 것. */
+.wrow__shift { height: 100%; }
+.wrow__track { display: flex; height: 100%; width: max-content; align-items: center; }
+.wrow__part { display: flex; align-items: center; flex: none; }
+.wrow__mqt { font-size: calc(var(--t-h3) * .5); font-weight: 300; margin-inline: 80px; white-space: nowrap; }
+.wrow__mqi { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; flex: none; }
+/* 흐름: 파트 하나 폭만큼 15초에 밀린다(원본 duration 15 · ease none · repeat -1).
+   파트가 N개이므로 -100%/N 이 정확히 파트 하나다. N 은 JS 가 --parts 로 알려 준다. */
+.wrow__track--run { animation: wrowmove 15s linear infinite; }
+@keyframes wrowmove { to { transform: translateX(calc(-100% / var(--parts, 4))); } }
+@media (prefers-reduced-motion: reduce) {
+  .wrow__track--run { animation: none; }
+  .wrow__mq { transition: none !important; }
+}
+@media (max-width: 900px) {
+  .wrow__base { padding: 28px 16px; }
+  .wrow__title { font-size: 22px; margin-inline: 16px; text-align: left; }
+  .wrow__mq { display: none; }        /* 터치 기기는 hover 가 없다 — 원본도 모바일은 썸네일만 쓴다 */
+}
+
+.biz-bands { margin-top: 72px; border-top: 1px solid var(--hline); }
+.biz-band {
+  position: relative;
+  display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 420px);
+  gap: 40px; align-items: start;
+  padding: 44px 8px;
+  border-bottom: 1px solid var(--hline);
+  transition: background-color .3s ease;
+}
+/* 진입하면 좌→우로 룰이 그어진다. 색은 전경색이다 —
+   4줄 전부를 레드로 그으면 "레드는 CTA·핵심에만" 원칙과 부딪힌다. 레드는 hover 에만 쓴다. */
+.biz-band::after {
+  content: ''; position: absolute; left: 0; top: -1px; height: 2px; width: 0;
+  background: currentColor;
+  transition: width .8s cubic-bezier(.16,1,.3,1), background-color .3s ease;
+}
+/* 룰은 밴드마다 순차로 그어진다 — 등장 순서(.hin nth-child)와 같은 간격 */
+[data-hin][data-in='true'] .biz-band::after { width: 100%; }
+[data-hin][data-in='true'] .biz-band:nth-child(1)::after { transition-delay: .15s; }
+[data-hin][data-in='true'] .biz-band:nth-child(2)::after { transition-delay: .25s; }
+[data-hin][data-in='true'] .biz-band:nth-child(3)::after { transition-delay: .35s; }
+[data-hin][data-in='true'] .biz-band:nth-child(4)::after { transition-delay: .45s; }
+@media (hover: hover) {
+  .biz-band:hover { background: var(--hsoft); }                      /* newsight 원본의 hover */
+  .biz-band:hover::after { background: var(--brand); }
+  .biz-band:hover .biz-band__label { color: var(--brand); }
+}
+.biz-band__no {
+  font-family: var(--font-en); font-size: var(--t-sm); font-weight: 700;
+  letter-spacing: .06em; color: var(--hmuted); padding-top: .5em;
+}
+.biz-band__label {
+  font-size: var(--t-eyebrow); font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--hmuted);
+  transition: color .3s ease;
+}
+.biz-band__t {
+  margin-top: 14px;
+  font-size: calc(var(--t-h3) * .58);         /* ≒31px — newsight 27px 자리, 우리 토큰 파생 */
+  font-weight: 700; line-height: 1.32; letter-spacing: -.025em;
+}
+.biz-band__d {
+  font-size: var(--t-body); line-height: 1.8; color: var(--hmuted); padding-top: .35em;
+}
+
+/* ── B. 개원 일정 / 가오픈 (bravomedi 의 차오르는 축) ─────────
+   좌측은 스크롤 중에도 붙어 있고, 우측 단계가 지나갈 때 세로 축이 차오른다. */
+.biz-open { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 80px; margin-top: 72px; }
+.biz-open__aside { position: sticky; top: calc(var(--nav-h) + 56px); align-self: start; }
+.biz-open__steps { position: relative; padding-left: 40px; }
+.biz-open__rail {                        /* 세로 축 — 회색 바탕 */
+  position: absolute; left: 3px; top: 8px; bottom: 8px; width: 2px;
+  background: var(--hline);
+}
+.biz-open__rail i {                      /* 차오르는 부분 */
+  position: absolute; inset: 0 0 auto 0; height: 0; background: var(--brand);
+  transition: height 1.6s cubic-bezier(.16,1,.3,1) .2s;
+}
+.biz-open__steps[data-in='true'] .biz-open__rail i { height: 100%; }
+.biz-open__step { position: relative; padding-bottom: 56px; }
+.biz-open__step:last-child { padding-bottom: 0; }
+.biz-open__step::before {                /* 축 위의 점 */
+  content: ''; position: absolute; left: -40px; top: 9px; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--hline);
+  transition: background-color .5s ease, transform .5s ease;
+}
+.biz-open__steps[data-in='true'] .biz-open__step::before { background: var(--brand); transform: scale(1.35); }
+.biz-open__steps[data-in='true'] .biz-open__step:nth-child(2)::before { transition-delay: .45s; }
+.biz-open__steps[data-in='true'] .biz-open__step:nth-child(3)::before { transition-delay: .9s; }
+.biz-open__phase {
+  font-size: var(--t-eyebrow); font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--hmuted);
+}
+.biz-open__t {
+  margin-top: 10px; font-size: calc(var(--t-h3) * .48);   /* ≒26px */
+  font-weight: 700; line-height: 1.4; letter-spacing: -.02em;
+}
+.biz-open__d { margin-top: 12px; font-size: var(--t-body); line-height: 1.8; color: var(--hmuted); max-width: 560px; }
+
+/* 먼저 공개하는 정보 — 칩. 버튼과 같은 라운드를 쓴다(--r-btn) */
+.biz-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.biz-chip {
+  font-size: var(--t-sm); font-weight: 600; line-height: 1;
+  padding: 10px 14px; border: 1px solid var(--hline); border-radius: var(--r-btn);
+  color: var(--hmuted);
+  transition: color .3s ease, border-color .3s ease, transform .5s cubic-bezier(.16,1,.3,1), opacity .5s ease;
+}
+.js-hin [data-hin] .biz-chip { opacity: 0; transform: translateY(10px); }
+[data-hin][data-in='true'] .biz-chip { opacity: 1; transform: none; }
+[data-hin][data-in='true'] .biz-chip:nth-child(1) { transition-delay: .30s; }
+[data-hin][data-in='true'] .biz-chip:nth-child(2) { transition-delay: .37s; }
+[data-hin][data-in='true'] .biz-chip:nth-child(3) { transition-delay: .44s; }
+[data-hin][data-in='true'] .biz-chip:nth-child(4) { transition-delay: .51s; }
+[data-hin][data-in='true'] .biz-chip:nth-child(5) { transition-delay: .58s; }
+[data-hin][data-in='true'] .biz-chip:nth-child(6) { transition-delay: .65s; }
+[data-hin][data-in='true'] .biz-chip:nth-child(7) { transition-delay: .72s; }
+@media (hover: hover) {
+  .biz-chip:hover { color: var(--brand); border-color: var(--brand); }
+}
+
+/* ── C. 병원 자체 운영 그리드 (soijeong Basic Function) ───────
+   원본은 5열 × 2행에 원형 아이콘 + 제목 + 2줄 설명이다.
+   우리는 아이콘 자산을 새로 들이지 않으므로 마커를 번호와 1px 룰로 바꿨다. */
+.biz-grid { margin-top: 64px; }
+.biz-grid__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px 40px; }
+/* 원본은 원형 아이콘이 셀 높이를 만든다. 아이콘 없이 그대로 옮기면 표처럼 납작해지므로
+   위아래 여백으로 그 높이를 대신하고 항목명을 한 단 키웠다. */
+.biz-grid__item {
+  padding: 30px 0 44px; border-top: 1px solid var(--hline);
+  transition: border-color .35s ease;
+}
+.biz-grid__no {
+  font-family: var(--font-en); font-size: var(--t-eyebrow); font-weight: 700;
+  letter-spacing: .1em; color: var(--hmuted);
+  transition: color .3s ease;
+}
+.biz-grid__t {
+  margin-top: 16px; font-size: calc(var(--t-h3) * .42);   /* ≒23px */
+  font-weight: 600; letter-spacing: -.02em;
+}
+@media (hover: hover) {
+  .biz-grid__item:hover { border-color: var(--brand); }
+  .biz-grid__item:hover .biz-grid__no { color: var(--brand); }
+}
+
+/* ── D. 상담·예약 연결 흐름 (soijeong 교차 블록의 가로 흐름) ── */
+.biz-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+.biz-flow__step {
+  position: relative; padding: 28px 26px 30px;
+  border: 1px solid var(--hline); border-radius: var(--r-card);
+  transition: border-color .35s ease;
+}
+.biz-flow__step + .biz-flow__step::before {   /* 사이 화살표 */
+  content: ''; position: absolute; left: -18px; top: 50%; width: 12px; height: 1px;
+  background: var(--hline);
+}
+.biz-flow__no {
+  font-family: var(--font-en); font-size: var(--t-eyebrow); font-weight: 700;
+  letter-spacing: .1em; color: var(--hmuted);
+}
+.biz-flow__t { margin-top: 12px; font-size: var(--t-lead); font-weight: 600; letter-spacing: -.01em; }
+.biz-flow__d { margin-top: 10px; font-size: var(--t-sm); line-height: 1.75; color: var(--hmuted); }
+@media (hover: hover) {
+  .biz-flow__step:hover { border-color: var(--brand); }
+}
+
+/* ── E. 검색 구조 (nodelix) ──────────────────────────────────
+   상단은 좌 대형 제목 / 우 설명 박스(원본은 흰색 3.5% 배경 + 1px 테두리),
+   그 아래 4열 라벨 카드 → 3열 카드로 좁혀 간다. */
+.biz-search__split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: 64px; align-items: start; }
+.biz-search__t { font-size: var(--t-h3); font-weight: 700; line-height: 1.16; letter-spacing: -.03em; }
+.biz-search__t em { font-style: normal; color: var(--brand); }
+.biz-search__box {
+  padding: 30px 32px; border: 1px solid var(--hline); border-radius: var(--r-card);
+  background: var(--hsoft);
+  font-size: var(--t-body); line-height: 1.85;
+}
+.biz-search__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 64px; }
+.biz-search__grid--3 { grid-template-columns: repeat(3, 1fr); margin-top: 20px; }
+.biz-search__card {
+  padding: 28px 26px 32px; border: 1px solid var(--hline); border-radius: var(--r-card);
+  transition: border-color .35s ease, background-color .35s ease;
+}
+.biz-search__en {
+  font-family: var(--font-en); font-size: var(--t-eyebrow); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--hmuted);
+  transition: color .5s ease;
+}
+/* 라벨 점등 — 레드는 이 섹션의 핵심인 SEO·AEO·GEO 세 장에만 준다.
+   앞의 네 장(지역·진료과·증상·질문)까지 레드로 켜면 일곱 개가 한꺼번에 붉어진다. */
+[data-hin][data-in='true'] .biz-search__en { color: var(--fg); }
+.invert [data-hin][data-in='true'] .biz-search__en { color: var(--bg); }
+[data-hin][data-in='true'] .biz-search__grid--3 .biz-search__en { color: var(--brand); }
+.biz-search__ct { margin-top: 14px; font-size: var(--t-lead); font-weight: 600; letter-spacing: -.01em; }
+.biz-search__cd { margin-top: 10px; font-size: var(--t-sm); line-height: 1.75; color: var(--hmuted); }
+@media (hover: hover) {
+  .biz-search__card:hover { border-color: var(--brand); background: var(--hsoft); }
+}
+
+/* ── F. 무료 진단 (crossdesign STEP 행 + urdv 좌측 고정) ────── */
+.biz-diag { display: grid; grid-template-columns: 440px minmax(0, 1fr); gap: 72px; }
+.biz-diag__aside { position: sticky; top: calc(var(--nav-h) + 56px); align-self: start; }
+/* 컬럼이 좁아 제목이 네 줄로 쪼개졌다 — 이 자리에서만 한 단 낮춘다(공통 .sechead 는 건드리지 않는다) */
+.biz-diag__aside .sechead__title { font-size: calc(var(--t-h3) * .78); }
+/* ⚠ 밝은 섹션에서 .btn 은 글자색이 var(--fg) 라 흰 바탕에 흰 글자가 된다 — 빈 박스로 보인다.
+   사이트의 기존 처방은 조각에서 인라인으로 색을 주는 것인데(칼럼 4편이 그렇다), 새 블록을
+   밝은 섹션에 넣을 때마다 다시 밟는다(2026-08-15 government 에서 실제로 밟았다).
+   그래서 **기본 상태만** 밝은 섹션 전체로 넓힌다. 조각의 인라인(98곳)과 값이 완전히 같아서
+   화면은 달라지지 않고, 앞으로 밝은 섹션에 넣는 버튼은 인라인 없이도 보인다.
+   ⚠ :hover 는 넓히면 안 된다 — 인라인 `color:var(--bg)` 가 우선이라 배경을 var(--bg) 로 깔면
+     다크 위에 다크 글자가 된다(98곳 전부). 인라인을 걷어내기 전에는 .biz-diag 범위로 둔다. */
+.invert .btn:not(.btn--brand) {
+  color: var(--bg); border-color: color-mix(in srgb, var(--bg) 30%, transparent);
+}
+/* ⭐ 2026-08-16 — 어두운 면에서도 hover 는 레드다(세영: "전부 레드로").
+   ⚠ 예전에는 `.biz-diag` 범위로 좁혀 뒀다. 이유는 조각 98곳의 인라인 `color:var(--bg)` 가
+     우선이라 **배경을 `--bg`(흰색)로 깔면 흰 글자 + 흰 배경**이 되기 때문이었다.
+     배경이 레드가 된 지금은 그 문제가 사라진다 — 인라인 흰 글자가 레드 위에 그대로 얹힌다.
+     그래서 범위를 `.invert` 전체로 넓혔다. */
+.invert .btn:not(.btn--brand):hover {
+  background: var(--brand); color: #fff; border-color: var(--brand);
+}
+.biz-diag__rows { border-top: 1px solid var(--hline); }
+.biz-diag__row {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 24px;
+  padding: 34px 0 38px; border-bottom: 1px solid var(--hline);
+}
+.biz-diag__step {
+  font-family: var(--font-en); font-size: var(--t-eyebrow); font-weight: 700;
+  letter-spacing: .1em; color: var(--hmuted); line-height: 1.6;
+}
+.biz-diag__step b { display: block; font-size: var(--t-sm); color: var(--brand); }
+.biz-diag__step i {                       /* 번호 밑 짧은 선 — 원본과 같은 자리 */
+  display: block; width: 18px; height: 2px; margin-top: 10px; background: var(--hline);
+}
+.biz-diag__t { font-size: calc(var(--t-h3) * .45); font-weight: 700; letter-spacing: -.02em; line-height: 1.4; }
+.biz-diag__d { margin-top: 12px; font-size: var(--t-body); line-height: 1.8; color: var(--hmuted); max-width: 640px; }
+
+@media (max-width: 1260px) {
+  .biz-band { grid-template-columns: 48px minmax(0, 1fr); gap: 24px; }
+  .biz-band__d { grid-column: 2; padding-top: 4px; }
+  .biz-open, .biz-diag { grid-template-columns: 1fr; gap: 48px; }
+  .biz-open__aside, .biz-diag__aside { position: static; }
+  .biz-grid__grid { grid-template-columns: repeat(3, 1fr); gap: 1px 32px; }
+  .biz-search__split { grid-template-columns: 1fr; gap: 32px; }
+  .biz-search__grid { grid-template-columns: repeat(2, 1fr); }
+  .biz-search__grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .biz-flow { grid-template-columns: 1fr; gap: 16px; }
+  .biz-flow__step + .biz-flow__step::before { left: 50%; top: -10px; width: 1px; height: 6px; }
+}
+@media (max-width: 900px) {
+  .biz-bands { margin-top: 48px; }
+  .biz-band { padding: 32px 4px; }
+  .biz-grid__grid { grid-template-columns: repeat(2, 1fr); }
+  .biz-search__grid, .biz-search__grid--3 { grid-template-columns: 1fr; }
+  .biz-diag__row { grid-template-columns: 1fr; gap: 12px; }
+  .biz-diag__step i { display: none; }
+  .biz-open__steps { padding-left: 28px; }
+  .biz-open__step::before { left: -28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js-hin [data-hin] .hin, .js-hin [data-hin] .biz-chip { opacity: 1; transform: none; }
+  .biz-band::after { transition: none; }
+  .biz-open__rail i { transition: none; }
+}
+
+/* ── G. 히어로 CTA (2026-08-14) ─────────────────────────────
+   서브페이지 히어로에는 원래 버튼이 없다. 병원 페이지만 예외다 —
+   무료 진단이 페이지 하단(7,700px 지점)에만 있어서 대부분 보기 전에 이탈했다.
+   전환이 목적인 페이지이므로 첫 화면에서 한 번 제안한다. */
+.biz-herocta { margin-top: 44px; }
+.biz-herocta .note { margin-top: 18px; }
+
+/* ── H. 기본 제공 범위 (bravomedi 12가지 · newsight 20가지 혜택 구간) ──
+   원본은 번호를 단 항목을 격자에 늘어놓아 "이만큼이 기본"이라는 인상을 만든다.
+   같은 방식이되 항목마다 한 줄 설명을 붙여 목록이 아니라 약속으로 읽히게 했다.
+   ⚠ CMS 그리드(.biz-grid__grid)와 형태가 겹치지 않도록 열 수와 밀도를 다르게 잡았다. */
+.biz-incl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 48px; margin-top: 64px; }
+.biz-incl__item { padding: 28px 0 32px; border-top: 1px solid var(--hline); }
+.biz-incl__head { display: flex; align-items: center; gap: 10px; }
+/* 아이콘 — 바탕화면 '아이콘 레퍼런스 DB'(자체 구축, 996개) 중 18개를 골라 썼다.
+   전부 같은 스타일 패밀리(Outline Rounded)라 선 굵기·모서리 느낌이 어긋나지 않는다.
+   ⚠ <img> 로 넣지 않는다 — 원본 SVG 에 fill 이 없어 검정으로 굳는다.
+     `mask-image` + `background: currentColor` 라야 밝은 면·어두운 면 양쪽에서 글자색을 따라간다. */
+.biz-incl__ico {
+  flex: none; width: 22px; height: 22px; background: currentColor;
+  -webkit-mask-image: var(--i); mask-image: var(--i);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-size: contain; mask-size: contain;
+  opacity: .85;
+}
+/* ⚠ 경로는 **base.css 기준**(`../img/`)이다. CSS 변수에 url() 을 담아 인라인으로 넘기면
+     조각(HTML) 기준이 아니라 이 파일 기준으로 풀려 `assets/css/assets/...` 가 된다
+     — 2026-08-16 실제로 그래서 아이콘이 전부 안 보였다. 그래서 클래스로 둔다. */
+.ico--search { -webkit-mask-image: url('../img/icon/search.svg'); mask-image: url('../img/icon/search.svg'); }
+.ico--sitemap { -webkit-mask-image: url('../img/icon/sitemap.svg'); mask-image: url('../img/icon/sitemap.svg'); }
+.ico--writing { -webkit-mask-image: url('../img/icon/writing.svg'); mask-image: url('../img/icon/writing.svg'); }
+.ico--responsive { -webkit-mask-image: url('../img/icon/responsive.svg'); mask-image: url('../img/icon/responsive.svg'); }
+.ico--mobile { -webkit-mask-image: url('../img/icon/mobile.svg'); mask-image: url('../img/icon/mobile.svg'); }
+.ico--ssl { -webkit-mask-image: url('../img/icon/ssl.svg'); mask-image: url('../img/icon/ssl.svg'); }
+.ico--globe { -webkit-mask-image: url('../img/icon/globe.svg'); mask-image: url('../img/icon/globe.svg'); }
+.ico--ai { -webkit-mask-image: url('../img/icon/ai.svg'); mask-image: url('../img/icon/ai.svg'); }
+.ico--tag { -webkit-mask-image: url('../img/icon/tag.svg'); mask-image: url('../img/icon/tag.svg'); }
+.ico--chart { -webkit-mask-image: url('../img/icon/chart.svg'); mask-image: url('../img/icon/chart.svg'); }
+.ico--form { -webkit-mask-image: url('../img/icon/form.svg'); mask-image: url('../img/icon/form.svg'); }
+.ico--alert { -webkit-mask-image: url('../img/icon/alert.svg'); mask-image: url('../img/icon/alert.svg'); }
+.ico--phone { -webkit-mask-image: url('../img/icon/phone.svg'); mask-image: url('../img/icon/phone.svg'); }
+.ico--consult { -webkit-mask-image: url('../img/icon/consult.svg'); mask-image: url('../img/icon/consult.svg'); }
+.ico--admin { -webkit-mask-image: url('../img/icon/admin.svg'); mask-image: url('../img/icon/admin.svg'); }
+.ico--notice { -webkit-mask-image: url('../img/icon/notice.svg'); mask-image: url('../img/icon/notice.svg'); }
+.ico--check { -webkit-mask-image: url('../img/icon/check.svg'); mask-image: url('../img/icon/check.svg'); }
+.ico--handover { -webkit-mask-image: url('../img/icon/handover.svg'); mask-image: url('../img/icon/handover.svg'); }
+.biz-incl__no {
+  font-family: var(--font-en); font-size: var(--t-eyebrow); font-weight: 700;
+  letter-spacing: .1em; color: var(--hmuted);
+}
+.biz-incl__t { font-size: var(--t-lead); font-weight: 600; letter-spacing: -.01em; }
+.biz-incl__d { margin-top: 10px; font-size: var(--t-sm); line-height: 1.75; color: var(--hmuted); }
+
+@media (max-width: 1260px) {
+  .biz-incl { grid-template-columns: repeat(2, 1fr); gap: 0 40px; }
+}
+@media (max-width: 900px) {
+  .biz-incl { grid-template-columns: 1fr; }
+  .biz-herocta { margin-top: 32px; }
+}
+
+/* ── I. 한 줄 진단 진입 (2026-08-14) ───────────────────────
+   레퍼런스에서 가장 강한 전환 장치는 '폼을 페이지 안에 두는 것'이었다 —
+   브이웹은 화면 하단에 상시 입력줄을, 프랜차이즈플러스는 상·하단에 견적 폼을 둔다.
+   포인트웹은 한 발 더 나가 **"사이트 URL만 주시면 담당자가 직접 봅니다"** 로 진입을 한 칸으로 줄인다.
+
+   우리는 접수 기능이 아직 없다(`free-proposal` 폼도 안내만 띄운다).
+   그래서 **가짜 폼을 하나 더 만들지 않고**, 입력한 주소를 그대로 무료 제안 폼의
+   '현재 홈페이지 주소'(#fp-site) 로 넘긴다. 실제로 동작하는 연결이고 한 칸이면 시작된다. */
+.biz-quick { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.biz-quick__f { flex: 1 1 280px; min-width: 0; }
+.biz-quick input {
+  width: 100%; padding: 17px 18px;
+  /* ⚠ 입력 필드는 알약으로 두지 않는다 — 버튼과 구분이 안 되고 글자가 좌우 곡면에 붙는다.
+     버튼이 999px 이 된 2026-08-16 에 `--r-field` 로 떼어 냈다. */
+  border: 1px solid var(--hline); border-radius: var(--r-field);
+  background: transparent; color: inherit;
+  font-family: inherit; font-size: var(--t-sm); font-weight: 500;
+  transition: border-color .3s ease;
+}
+.biz-quick input::placeholder { color: var(--hmuted); }
+.biz-quick input:focus { outline: none; border-color: var(--brand); }
+.biz-quick .btn { flex: none; }
+/* 좌측 고정 컬럼(진단 aside)은 폭이 좁아 한 줄에 들어가지 않는다 — 거기서는 세로로 쌓는다 */
+.biz-diag__aside .biz-quick { flex-direction: column; }
+.biz-diag__aside .biz-quick .btn { width: 100%; }
+.biz-quick__note { margin-top: 14px; font-size: var(--t-sm); line-height: 1.7; color: var(--hmuted); }
+
+@media (max-width: 900px) {
+  .biz-quick .btn { width: 100%; }
+}
+
+/* 화면에는 안 보이지만 스크린리더는 읽는 라벨 — 한 줄 입력처럼 placeholder 만으로는
+   라벨이 되지 않는 자리에 쓴다(placeholder 는 입력을 시작하면 사라진다). */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ── 디자인센터 포트폴리오 (graphic-design) ────────────────────────────────
+   실제 인쇄물 사진이라 --img-treat(무채색 변환)을 걸지 않는다. 결과물은 색이 정보다.
+   필터 칩은 FAQ 와 같은 .chip 을 재사용하고, 여기서는 그리드만 정의한다. */
+/* ⚠ 반드시 minmax(0,1fr) 이다. 그냥 1fr 로 두면 열의 최소폭이 min-content 라
+   `word-break:keep-all` 로 안 쪼개지는 긴 제목이 자기 열을 밀어 **열 폭이 서로 달라진다**
+   (2026-08-15 실측: 390px 에서 161.6px / 191.0px 로 갈라졌다). */
+/* ⭐ 2026-08-16 세영 지시로 studio.haoc.co.kr 의 포트폴리오 그리드를 그대로 이식했다.
+   그 사이트 실측: `.np-grid { grid-template-columns: repeat(4,1fr); gap: 0 }` +
+   `.np-item { aspect-ratio: 3/4; overflow: hidden }` + `img { object-fit: cover }`.
+   **풀블리드(화면 끝까지) · 무간격 · 균일 타일**이 핵심이다 — 조각에서 그리드를
+   `.container` **밖**에 두는 이유가 이것이다.
+   ⚠ cover 라 그리드에서는 사진이 잘린다. 그래도 되는 이유는 **누르면 라이트박스가
+     contain 으로 전체를 보여주기** 때문이다(레퍼런스도 같은 구성). */
+/* ── 분류별 가로 레일 ─────────────────────────────────────────────
+   ⚠ 예전에는 전체를 한 그리드에 세로로 쌓았다. 편집디자인 135장·촬영 54장이라
+     **한참을 스크롤해야 했다**(2026-08-16 세영 지적). 분류마다 한 줄로 눕힌다.
+   ⚠ 레일은 `.container` 밖이라 오른쪽으로 화면 끝까지 흐른다 — '더 있다'가 읽히는 이유다.
+     대신 **첫 타일은 본문과 같은 x 에서 시작**해야 기준선이 흐트러지지 않는다:
+     좌측 패딩을 컨테이너 좌측과 같은 값으로 계산해 넣는다. */
+.drail-head {
+  width: 100%; max-width: var(--container); margin-inline: auto;
+  padding-inline: var(--gutter); margin-top: 64px;
+}
+.drail-head__t {
+  margin: 0; font-size: var(--t-lead); font-weight: 700; letter-spacing: -.01em;
+  display: flex; align-items: baseline; gap: 10px;
+}
+.drail-head__t b { font-size: var(--t-sm); font-weight: 600; color: var(--muted); }
+
+.drail {
+  display: flex; gap: 0; margin-top: 20px;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-inline: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+  scroll-padding-inline-start: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+  /* 스크롤바는 숨기되 스크롤 자체는 살린다(휠·트랙패드·드래그 모두 동작). */
+  scrollbar-width: none;
+}
+.drail::-webkit-scrollbar { display: none; }
+.drail:focus-visible { outline: 2px solid var(--brand); outline-offset: -3px; }
+.drail .dwork__item {
+  flex: 0 0 clamp(200px, 21vw, 280px);
+  scroll-snap-align: start;
+}
+/* 타일 = 3:4 정사각에 가까운 세로 칸. 레퍼런스와 같은 비율이다.
+   라운드·테두리·여백을 두지 않는다 — 타일끼리 맞붙어 한 장의 면이 되어야 한다. */
+.dwork__item {
+  position: relative; display: block; width: 100%; aspect-ratio: 3 / 4;
+  padding: 0; border: 0; background: var(--bg-soft); overflow: hidden;
+  font: inherit; color: inherit; text-align: left; cursor: zoom-in;
+}
+.dwork__item[hidden] { display: none; }
+.dwork__item:focus-visible { outline: 2px solid var(--brand); outline-offset: -3px; }
+.dwork__img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  transition: transform .8s cubic-bezier(.16,1,.3,1);
+}
+.dwork__item:hover .dwork__img { transform: scale(1.05); }
+/* 상세페이지처럼 아주 홀쭉한 원본은 위쪽을 보여준다(그리드에서만 — 라이트박스는 전체를 본다). */
+.dwork__img--crop { object-position: center top; }
+
+/* 캡션은 평소 숨어 있다가 hover 에 떠오른다(레퍼런스와 같은 동작). */
+.dwork__item::before {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, transparent 45%, rgba(15,13,10,.72) 100%);
+  opacity: 0; transition: opacity .4s cubic-bezier(.16,1,.3,1);
+}
+.dwork__item:hover::before, .dwork__item:focus-visible::before { opacity: 1; }
+.dwork__cap {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 24px clamp(16px, 2vw, 26px);
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1);
+}
+.dwork__item:hover .dwork__cap, .dwork__item:focus-visible .dwork__cap { opacity: 1; transform: none; }
+.dwork__t { display: block; font-size: var(--t-body); font-weight: 700; line-height: 1.4; color: #fff; word-break: keep-all; }
+.dwork__c { display: block; margin-top: 5px; font-size: var(--t-sm); font-weight: 600; color: var(--brand-2); }
+/* 우상단 ↗ — "누르면 크게 열린다"는 신호. 레퍼런스와 같은 자리·같은 크기. */
+.dwork__item::after {
+  content: '↗'; position: absolute; top: 14px; right: 14px; z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #fff; color: var(--fg);
+  display: grid; place-items: center; font-size: 17px; font-weight: 700;
+  opacity: 0; transform: translateY(8px) scale(.8);
+  transition: opacity .35s cubic-bezier(.16,1,.3,1), transform .35s cubic-bezier(.16,1,.3,1);
+}
+.dwork__item:hover::after, .dwork__item:focus-visible::after { opacity: 1; transform: none; }
+
+/* ⚠ 터치 기기에는 hover 가 없다 — 캡션이 영원히 안 보이면 어떤 작업인지 알 길이 없다.
+   그래서 hover 가 없는 환경에서는 캡션과 그라디언트를 처음부터 켜 둔다. */
+@media (hover: none) {
+  .dwork__item::before { opacity: 1; }
+  .dwork__cap { opacity: 1; transform: none; }
+  .dwork__item::after { display: none; }
+}
+
+/* 좁은 화면에서는 타일을 조금 키워(화면의 절반쯤) 손가락으로 넘기기 좋게 한다. */
+@media (max-width: 900px) {
+  .drail-head { margin-top: 48px; }
+  .drail .dwork__item { flex-basis: clamp(180px, 46vw, 260px); }
+}
+
+/* ── 포트폴리오 라이트박스 ─────────────────────────────────────────────
+   카드를 누르면 크게 보이고 오른쪽에 설명이 붙는다(원본 두 센터 사이트와 같은 구성).
+   마크업은 site.js 가 한 번만 만들어 body 에 붙인다 — 조각에는 들어가지 않는다. */
+.lbox {
+  position: fixed; inset: 0; z-index: 60; display: none;
+  /* ⚠ 반투명으로 두지 말 것. 88% → 97% 까지 올려 봐도 뒤 본문 글자가 설명과 겹쳐 읽혔다
+     (모바일에서 특히 심하다). 모달이니 그냥 덮는다. */
+  background: #0b0b0b;
+}
+.lbox.is-open { display: block; }
+.lbox__wrap {
+  position: absolute; inset: 0; display: grid; gap: 40px; align-items: center;
+  grid-template-columns: minmax(0, 1fr) 340px; padding: 72px 88px;
+}
+.lbox__figure { display: flex; align-items: center; justify-content: center; height: 100%; min-height: 0; }
+.lbox__img {
+  max-width: 100%; max-height: 100%; object-fit: contain;
+  border-radius: var(--r-card); background: #f4f4f2;
+}
+.lbox__info { color: #f4f4f2; max-height: 100%; overflow-y: auto; }
+.lbox__cat { display: block; font-size: var(--t-sm); color: #a8a8a6; }
+.lbox__title { margin-top: 10px; font-size: 26px; font-weight: 700; line-height: 1.35; word-break: keep-all; }
+.lbox__desc { margin-top: 16px; font-size: var(--t-body); line-height: 1.75; color: #d6d6d4; word-break: keep-all; }
+.lbox__label {
+  margin-top: 32px; padding-top: 18px; font-size: var(--t-eyebrow); letter-spacing: .08em;
+  color: #a8a8a6; border-top: 1px solid #4a4a4a;
+}
+.lbox__rows { margin-top: 14px; display: grid; gap: 10px; }
+.lbox__rows div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; font-size: var(--t-sm); }
+.lbox__rows b { font-weight: 600; color: #a8a8a6; }
+.lbox__rows span { color: #f4f4f2; word-break: keep-all; }
+.lbox__btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 1px solid #4a4a4a; background: color-mix(in srgb, #000 55%, transparent);
+  color: #f4f4f2; font-size: 24px; line-height: 1; cursor: pointer;
+  transition: border-color .25s, background .25s;
+}
+.lbox__btn:hover { border-color: #f4f4f2; background: #000; }
+.lbox__btn--prev { left: 20px; }
+.lbox__btn--next { right: 20px; }
+.lbox__close {
+  position: absolute; top: 20px; right: 20px; width: 48px; height: 48px;
+  border: 1px solid #4a4a4a; border-radius: 50%; background: transparent;
+  color: #f4f4f2; font-size: 26px; line-height: 1; cursor: pointer;
+  transition: border-color .25s, background .25s;
+}
+.lbox__close:hover { border-color: #f4f4f2; background: #000; }
+.lbox__btn:focus-visible, .lbox__close:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+body.lbox-open { overflow: hidden; }
+
+@media (max-width: 1000px) {
+  /* 좁은 화면에서는 설명을 이미지 아래로 내리고 전체를 세로 스크롤한다.
+     가로 2단을 유지하면 이미지도 설명도 둘 다 못 읽는 크기가 된다. */
+  .lbox__wrap {
+    grid-template-columns: minmax(0, 1fr); align-items: start;
+    padding: 64px 20px 32px; overflow-y: auto; gap: 24px;
+  }
+  .lbox__figure { max-height: 52vh; }
+  /* 이전·다음이 화면 아래에 고정되므로 그만큼 자리를 비운다 — 안 비우면 마지막 행을 가린다. */
+  .lbox__info { max-height: none; overflow: visible; padding-bottom: 76px; }
+  .lbox__title { font-size: 21px; }
+  .lbox__btn { top: auto; bottom: 16px; transform: none; width: 46px; height: 46px; }
+}
+
+/* ⭐ 2026-08-16 — 데스크톱 GNB 를 폭이 실제로 맞는 지점에서 햄버거로 넘긴다.
+   그전에는 `.nav__links` 가 **900px 까지** 버텨서, 901~1240px 구간에서 메뉴가 2~3줄로
+   접힌 채 보였다(1200px 캡처로 확인). 대표님 시트 메뉴명이 「AI 가시성 홈페이지제작」처럼
+   길어지면서 드러난 문제다.
+   기준값은 실측이다 — 메뉴 자연폭 + 로고 90 + 최소 간격 40 이 필요하다.
+   2026-08-16 밤 유지보수를 대메뉴로 되돌리면서 9개가 되었다(대표님 녹음본 지시):
+     자연폭 1170 + 90 + 40 = 1300 → **1320px** 로 올렸다.
+   ⚠ 메뉴 이름이나 개수를 바꾸면 이 값도 다시 재야 한다 — `scratchpad/xw.py` 로
+     `.nav__links` 자연폭을 재고 +130 하면 된다.
+   ⚠ 1280 노트북은 이제 햄버거다. 깨진 두 줄 메뉴를 보여주는 것보다 낫다고 판단했다. */
+@media (max-width: 1320px) {
+  .nav__links { display: none; }
+  .nav__burger { display: block; width: 28px; height: 28px; color: var(--fg); margin-left: auto; position: relative; z-index: 51; }
+  .nav__burger svg { width: 100%; height: 100%; }
+  .nav__burger .ic-close, .nav__burger[aria-expanded='true'] .ic-menu { display: none; }
+  .nav__burger[aria-expanded='true'] .ic-close { display: block; color: var(--fg); }
+}
+
+/* ══ .cols--card — 파이브프로(fivepro.co.kr) 카드 이식 · 2026-08-17 ══════════
+   대표님 미팅 녹음본: "기존 홈페이지 시장 최강자… 파이브프로를 따라가면 돼요."
+   세영님 지시로 **선+글자(.col) 를 카드로** 바꾸는 시험 적용이다.
+
+   실측값(scratchpad/probe_fp.py 로 받은 원본 그대로):
+     · 반경   15px(li.icon) · 20px(.swiper-slide/.thumb_container)
+     · 그림자 rgba(0,0,0,.08) 0 0 15px  /  rgba(0,0,0,.05) 0 10px 15px
+     · 테두리 1px solid #e9e9e9 (.thumb_container)
+     · 안쪽여백 45px 28px 30px 28px (li.icon)
+     · 그리드 gap 30px 20px (.img_container)
+
+   ⚠ 레퍼런스는 **전면 흰 바탕**이라 그림자만으로 카드가 뜬다. 우리는 `.col` 243개 중
+     152개(63%)가 어두운 섹션(.invert)에 있어서 흰 카드를 그대로 얹으면 인상이 달라진다.
+     → 밝은 면은 레퍼런스 그대로, 어두운 면은 **같은 형태를 유지하되 면을 한 단계 띄우는**
+       방식으로 옮긴다(검은 바탕에서는 그림자가 보이지 않으므로 면 밝기로 대신한다).
+   ⚠ 반경은 우리 토큰 `--r-card`(12px)를 쓰지 않고 레퍼런스값 15px 를 그대로 뒀다.
+   ⚠ 되돌리려면 조각에서 `cols--card` 클래스만 빼면 된다. CSS 는 남겨도 무해하다. */
+.cols--card { gap: 30px 20px; }
+.cols--card .col {
+  padding: 45px 28px 30px;
+  background: #fff;
+  border: 1px solid #e9e9e9;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, .08) 0 0 15px;
+}
+/* 카드가 되면 윗선은 카드 테두리가 대신한다 — 선이 두 번 그려지지 않게 숨긴다 */
+.cols--card .col > .rule { display: none; }
+.cols--card .col__label { height: auto; }
+
+/* 어두운 섹션 — 검은 바탕에서는 그림자가 보이지 않는다. 면을 띄우고 테두리를 낮춘다. */
+.invert .cols--card .col {
+  background: color-mix(in srgb, var(--bg) 7%, transparent);
+  border-color: color-mix(in srgb, var(--bg) 14%, transparent);
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .cols--card { gap: 20px; }
+  .cols--card .col { padding: 32px 22px 26px; }
+}
+
+/* ── 카드 안 이미지 — 파이브프로 「제작 사례」 카드 구조 ─────────────────
+   실측: 이미지가 카드 상단 전체 폭을 채우고 아래에 로고·제목이 온다(fp_1800 캡처).
+   hover 는 레퍼런스 값 그대로 `transform .5s ease` + `all .3s ease`.
+   ⚠ 이미지가 카드 안쪽 여백을 뚫고 상단 모서리에 붙어야 한다 → 음수 마진으로 뺀다.
+   ⚠ 비율은 우리 자산이 제각각이라 aspect-ratio 로 고정하고 object-fit:cover 로 채운다.
+     (레퍼런스도 카드마다 원본 비율이 달라 같은 방식이다) */
+.col__img {
+  margin: -45px -28px 24px; border-radius: 15px 15px 0 0; overflow: hidden;
+  aspect-ratio: 4 / 3; background: color-mix(in srgb, var(--fg) 6%, transparent);
+}
+.col__img img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .5s ease;
+}
+.cols--card .col { overflow: hidden; transition: all .3s ease; }
+.col:hover .col__img img { transform: scale(1.06); }
+.invert .col__img { background: color-mix(in srgb, var(--bg) 10%, transparent); }
+/* ⚠ 평면 `.cols` 에는 상쇄할 카드 여백이 없다. 카드용 음수 마진을 그대로 두면
+   이미지만 기준선 밖으로 나간다 — 실측 왼쪽 92 / 라벨 120 으로 28px 어긋났다
+   (2026-08-17). 카드에 붙지 않으므로 모서리도 네 곳 다 굴린다. */
+.cols:not(.cols--card) .col__img { margin: 0 0 24px; border-radius: 15px; }
+/* 세로형 자산(카탈로그·리플렛)은 3:4 로 — 가로로 우겨 넣으면 잘려 못 알아본다 */
+.col__img--tall { aspect-ratio: 3 / 4; }
+@media (max-width: 900px) {
+  .col__img { margin: -32px -22px 20px; }
+  .cols:not(.cols--card) .col__img { margin: 0 0 20px; }
+}
+
+/* ══ 사진이 없는 히어로의 추상 배경 — `.subhero--grad` (2026-08-17 세영) ═══════
+   세영: "AI로 생성한 이미지는 안 넣기로 했어. 너무 티나서." → 개념 페이지 30곳은
+   사진 대신 CSS 로 그린다. 파일이 늘지 않고 어떤 화면에서도 선명하다.
+
+   ⚠ **레퍼런스(haoc.co.kr)를 그대로 옮기지 않는다**(2026-08-17 세영: "히어로 이미지는
+     레퍼런스 사이트와 똑같이 가면 안돼"). 네 겹으로 쌓는 기법만 같고 값은 우리 것이다 —
+     바탕은 살구가 아니라 먹색, 흐름은 155° 가 아니라 168°, 원호는 화면 오른쪽,
+     포인트는 하오웹 레드(#e83817).
+   ⭐ **밝은 쪽으로 간다**(2026-08-17 세영: "CSS도 어두운 것보다 밝은 게 나은 거 같아").
+     처음엔 색을 안 뒤집어도 되는 어두운 안으로 갔다가 밝은 안으로 바꿨다.
+   ⚠⚠ 밝아지면 **글자·버튼·내비 색을 전부 뒤집어야 한다** — 원래 전부 흰색이다.
+     그런데 **글로벌 6곳은 여전히 어두운 실사**라, 뒤집기를 `.subhero` 전체에 걸면
+     글로벌이 통째로 깨진다. 그래서 아래 규칙은 **모두 `--grad` 안에서만** 건다.
+     내비도 `body:has(.subhero--grad)` 로 좁혔다.
+   ⚠ 사진을 쓰는 6곳(글로벌)에는 이 클래스를 걸지 않는다.
+   ⭐ 되돌리려면 이 블록과 마크업의 `subhero--grad` 만 지우면 된다. */
+.subhero--grad {
+  background: linear-gradient(200deg, #fbfaf9 0%, #f6f3f1 34%, #f2e9e6 68%, #efdfda 100%);
+}
+.subhero--grad .subhero__scrim {
+  background:
+    radial-gradient(46% 52% at 88% 6%,   rgba(232,56,23,.10), rgba(232,56,23,0) 62%),
+    radial-gradient(56% 50% at 6% 30%,   rgba(255,255,255,.94), rgba(255,255,255,0) 58%),
+    radial-gradient(70% 62% at 18% 112%, rgba(232,56,23,.07), rgba(232,56,23,0) 60%);
+}
+/* 얇은 원호 — 점무늬 마스크를 반드시 풀어 준다. 안 그러면 링이 점으로 잘려 나온다. */
+.subhero--grad .subhero__dots {
+  inset: -32% -22%;
+  background-image:
+    radial-gradient(closest-side at 22% 52%, rgba(255,255,255,0) 66%, rgba(255,255,255,.90) 67%, rgba(255,255,255,0) 71%),
+    radial-gradient(closest-side at 12% 38%, rgba(255,255,255,0) 57%, rgba(255,255,255,.66) 58%, rgba(255,255,255,0) 62%),
+    radial-gradient(closest-side at 34% 64%, rgba(232,56,23,0) 74%, rgba(232,56,23,.10) 75%, rgba(232,56,23,0) 78%);
+  background-size: auto;
+  -webkit-mask-image: none; mask-image: none;
+  transform: rotate(-12deg);
+}
+.subhero--grad::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(130% 92% at 50% -26%, rgba(255,255,255,0) 54%, rgba(255,255,255,.46) 100%);
+}
+/* 밝은 바탕이 됐으니 글자를 되돌린다 — `--grad` 안에서만. */
+/* ⭐ 영문 타이틀은 **완전 블랙, 투명도 없음**(2026-08-17 세영). 처음엔 배경 장식처럼
+   옅게 깔았는데 지시로 바꿨다. `--fg` 는 먹색 #17150f 다. */
+.subhero--grad .subhero__title { color: var(--fg); }
+.subhero--grad .h1__ko { color: var(--fg); }
+.subhero--grad .subhero__crumb { color: var(--brand); }
+.subhero--grad .subhero__kr,
+.subhero--grad .subhero__aside,
+.subhero--grad .note { color: color-mix(in srgb, var(--fg) 72%, transparent); }
+.subhero--grad .btn:not(.btn--brand) {
+  color: var(--fg); border-color: color-mix(in srgb, var(--fg) 28%, transparent);
+}
+.subhero--grad .btn:not(.btn--brand):hover { background: var(--brand); border-color: var(--brand); color: #fff; }
+/* ⚠ 내비도 같이. 위쪽(231~238행)에 서브히어로가 어둡다는 전제로 메뉴·버거를 흰색으로
+   칠하고 로고를 어두운 배경용으로 바꾸는 규칙이 있다. 배경만 밝히면 메뉴가 사라진다.
+   ⚠ 글로벌(실사)과 메인 히어로는 그대로 둬야 하므로 `--grad` 가 있는 문서에만 건다.
+   ⚠ 로고는 `content: normal` 로는 안 돌아온다. 밝은 배경용 파일을 명시해야 한다. */
+body:has(.subhero--grad) .nav:not(.is-stuck):not(.is-open) .nav__link,
+body:has(.subhero--grad) .nav:not(.is-stuck):not(.is-open) .nav__burger { color: var(--fg); }
+body:has(.subhero--grad) .nav:not(.is-stuck):not(.is-open) .nav__logo img {
+  content: url('../img/logo-on-light.png');
+}
+
+/* ══ 서브히어로 타이틀을 화면 정중앙으로 — 레퍼런스(haoc.co.kr) 배치 (2026-08-17 세영) ══
+   세영: "서브페이지 히어로 전부 타이틀 레이아웃을 레퍼런스처럼 바꾸자. 화면 상하좌우 중앙정렬로."
+   원래는 왼쪽 아래(`justify-content:flex-end` + 좌측 정렬)였다.
+   ⚠ 1뎁스와 2뎁스의 차이는 **높이**가 계속 만든다(100svh 대 70svh) — 정렬만 통일한다.
+   ⚠ 아래 여백을 위와 같게 맞춰야 진짜 가운데로 보인다. 원래 `padding-block: nav-h 56px`
+     이라 아래가 더 두꺼웠다. 위는 내비에 가리지 않게 nav-h 를 유지하고 아래를 같게 준다.
+   ⚠ 폭이 제한된 문장(`__kr` 660 · `__aside` 420)은 `margin-inline:auto` 가 없으면
+     가운데로 안 온다. 글로벌 6곳(실사)에도 똑같이 적용된다 — 세영: "전부". */
+.subhero__inner {
+  justify-content: center; align-items: center; text-align: center;
+  padding-block: var(--nav-h) var(--nav-h);
+}
+.subhero__kr, .subhero__aside { margin-inline: auto; }
+/* 1뎁스에 남아 있던 2열 행도 한 줄로 세워 가운데에 맞춘다. */
+.subhero__row {
+  grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 14px;
+}
+
+/* ── 자간·행간·여백을 레퍼런스에 맞춘다 (haoc.co.kr 실측 · 뷰포트 1280) ──────────
+   eyebrow  20px/600 · 행간 1.6  · 자간 0.01em · 아래 28px
+   제목     58.88px/600 · 행간 **1.2** · 자간 **-0.04em**
+   리드문   16.9px/500 · 행간 **1.75** · 자간 normal · 위 **36px**
+   CTA      16px/700 · 행간 1.6 · 위 **56px**
+   ⭐ **크기는 우리 토큰을 그대로 둔다**(레퍼런스 px 를 옮기지 않는다 — 하오웹 원칙).
+     자간·행간·여백만 맞춘다. 세영: "레퍼런스 대로 글자간 행간도 잘 확인해줘."
+   ⚠ 국문 제목(.h1__ko)에는 원래 행간 지정이 없어 기본값으로 벌어져 있었다. */
+.subhero .h1__ko { line-height: 1.2; letter-spacing: -.04em; }
+.subhero__crumb { margin-bottom: 28px; }
+.subhero__kr { margin-top: 36px; line-height: 1.75; }
+.subhero__row .subhero__kr { margin-top: 0; }
+.subhero__aside { line-height: 1.75; }
+.subhero .biz-herocta { margin-top: 56px; }
+
+/* ══ 차별성 3가지 `.diff` — motiflow.net 이식 (2026-08-17 세영) ════════════════
+   실측(motiflow.net · 뷰포트 1280)
+     · 레이아웃  왼쪽 600 / 오른쪽 665 (≒ 47:53) · 섹션 배경 rgb(0,0,0)
+     · ⭐ **모션 = 왼쪽 `position:sticky; top:82.39px` 하나뿐이다.** 카드에는 등장
+       애니메이션이 없다(transform:none · opacity:1 고정). 왼쪽이 붙어 있는 동안
+       오른쪽 카드만 흐른다 — 그것이 이 섹션 모션의 전부다.
+     · 카드  폭 635 · 높이 391~474 · 반경 20px · 배경 cover
+     · 카드 제목 48px/700 lh1.2 ls-.021em · 카피 18px/700 lh1.2 ls-.056em
+     · 배지 20px/700 ls-.05em rgb(84,94,111) · 부제 22px/700 ls-.045em 흰색
+   ⚠ 크기는 레퍼런스 px 를 그대로 옮기지 않는다(하오웹 원칙) — 우리 화면에 맞춰 줄였다.
+   ⚠⚠ sticky 는 **부모가 높이를 갖고 자식이 stretch 가 아니어야** 붙는다.
+     그리드 기본값(align-items:stretch)이면 자식이 부모 높이를 다 먹어 절대 고정되지 않는다.
+     그래서 `.diff__inner` 에 `align-items:start` 를 준다.
+   ⚠ 배경 사진 위에 흰 글자가 얹히므로 카드마다 어두운 막을 깐다. */
+.diff { background: #000; color: #fff; padding-block: 128px; }
+.diff__inner {
+  max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter);
+  display: grid; grid-template-columns: 47fr 53fr; gap: 48px; align-items: start;
+}
+.diff__aside { position: sticky; top: calc(var(--nav-h) + 28px); }
+.diff__badge {
+  display: inline-block; font-size: 15px; font-weight: 700; letter-spacing: -.02em;
+  color: rgba(255, 255, 255, .72); background: rgba(255, 255, 255, .10);
+  padding: 9px 18px; border-radius: 999px;
+}
+.diff__title {
+  margin-top: 28px; font-size: clamp(44px, 4.4vw, 64px); font-weight: 700;
+  line-height: 1.12; letter-spacing: -.04em; color: #fff;
+}
+.diff__sub {
+  margin-top: 32px; font-size: var(--t-lead); font-weight: 700;
+  line-height: 1.6; letter-spacing: -.02em; color: rgba(255, 255, 255, .68);
+}
+.diff__list { display: flex; flex-direction: column; gap: 24px; }
+.diff__card {
+  position: relative; overflow: hidden; border-radius: 20px;
+  min-height: 400px; display: flex; align-items: flex-end;
+}
+.diff__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* 어두운 막 — 아래로 갈수록 진하게. 글자가 앉는 쪽을 확실히 눌러 준다. */
+.diff__card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.86) 0%, rgba(0,0,0,.58) 46%, rgba(0,0,0,.22) 100%);
+}
+.diff__body { position: relative; z-index: 2; padding: 44px 40px 40px; width: 100%; }
+.diff__cardt { font-size: clamp(28px, 2.6vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
+.diff__say { margin-top: 26px; }
+.diff__q { font-size: var(--t-body); font-weight: 700; line-height: 1.5; letter-spacing: -.02em; color: rgba(255, 255, 255, .72); }
+.diff__a { margin-top: 8px; font-size: var(--t-body); font-weight: 700; line-height: 1.5; letter-spacing: -.02em; color: #fff; }
+.diff__a b { color: var(--brand-2); font-weight: 700; }
+.diff__tags {
+  margin-top: 26px; padding-top: 22px; display: flex; flex-wrap: wrap; gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, .22);
+}
+.diff__tags span {
+  font-size: var(--t-eyebrow); font-weight: 500; color: rgba(255, 255, 255, .86);
+  background: rgba(255, 255, 255, .12); padding: 7px 14px; border-radius: 999px;
+}
+@media (max-width: 900px) {
+  .diff { padding-block: 88px; }
+  .diff__inner { grid-template-columns: 1fr; gap: 40px; }
+  /* ⚠ 한 줄로 접히면 sticky 를 반드시 푼다 — 안 그러면 제목이 카드 위에 겹쳐 따라다닌다. */
+  .diff__aside { position: static; }
+  .diff__body { padding: 32px 24px 28px; }
+  .diff__card { min-height: 340px; }
+}

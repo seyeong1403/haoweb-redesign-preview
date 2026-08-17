@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>병원 홈페이지 제작 — 하오웹</title>
+<meta name="description" content="진료과목·의료진·진료 방식을 환자가 확인하고 예약으로 이어지도록 설계합니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="병원 홈페이지 제작 — 하오웹">
+<meta property="og:description" content="진료과목·의료진·진료 방식을 환자가 확인하고 예약으로 이어지도록 설계합니다.">
+<meta property="og:site_name" content="HAOWEB">
+<link rel="icon" href="assets/img/logo-on-dark.png">
+<link rel="stylesheet" href="assets/css/base.css">
+</head>
+<body>
+<svg class="maskdefs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="hao-mask" clipPathUnits="userSpaceOnUse">
+      <text data-hao-mask x="0" y="0" text-anchor="middle"
+            font-family="'Pretendard Variable', Pretendard, sans-serif"
+            font-weight="800" font-size="200" letter-spacing="-0.03em">HAO</text>
+    </clipPath>
+  </defs>
+</svg>
+<nav class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="nav__logo" href="index.html" aria-label="하오웹 홈">
+      <img src="assets/img/logo-on-dark.png" alt="하오웹" width="120" height="26">
+    </a>
+    <div class="nav__links">
+    <div class="nav__group" data-navgroup>
+      <a class="nav__link" href="website.html" aria-current="page" aria-haspopup="true" aria-expanded="false">AI 가시성 홈페이지 제작</a>
+      <div class="mm" data-mmpanel>
+        <div class="mm__inner">
+          <p class="mm__eyebrow">AI 가시성 홈페이지 제작</p>
+          <div class="mm__grid"><a class="mm__link" href="website.html">홈페이지 제작센터</a><a class="mm__link" href="company.html">기업 홈페이지</a><a class="mm__link" href="hospital.html" aria-current="page">병원 홈페이지</a><a class="mm__link" href="franchise.html">프랜차이즈 홈페이지</a><a class="mm__link" href="shop.html">쇼핑몰</a><a class="mm__link" href="lawyer.html">변호사·법률 홈페이지</a><a class="mm__link" href="landing.html">랜딩페이지</a><a class="mm__link" href="app.html">앱 제작</a><a class="mm__link" href="content-production.html">홈페이지 콘텐츠 제작</a><a class="mm__link" href="process.html">제작 과정</a><a class="mm__link" href="plan.html">제작 플랜</a><a class="mm__link" href="price-guide.html">제작비 안내</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav__group" data-navgroup>
+      <a class="nav__link" href="renewal.html" aria-haspopup="true" aria-expanded="false">AI 가시성 홈페이지 리뉴얼</a>
+      <div class="mm" data-mmpanel>
+        <div class="mm__inner">
+          <p class="mm__eyebrow">AI 가시성 홈페이지 리뉴얼</p>
+          <div class="mm__grid"><a class="mm__link" href="renewal.html">홈페이지 리뉴얼</a><a class="mm__link" href="diagnosis.html">현재 홈페이지 진단</a><a class="mm__link" href="free-proposal.html">무료 홈페이지 제안</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav__group" data-navgroup>
+      <a class="nav__link" href="global.html" aria-haspopup="true" aria-expanded="false">글로벌 홈페이지</a>
+      <div class="mm" data-mmpanel>
+        <div class="mm__inner">
+          <p class="mm__eyebrow">글로벌 홈페이지</p>
+          <div class="mm__grid"><a class="mm__link" href="global.html">글로벌 홈페이지</a><a class="mm__link" href="global-vn.html">베트남</a><a class="mm__link" href="global-cn.html">중국</a><a class="mm__link" href="global-th.html">태국</a><a class="mm__link" href="global-jp.html">일본</a><a class="mm__link" href="global-en.html">영문</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav__group" data-navgroup>
+      <a class="nav__link" href="included.html" aria-haspopup="true" aria-expanded="false">무료서비스</a>
+      <div class="mm" data-mmpanel>
+        <div class="mm__inner">
+          <p class="mm__eyebrow">무료서비스</p>
+          <div class="mm__grid"><a class="mm__link" href="included.html">무료서비스</a><a class="mm__link" href="free-proposal.html">무료 홈페이지 제안</a><a class="mm__link" href="diagnosis.html">현재 홈페이지 진단</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav__group" data-navgroup>
+      <a class="nav__link" href="portfolio.html" aria-haspopup="true" aria-expanded="false">포트폴리오</a>
+      <div class="mm" data-mmpanel>
+        <div class="mm__inner">
+          <p class="mm__eyebrow">포트폴리오</p>
+          <div class="mm__grid"><a class="mm__link" href="portfolio.html">포트폴리오</a><a class="mm__link" href="interview.html">고객 인터뷰</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav__group" data-navgroup>
+      <a class="nav__link" href="ai-content.html" aria-haspopup="true" aria-expanded="false">AI 콘텐츠</a>
+      <div class="mm" data-mmpanel>
+        <div class="mm__inner">
+          <p class="mm__eyebrow">AI 콘텐츠</p>
+          <div class="mm__grid"><a class="mm__link" href="ai-content.html">AI 활용 전문 콘텐츠</a><a class="mm__link" href="search-ai.html">AI 가시성</a><a class="mm__link" href="seo.html">SEO</a><a class="mm__link" href="aeo.html">AEO</a><a class="mm__link" href="geo.html">GEO</a><a class="mm__link" href="columns.html">하오웹 칼럼</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav__group" data-navgroup>
+      <a class="nav__link" href="graphic-design.html" aria-haspopup="true" aria-expanded="false">디자인·촬영</a>
+      <div class="mm" data-mmpanel>
+        <div class="mm__inner">
+          <p class="mm__eyebrow">디자인·촬영</p>
+          <div class="mm__grid"><a class="mm__link" href="graphic-design.html">그래픽·편집디자인</a><a class="mm__link" href="studio.html">사진·영상 촬영</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav__group" data-navgroup>
+      <a class="nav__link" href="maintenance.html" aria-haspopup="true" aria-expanded="false">유지보수</a>
+      <div class="mm" data-mmpanel>
+        <div class="mm__inner">
+          <p class="mm__eyebrow">유지보수</p>
+          <div class="mm__grid"><a class="mm__link" href="maintenance.html">유지보수</a><a class="mm__link" href="content-operation.html">콘텐츠 운영</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav__group" data-navgroup>
+      <a class="nav__link" href="inquiry.html" aria-haspopup="true" aria-expanded="false">고객지원</a>
+      <div class="mm" data-mmpanel>
+        <div class="mm__inner">
+          <p class="mm__eyebrow">고객지원</p>
+          <div class="mm__grid"><a class="mm__link" href="inquiry.html">제작 문의</a><a class="mm__link" href="faq.html">FAQ</a><a class="mm__link" href="notice.html">공지사항</a><a class="mm__link" href="about.html">회사소개</a></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <button class="nav__burger" data-burger aria-expanded="false" aria-label="메뉴 열기"><svg class="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg><svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  </div>
+</nav>
+<div class="navpanel" data-navpanel data-open="false">
+  <div class="navpanel__inner">
+      <div class="navpanel__group">
+        <p class="navpanel__h">AI 가시성 홈페이지 제작</p>
+        <a class="navpanel__link" href="website.html">홈페이지 제작센터</a><a class="navpanel__link" href="company.html">기업 홈페이지</a><a class="navpanel__link" href="hospital.html" aria-current="page">병원 홈페이지</a><a class="navpanel__link" href="franchise.html">프랜차이즈 홈페이지</a><a class="navpanel__link" href="shop.html">쇼핑몰</a><a class="navpanel__link" href="lawyer.html">변호사·법률 홈페이지</a><a class="navpanel__link" href="landing.html">랜딩페이지</a><a class="navpanel__link" href="app.html">앱 제작</a><a class="navpanel__link" href="content-production.html">홈페이지 콘텐츠 제작</a><a class="navpanel__link" href="process.html">제작 과정</a><a class="navpanel__link" href="plan.html">제작 플랜</a><a class="navpanel__link" href="price-guide.html">제작비 안내</a>
+      </div>      <div class="navpanel__group">
+        <p class="navpanel__h">AI 가시성 홈페이지 리뉴얼</p>
+        <a class="navpanel__link" href="renewal.html">홈페이지 리뉴얼</a><a class="navpanel__link" href="diagnosis.html">현재 홈페이지 진단</a><a class="navpanel__link" href="free-proposal.html">무료 홈페이지 제안</a>
+      </div>      <div class="navpanel__group">
+        <p class="navpanel__h">글로벌 홈페이지</p>
+        <a class="navpanel__link" href="global.html">글로벌 홈페이지</a><a class="navpanel__link" href="global-vn.html">베트남</a><a class="navpanel__link" href="global-cn.html">중국</a><a class="navpanel__link" href="global-th.html">태국</a><a class="navpanel__link" href="global-jp.html">일본</a><a class="navpanel__link" href="global-en.html">영문</a>
+      </div>      <div class="navpanel__group">
+        <p class="navpanel__h">무료서비스</p>
+        <a class="navpanel__link" href="included.html">무료서비스</a><a class="navpanel__link" href="free-proposal.html">무료 홈페이지 제안</a><a class="navpanel__link" href="diagnosis.html">현재 홈페이지 진단</a>
+      </div>      <div class="navpanel__group">
+        <p class="navpanel__h">포트폴리오</p>
+        <a class="navpanel__link" href="portfolio.html">포트폴리오</a><a class="navpanel__link" href="interview.html">고객 인터뷰</a>
+      </div>      <div class="navpanel__group">
+        <p class="navpanel__h">AI 콘텐츠</p>
+        <a class="navpanel__link" href="ai-content.html">AI 활용 전문 콘텐츠</a><a class="navpanel__link" href="search-ai.html">AI 가시성</a><a class="navpanel__link" href="seo.html">SEO</a><a class="navpanel__link" href="aeo.html">AEO</a><a class="navpanel__link" href="geo.html">GEO</a><a class="navpanel__link" href="columns.html">하오웹 칼럼</a>
+      </div>      <div class="navpanel__group">
+        <p class="navpanel__h">디자인·촬영</p>
+        <a class="navpanel__link" href="graphic-design.html">그래픽·편집디자인</a><a class="navpanel__link" href="studio.html">사진·영상 촬영</a>
+      </div>      <div class="navpanel__group">
+        <p class="navpanel__h">유지보수</p>
+        <a class="navpanel__link" href="maintenance.html">유지보수</a><a class="navpanel__link" href="content-operation.html">콘텐츠 운영</a>
+      </div>      <div class="navpanel__group">
+        <p class="navpanel__h">고객지원</p>
+        <a class="navpanel__link" href="inquiry.html">제작 문의</a><a class="navpanel__link" href="faq.html">FAQ</a><a class="navpanel__link" href="notice.html">공지사항</a><a class="navpanel__link" href="about.html">회사소개</a>
+      </div>
+  </div>
+</div>
+<main>
+<!-- 병원 홈페이지 제작 — 2026-08-14 전면 재구성.
+     목적은 하나다: 이 페이지를 본 원장이 문의를 남기게 하는 것.
+     그래서 순서를 '문제 → 방식 → 받는 것 → 운영 → 비용 → 진단 신청'으로 다시 짰다.
+
+     레퍼런스 8곳을 실측해 마케팅 장치만 골라 왔다(README 23·24번).
+       bravomedi   기본 제공 목록을 못 박는 방식 · 가로 밴드
+       newsight    자가진단형 대상 카드 · 기본 혜택 패키지화
+       brainmedi   비용을 숨기지 않는 태도(우리는 금액 대신 '무엇이 비용을 정하는지')
+       crossdesign 진단·경쟁 비교를 먼저 주는 리드 마그넷 · 오픈 이후 단계
+       soijeong    병원이 직접 운영하는 CMS
+       nodelix     지역·진료과·증상·질문 검색 구조
+       tommso      개원 패키지 · 칼럼
+       urdv        좌측 고정 + 우측 스택
+     ⚠ 가져오지 않은 것: 성과 수치·성장률·만족도·상위노출 캡처·후기·타임세일·템플릿 상품.
+       근거가 없거나(우리는 그 자산이 없다) 효과 보장에 해당한다. -->
+
+<section class="subhero subhero--full subhero--grad" style="height:70svh">
+<div class="subhero__scrim" aria-hidden="true"></div>
+  <div class="subhero__dots" aria-hidden="true"></div>
+  <div class="subhero__inner">
+    <p class="subhero__crumb">홈페이지 제작</p>
+    <p class="subhero__title" data-anim data-anim-hero>Hospital</p>
+    <h1 class="h1__ko" data-fade data-anim-hero data-delay=".06">병원 홈페이지 제작</h1>
+    <!-- 서브타이틀과 오른쪽 문장은 **같은 행**에 둔다 — 값(margin)이 아니라 구조로
+         맞춰야 화면 폭이 바뀌어도 윗선이 어긋나지 않는다(2026-08-16). -->
+    <p class="subhero__kr" data-fade data-anim-hero>환자는 검색으로 병원을 고릅니다. 진료과·의료진·진료 정보를 확인하고 예약까지 이어지는 홈페이지를 만듭니다.</p>
+
+    <div class="biz-herocta" data-fade data-anim-hero data-delay=".12">
+      <div class="btns">
+        <a class="btn btn--brand" href="diagnosis.html">무료 진단 신청하기</a>
+        <a class="btn" href="inquiry.html">병원 홈페이지 상담</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 문제 제기 + 대상 — nodelix 의 "홈페이지는 있는데 왜 문의가 없을까" 도입과
+     newsight 의 '이런 원장님께 추천'(자가진단) 을 하나로 합쳤다.
+     둘을 따로 두면 같은 질문을 두 번 하는 셈이라 첫 화면 다음의 힘이 빠진다. -->
+<section class="sec sec--tight">
+  <div class="container">
+    <div class="sechead sechead--full">
+      <h2 class="sechead__title" data-anim="lines">홈페이지는 있는데, 문의가 없습니다.</h2>
+      <p class="sechead__lead" data-anim="lines">광고를 늘리기 전에 홈페이지부터 봐야 하는 경우가 많습니다. 들어온 환자가 확인하려던 것을 못 찾고 나가면, 광고로 유입되어도 필요한 정보를 찾지 못하면 문의로 이어지기 어렵습니다.</p>
+    </div>
+    <div class="figfull" data-fade>
+      <img src="assets/img/pv/scope-medical.jpg" alt="조용한 병원 복도" loading="lazy">
+    </div>
+    <div class="cardgrid">
+      <div class="card" data-fade>
+        <p class="card__t">검색해도 우리 병원이 나오지 않습니다</p>
+        <p class="card__d">환자는 병원 이름이 아니라 지역·진료과·증상으로 검색합니다.</p>
+      </div>
+      <div class="card" data-fade data-delay="0.05">
+        <p class="card__t">들어와도 진료과를 찾지 못합니다</p>
+        <p class="card__d">진료 안내가 한 페이지에 몰려 있으면 확인 도중 나갑니다.</p>
+      </div>
+      <div class="card" data-fade data-delay="0.10">
+        <p class="card__t">모바일에서 예약이 불편합니다</p>
+        <p class="card__d">대부분의 환자가 휴대폰으로 들어와 그 자리에서 결정합니다.</p>
+      </div>
+      <div class="card" data-fade data-delay="0.15">
+        <p class="card__t">수정할 때마다 제작사에 연락해야 합니다</p>
+        <p class="card__d">휴진 안내 한 줄 바꾸는 데 며칠이 걸립니다.</p>
+      </div>
+      <div class="card" data-fade data-delay="0.20">
+        <p class="card__t">개원 일정이 촉박합니다</p>
+        <p class="card__d">홈페이지가 개원일에 맞춰 열리지 못할 것 같습니다.</p>
+      </div>
+      <div class="card" data-fade data-delay="0.25">
+        <p class="card__t">들어온 상담이 어디로 갔는지 모릅니다</p>
+        <p class="card__d">홈페이지에서 발생한 문의가 응대로 이어지지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 검색 노출 + 전담 — 2026-08-15 세영 지시로 페이지 상단으로 올렸다.
+     원래 「기본 제공」 섹션 끝(페이지 중반)에 있었는데, AEO·SEO·GEO로 노출되는 것이
+     하오웹에서 가장 중요한 이야기라 문제 제기 바로 다음에 둔다.
+     순서: 이렇게 검색된다(사실) → 그걸 아는 전문 마케터가 만든다(우리). 인과로 읽혀야 한다.
+     ⚠ 이 섹션을 다시 옮기면 아래 「기본 제공」 과 중복되지 않는지 확인할 것. -->
+<section class="sec invert">
+  <div class="container">
+    <!-- 이렇게 검색됩니다 — 2026-08-15. SEO·AEO·GEO 페이지가 "구조를 만듭니다" 까지만 말해
+         "그게 우리 업종에 무슨 의미냐" 가 남았다. 그 빈칸을 업종별 검색어로 채운다.
+         위 「업종 전문 마케터」 의 근거이기도 하다 — 아는 사람만 쓸 수 있는 말이다.
+         ⭐ 선(2026-08-15 세영 확인): **무엇을·왜만 쓰고 어떻게·얼마나는 쓰지 않는다.**
+           검색어 예시와 페이지를 나누는 이유까지가 끝. 조사 도구·추출 기준·검색량 같은
+           절차를 쓰면 매뉴얼로 읽혀 "그럼 나도 하겠네" 가 된다(0원과 비교당하는 함정).
+         ⚠ 검색어는 전부 **예시**다. 고객사의 실제 키워드 세트는 절대 쓰지 않는다 —
+           공개하면 그 고객의 경쟁사가 그대로 가져간다. 우리가 아니라 고객이 손해다.
+         ⚠ 순위·노출을 약속하는 문장은 넣지 않는다. -->
+    <div class="sechead sechead--full" style="margin-top:0">
+      <h2 class="sechead__title" data-anim="lines">환자는 증상·지역·진료과로 검색합니다.</h2>
+      <p class="sechead__lead" data-anim="lines">환자가 검색하는 증상·지역·진료과에 맞는 페이지를 구성해 검색 유입과 연결합니다.</p>
+    </div>
+    <div class="biz-bands" data-hin style="margin-top:56px">
+      <article class="biz-band hin">
+        <span class="biz-band__no">01</span>
+        <div>
+          <p class="biz-band__label">증상</p>
+          <h3 class="biz-band__t">“무릎 안쪽이 아파요”</h3>
+        </div>
+        <p class="biz-band__d">증상 페이지가 따로 있어야 이 검색이 도착할 주소가 생깁니다.</p>
+      </article>
+      <article class="biz-band hin">
+        <span class="biz-band__no">02</span>
+        <div>
+          <p class="biz-band__label">질환·시술</p>
+          <h3 class="biz-band__t">“무지외반증 수술”</h3>
+        </div>
+        <p class="biz-band__d">진료과 한 페이지에 다 넣으면 질환으로 찾는 환자를 놓칩니다.</p>
+      </article>
+      <article class="biz-band hin">
+        <span class="biz-band__no">03</span>
+        <div>
+          <p class="biz-band__label">지역</p>
+          <h3 class="biz-band__t">“○○동 정형외과”</h3>
+        </div>
+        <p class="biz-band__d">가까운 병원을 찾는 검색이 가장 많습니다.</p>
+      </article>
+      <article class="biz-band hin">
+        <span class="biz-band__no">04</span>
+        <div>
+          <p class="biz-band__label">진료 정보</p>
+          <h3 class="biz-band__t">“일요일 진료 소아과”</h3>
+        </div>
+        <p class="biz-band__d">진료 시간·주차·비용도 검색어입니다.</p>
+      </article>
+    </div>
+
+
+    <!-- 업종 전담 — 2026-08-15 세영 확인. 「말씀만 해주세요」 의 근거다.
+         자료가 없어도 되는 이유는 그 업종을 아는 사람이 이미 무엇을 물어야 할지 알기 때문이다.
+         ⚠ 반드시 아래 「원고를 써 주지 않으셔도 됩니다」 **앞**에 둘 것 — 순서가 뒤집히면
+           '원장님이 안 하셔도 된다' 는 말을 두 번 하게 된다. 누가(전담) → 그래서 무엇을
+           안 해도 되는가(원고) 의 인과로 읽혀야 한다(2026-08-15 실제로 밟았다).
+         ⚠ 인원 수·이름은 적지 않는다 — 바뀌면 사이트를 계속 고쳐야 한다. -->
+    <div class="sechead sechead--full" style="margin-top:104px">
+      <h2 class="sechead__title" data-anim="lines">병원 전문 마케터가 검색과 AI 노출까지 설계합니다.</h2>
+      <p class="sechead__lead" data-anim="lines">진료과를 어떻게 나눌지, 의료광고에서 무엇이 걸리는지 알고 시작합니다. 환자가 검색할 때와 AI에게 물을 때 양쪽에서 병원이 보이도록 구조를 잡습니다.</p>
+    </div>
+
+    <!-- 검색·AI 노출 목업 — 2026-08-15 세영. 대표님 참고(web.haoc.co.kr)의 '검색 결과 / AI 답변'
+         카드를 우리 토큰으로 다시 그렸다. 병원부터 적용하고, 되면 나머지 업종으로 넓힌다.
+         ⭐ '상위노출' 이라는 단어를 쓴다(2026-08-15 세영 승인). 대신 결과를 약속하지 않고
+           '구조를 이렇게 만든다 → 그만큼 노출 가능성이 높아진다' 로 쓴다.
+         ⚠ 화면은 전부 **가상의 예시**다. 실제 검색 결과 캡처를 쓰면 만들어 낸 성과 증거가 된다.
+           병원명·주소는 ○○·△△ 로 가려 두었고 하단 주석에 예시임을 적었다. 지우지 말 것. -->
+
+    <div class="mockrow" style="margin-top:64px">
+      <div class="mockrow__txt" data-fade>
+        <p class="eyebrow">01 · SEO</p>
+        <h3 class="sechead__title" style="margin-top:16px;font-size:38px" data-anim="lines">검색엔진 상위노출, 구조부터 다릅니다.</h3>
+        <p class="col__body" style="margin-top:20px">환자가 쓰는 말마다 도착할 페이지를 만들고, 검색엔진이 읽는 것들을 함께 정리합니다. 그만큼 검색 노출 가능성이 높아집니다.</p>
+        <dl class="deflist" style="margin-top:24px">
+          <div><dt>증상·질환·지역별 페이지 분리</dt></div>
+          <div><dt>제목·설명·주소 구조 정리</dt></div>
+          <div><dt>구조화 데이터·사이트맵</dt></div>
+        </dl>
+      </div>
+      <div class="mock" data-fade data-delay=".08">
+        <p class="mock__head">검색 결과 <i>SEO</i></p>
+        <p class="mock__q">○○동 정형외과</p>
+        <div class="mock__row mock__row--top">
+          <p class="mock__rank">1</p>
+          <p class="mock__t">○○정형외과 — 무릎·어깨 통증 진료</p>
+          <p class="mock__u">ooclinic.co.kr › 진료안내 › 무릎</p>
+        </div>
+        <div class="mock__row">
+          <p class="mock__t">△△의원</p>
+          <p class="mock__u">example-clinic.co.kr</p>
+        </div>
+        <div class="mock__row">
+          <p class="mock__t">□□병원</p>
+          <p class="mock__u">example-hospital.kr</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockrow mockrow--rev" style="margin-top:80px">
+      <div class="mockrow__txt" data-fade>
+        <p class="eyebrow">02 · AEO · GEO</p>
+        <h3 class="sechead__title" style="margin-top:16px;font-size:38px" data-anim="lines">AI 답변에도 병원이 노출되게.</h3>
+        <p class="col__body" style="margin-top:20px">환자가 ChatGPT·제미나이·퍼플렉시티에 물을 때, 그 답에 병원이 언급되려면 답이 될 문장이 페이지에 있어야 합니다.</p>
+        <dl class="deflist" style="margin-top:24px">
+          <div><dt>환자가 묻는 질문을 문장으로</dt></div>
+          <div><dt>진료과·의료진·근거의 연결</dt></div>
+          <div><dt>표기를 전 페이지에서 하나로</dt></div>
+        </dl>
+      </div>
+      <div class="mock" data-fade data-delay=".08">
+        <p class="mock__head">AI 답변 <i>AEO · GEO</i></p>
+        <p class="mock__ask">무릎 안쪽이 아픈데 어디로 가야 해?</p>
+        <p class="mock__ans">무릎 안쪽 통증은 정형외과에서 봅니다. ○○동이라면 <b>○○정형외과</b>처럼 무릎 진료를 따로 안내하는 곳을 확인해 보세요. 진료 시간과 주차 정보도 함께 나와 있습니다.</p>
+        <p class="mock__src">참고 — ooclinic.co.kr › 진료안내 › 무릎</p>
+      </div>
+    </div>
+
+
+
+    <!-- 노출 → 결과 — 2026-08-15 세영(대표님 참고 이미지).
+         위 두 목업이 '이렇게 노출된다' 까지만 말하고 끝나 "그래서 뭐가 좋아지나" 가 비어 있었다.
+         ⚠ 수치·퍼센트는 넣지 않는다. 근거가 없고, 넣는 순간 성과 보장이 된다. -->
+    <p class="eyebrow" style="margin-top:72px;text-align:center">이렇게 노출되면</p>
+    <div class="eqrow" style="margin-top:24px">
+      <div class="eqbox" data-fade>
+        <p class="eqbox__t">검색 상위노출</p>
+        <p class="eqbox__d">유입이 늘어납니다</p>
+      </div>
+      <span class="eqop">+</span>
+      <div class="eqbox" data-fade data-delay=".06">
+        <p class="eqbox__t">AI 답변 노출</p>
+        <p class="eqbox__d">신뢰가 먼저 생깁니다</p>
+      </div>
+      <span class="eqop">=</span>
+      <div class="eqbox eqbox--out" data-fade data-delay=".12">
+        <p class="eqbox__t">상담·예약 문의</p>
+        <p class="eqbox__d">환자가 병원을 고르고 연락합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 병원·진료과·타깃 환자 분석 — newsight 노하우 밴드 구조 이식.
+     실측: 풀블리드 가로 밴드 · 줄 위 1px 룰 · 작은 라벨 + 큰 제목 · hover 배경.3s.
+     우리는 인덱스 번호와 설명 열을 더해 3열로 만들고, 진입 시 룰이 좌→우로 그어지게 했다. -->
+<section class="sec invert">
+  <div class="container">
+    <p class="eyebrow">BEFORE DESIGN</p>
+    <div class="sechead sechead--stack" style="margin-top:28px">
+      <h2 class="sechead__title" data-anim="lines">제작 전에 병원과 주요 환자층을 먼저 분석합니다.</h2>
+      <p class="sechead__lead" data-anim="lines">디자인부터 시작하지 않습니다. 무엇을 먼저 보여줄지 정하고 화면을 그립니다.</p>
+    </div>
+
+    <div class="biz-bands" data-hin>
+      <article class="biz-band hin">
+        <span class="biz-band__no">01</span>
+        <div>
+          <p class="biz-band__label">Hospital</p>
+          <h3 class="biz-band__t">병원 분석</h3>
+        </div>
+        <p class="biz-band__d">진료과·규모·강점과 지금 가지고 계신 자료를 확인합니다.</p>
+      </article>
+      <article class="biz-band hin">
+        <span class="biz-band__no">02</span>
+        <div>
+          <p class="biz-band__label">Patient</p>
+          <h3 class="biz-band__t">타깃 환자 분석</h3>
+        </div>
+        <p class="biz-band__d">주요 환자층이 무엇을 궁금해하고 어디에서 신뢰를 판단하는지 봅니다.</p>
+      </article>
+      <article class="biz-band hin">
+        <span class="biz-band__no">03</span>
+        <div>
+          <p class="biz-band__label">Competitor</p>
+          <h3 class="biz-band__t">경쟁 병원 비교</h3>
+        </div>
+        <!-- ⚠ 아래 무료 진단 STEP 02 와 겹치지 않게 목적을 밝힌다.
+             여기는 '무엇을 먼저 보여줄지' 정하는 제작 전 분석, 진단은 '지금 무엇이 부족한지' 확인이다. -->
+        <p class="biz-band__d">같은 지역·진료과의 병원을 비교해, 우리 병원이 무엇을 먼저 보여줘야 하는지 찾습니다.</p>
+      </article>
+      <article class="biz-band hin">
+        <span class="biz-band__no">04</span>
+        <div>
+          <p class="biz-band__label">Priority</p>
+          <h3 class="biz-band__t">우선순위 정리</h3>
+        </div>
+        <p class="biz-band__d">진료과·의료진·증상 콘텐츠와 상담·예약 동선의 순서를 정합니다.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--wide">
+  <div class="container">
+    <div class="bighead">
+      <h2 class="bighead__title" data-anim>Patient Journey</h2>
+      <p class="bighead__lead" data-anim="lines">병원 내부 조직이 아니라, 환자가 정보를 찾는 순서를 기준으로 구성합니다.</p>
+    </div>
+    <div class="timeline" style="margin-top:96px" data-timeline>
+      <div class="timeline__line"><i></i></div>
+      <div class="tstep"><span class="tstep__no">01</span>
+        <h3 class="tstep__t">증상 검색</h3><p class="tstep__d">증상·치료명으로 검색해 도착합니다.</p></div>
+      <div class="tstep"><span class="tstep__no">02</span>
+        <h3 class="tstep__t">진료과 확인</h3><p class="tstep__d">우리 병원에서 진료가 가능한지 봅니다.</p></div>
+      <div class="tstep"><span class="tstep__no">03</span>
+        <h3 class="tstep__t">의료진 확인</h3><p class="tstep__d">누가 진료하는지, 어떤 분야를 보는지 확인합니다.</p></div>
+      <div class="tstep"><span class="tstep__no">04</span>
+        <h3 class="tstep__t">진료정보 확인</h3><p class="tstep__d">진료 시간·위치·주차·비용 안내를 확인합니다.</p></div>
+      <div class="tstep"><span class="tstep__no">05</span>
+        <h3 class="tstep__t">상담·예약</h3><p class="tstep__d">전화 또는 온라인으로 상담하고 예약합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 기본 제공 범위 — bravomedi '12가지 필수 요소' · newsight '20가지 기본 혜택' 이식.
+     포트폴리오가 적은 우리가 쓸 수 있는 가장 구체적인 근거다.
+     방법론만 말하면 "그래서 뭘 해준다는 건가"가 남는다.
+     ⚠ 9항목은 2026-08-14 세영 확인(전부 기본 제공). 다만 연동은 병원이 쓰는 서비스에 따라
+       달라지므로 CRM 은 '검토', 예약은 '연결'로 적고 하단 주석에 조건을 남겼다. -->
+<section class="sec">
+  <div class="container">
+    <p class="eyebrow">기본 제공</p>
+    <div class="sechead sechead--stack" style="margin-top:28px">
+      <h2 class="sechead__title" data-anim="lines">병원 홈페이지에 필요한 기본은 모두 포함합니다.</h2>
+      <p class="sechead__lead" data-anim="lines">아래는 모두 제작비에 들어 있습니다. 아래 항목은 기본 제작비에 포함되며 오픈 시점에 함께 적용합니다.</p>
+    </div>
+
+    <div class="biz-incl" data-hin>
+      <div class="biz-incl__item hin">
+        <div class="biz-incl__head"><span class="biz-incl__no">01</span><p class="biz-incl__t">반응형 제작</p></div>
+        <p class="biz-incl__d">PC·태블릿·모바일에서 같은 정보를 같은 순서로 봅니다.</p>
+      </div>
+      <div class="biz-incl__item hin">
+        <div class="biz-incl__head"><span class="biz-incl__no">02</span><p class="biz-incl__t">SSL 보안</p></div>
+        <p class="biz-incl__d">주소창에 자물쇠가 붙는 https로 제공합니다.</p>
+      </div>
+      <div class="biz-incl__item hin">
+        <div class="biz-incl__head"><span class="biz-incl__no">03</span><p class="biz-incl__t">검색엔진 등록</p></div>
+        <p class="biz-incl__d">네이버·구글에 사이트를 등록하고 수집 상태를 확인합니다.</p>
+      </div>
+      <div class="biz-incl__item hin">
+        <div class="biz-incl__head"><span class="biz-incl__no">04</span><p class="biz-incl__t">접속·로그 분석</p></div>
+        <p class="biz-incl__d">어떤 경로로 들어와 어디에서 나가는지 볼 수 있게 설치합니다.</p>
+      </div>
+      <div class="biz-incl__item hin">
+        <div class="biz-incl__head"><span class="biz-incl__no">05</span><p class="biz-incl__t">QR코드</p></div>
+        <p class="biz-incl__d">명함·안내물·원내 게시물에 넣을 홈페이지 QR을 만들어 드립니다.</p>
+      </div>
+      <div class="biz-incl__item hin">
+        <div class="biz-incl__head"><span class="biz-incl__no">06</span><p class="biz-incl__t">예약 연결</p></div>
+        <p class="biz-incl__d">쓰고 계신 예약 서비스로 이어지도록 연결합니다.</p>
+      </div>
+      <div class="biz-incl__item hin">
+        <div class="biz-incl__head"><span class="biz-incl__no">07</span><p class="biz-incl__t">CRM 연동</p></div>
+        <p class="biz-incl__d">사용 중인 고객관리 도구가 있으면 연동 방식을 검토합니다.</p>
+      </div>
+      <div class="biz-incl__item hin">
+        <div class="biz-incl__head"><span class="biz-incl__no">08</span><p class="biz-incl__t">알림톡·SMS</p></div>
+        <p class="biz-incl__d">상담·예약이 들어오면 담당자에게 알림이 가도록 구성합니다.</p>
+      </div>
+      <div class="biz-incl__item hin">
+        <div class="biz-incl__head"><span class="biz-incl__no">09</span><p class="biz-incl__t">촬영 지원</p></div>
+        <p class="biz-incl__d">병원 공간과 의료진 사진 촬영을 지원합니다.</p>
+      </div>
+    </div>
+
+
+    <!-- 촬영 — bravomedi 는 '전문 연출 촬영'을 독립 섹션으로 크게 다룬다.
+         우리도 실제로 하는 일인데(studio.html) 업종 페이지에서 한 줄로만 지나가고 있었다.
+         섹션을 늘리지 않고 기본 제공 끝에 붙여 리듬은 유지한다. -->
+    <div class="sechead sechead--full" style="margin-top:104px">
+      <h2 class="sechead__title" data-anim="lines">쓸 사진이 없다면, 촬영부터 함께합니다.</h2>
+      <p class="sechead__lead" data-anim="lines">병원 사진은 첫인상과 신뢰 판단에 큰 영향을 줍니다. 어느 페이지에 어떤 장면이 필요한지 정한 뒤 찍습니다.</p>
+    </div>
+    <div class="btns" style="margin-top:40px">
+      <a class="btn" href="studio.html">사진·영상 촬영</a>
+      <a class="btn" href="graphic-design.html">그래픽·편집디자인</a>
+    </div>
+
+    <!-- 원장 부담 제거 — 2026-08-15. 이 업종의 진짜 통증은 제작 중에 원장이 계속 불려 나가는 것이다
+         (원고 요청·사진 요청·확인 요청). 촬영은 위에서 말했으니 여기서는 '글' 쪽을 맡는다.
+         메인 리빌의 「말씀만 해주시면」 을 병원 문맥으로 옮긴 것이다. -->
+    <div class="sechead sechead--full" style="margin-top:104px">
+      <h2 class="sechead__title" data-anim="lines">원고를 써 주지 않으셔도 됩니다.</h2>
+      <p class="sechead__lead" data-anim="lines">진료와 운영 중에 홈페이지 원고까지 직접 준비하기는 어렵습니다. 한 번 말씀해 주시면 저희가 초안으로 정리합니다.</p>
+    </div>
+    <div class="cols" style="margin-top:64px">
+      <div class="col" data-fade>
+        <div class="rule"></div>
+        <div class="col__label"><span>한 번의 인터뷰</span></div>
+        <p class="col__body">진료 방식과 강점을 한 번 여쭙습니다. 방문이 어려우면 통화로 진행합니다.</p>
+      </div>
+      <div class="col" data-fade data-delay=".08">
+        <div class="rule"></div>
+        <div class="col__label"><span>초안 정리</span></div>
+        <p class="col__body">진료과·의료진·진료정보 페이지의 원고를 초안으로 만들어 드립니다.</p>
+      </div>
+      <div class="col" data-fade data-delay=".16">
+        <div class="rule"></div>
+        <div class="col__label"><span>확인만</span></div>
+        <p class="col__body">원장님이 하실 일은 사실이 맞는지 확인해 주시는 것입니다.</p>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- 병원 자체 운영 + 상담·예약 관리 — soijeong.com/cms-medical 이식.
+     실측: Basic Function 5열 × 2행 기능 그리드, WOW fadeInUp 1s + delay 0.1s 간격.
+     아이콘 자산을 새로 들이지 않으므로 마커를 번호와 1px 룰로 바꿨다.
+     ⚠ 기존 「정확한 정보와 편안한 동선」을 이 섹션에 통합했다 — 권장 정보구조·주요 기능 패널과
+       의료광고 관련 문구는 그대로 살렸다. 지우지 말 것. -->
+<section class="sec invert">
+  <div class="container">
+    <p class="eyebrow">병원 운영</p>
+    <div class="sechead sechead--stack" style="margin-top:28px">
+      <h2 class="sechead__title" data-anim="lines">자주 바뀌는 정보는 병원에서 직접 관리합니다.</h2>
+      <p class="sechead__lead" data-anim="lines">작은 수정마다 제작사에 연락하지 않도록, 병원에서 바로 고칠 수 있게 만듭니다.</p>
+    </div>
+
+    <div class="biz-grid" data-hin>
+      <div class="biz-grid__grid">
+        <div class="biz-grid__item hin"><p class="biz-grid__no">01</p><p class="biz-grid__t">의료진</p></div>
+        <div class="biz-grid__item hin"><p class="biz-grid__no">02</p><p class="biz-grid__t">진료시간</p></div>
+        <div class="biz-grid__item hin"><p class="biz-grid__no">03</p><p class="biz-grid__t">휴진 안내</p></div>
+        <div class="biz-grid__item hin"><p class="biz-grid__no">04</p><p class="biz-grid__t">공지사항</p></div>
+        <div class="biz-grid__item hin"><p class="biz-grid__no">05</p><p class="biz-grid__t">팝업</p></div>
+        <div class="biz-grid__item hin"><p class="biz-grid__no">06</p><p class="biz-grid__t">이벤트</p></div>
+        <div class="biz-grid__item hin"><p class="biz-grid__no">07</p><p class="biz-grid__t">비급여 정보</p></div>
+      </div>
+    </div>
+
+    <div class="sechead sechead--stack" style="margin-top:104px">
+      <h2 class="sechead__title" data-anim="lines">들어온 상담을 놓치지 않도록 연결합니다.</h2>
+      <p class="sechead__lead" data-anim="lines">들어온 상담이 응대로 이어지도록 알림과 연동을 함께 구성합니다.</p>
+    </div>
+
+    <div class="biz-flow" data-hin>
+      <div class="biz-flow__step hin">
+        <p class="biz-flow__no">Step 01</p>
+        <p class="biz-flow__t">홈페이지 상담·예약</p>
+        <p class="biz-flow__d">환자가 홈페이지에서 상담을 남기거나 예약을 신청합니다.</p>
+      </div>
+      <div class="biz-flow__step hin">
+        <p class="biz-flow__no">Step 02</p>
+        <p class="biz-flow__t">담당자 알림</p>
+        <p class="biz-flow__d">알림톡·SMS로 담당자에게 바로 전달되도록 구성합니다.</p>
+      </div>
+      <div class="biz-flow__step hin">
+        <p class="biz-flow__no">Step 03</p>
+        <p class="biz-flow__t">확인과 연동</p>
+        <p class="biz-flow__d">접수 내용을 한곳에서 확인하고, 쓰고 계신 예약·CRM 도구와 연결합니다.</p>
+      </div>
+    </div>
+
+    <div class="sechead sechead--stack" style="margin-top:104px">
+      <h2 class="sechead__title" data-anim="lines">정확한 정보와 편리한 이용 흐름을 함께 구성합니다.</h2>
+      <p class="sechead__lead" data-anim="lines">과장 없이 정확한 진료 정보를 전달하고, 어느 페이지에서든 예약으로 이어집니다.</p>
+    </div>
+    <div class="panels">
+      <div class="panel" data-fade>
+        <p class="panel__label">권장 정보구조</p>
+        <p class="panel__body">진료과별 페이지로 증상·치료 안내를 나누고, 증상에서 진료과로 찾아 들어오는 경로를 만듭니다.</p>
+        <dl class="deflist">
+          <div><dt>병원 소개 · 의료진</dt></div>
+          <div><dt>진료과·진료 안내</dt></div>
+          <div><dt>장비·시설</dt></div>
+          <div><dt>이용 안내(시간·위치·주차)</dt></div>
+          <div><dt>공지·건강 정보</dt></div>
+          <div><dt>예약·문의</dt></div>
+        </dl>
+      </div>
+      <div class="panel panel--sub panel--fill" data-fade data-delay=".08">
+        <p class="panel__label">주요 기능</p>
+        <p class="panel__body">사용 중인 예약 서비스가 있으면 연동을 검토하고, 없으면 예약 문의 폼과 전화 동선으로 구성합니다.</p>
+        <dl class="deflist">
+          <div><dt>진료 시간표</dt></div>
+          <div><dt>온라인 예약(또는 예약 연동)</dt></div>
+          <div><dt>지도·주차 안내</dt></div>
+          <div><dt>공지 관리자 등록</dt></div>
+          <div><dt>모바일 전화 바로 걸기</dt></div>
+        </dl>
+      </div>
+    </div>
+    <div class="btns" style="margin-top:48px">
+      <a class="btn" href="maintenance.html">유지보수 안내</a>
+      <a class="btn" href="content-operation.html">콘텐츠 운영</a>
+    </div>
+  </div>
+</section>
+
+<!-- 개원 일정 / 가오픈 — bravomedi 의 스크롤 성장 모션(AOS · growUp) 이식.
+     좌측 제목은 스크롤 중에도 붙어 있고, 우측 단계가 지나갈 때 세로 축이 아래로 차오른다. -->
+<section class="sec">
+  <div class="container">
+    <div class="biz-open">
+      <div class="biz-open__aside">
+        <p class="eyebrow">개원 일정 대응</p>
+        <h2 class="sechead__title" style="margin-top:24px" data-anim="lines">개원 일정에 맞춰 필요한 정보부터 공개합니다.</h2>
+        <p class="sechead__lead" style="margin-top:24px;max-width:none" data-anim="lines">일정이 촉박한 경우 개원일에 필요한 핵심 정보부터 우선 공개하고, 이후 세부 콘텐츠를 확장합니다.</p>
+      </div>
+
+      <div class="biz-open__steps" data-hin>
+        <div class="biz-open__rail" aria-hidden="true"><i></i></div>
+        <div class="biz-open__step hin">
+          <p class="biz-open__phase">Phase 01 — 가오픈</p>
+          <h3 class="biz-open__t">필요한 정보를 먼저 공개합니다.</h3>
+          <p class="biz-open__d">환자가 개원 전에 확인해야 하는 정보를 먼저 엽니다. 검색에 걸리는 것도 이 시점부터 시작됩니다.</p>
+          <div class="biz-chips">
+            <span class="biz-chip">병원명</span>
+            <span class="biz-chip">진료과</span>
+            <span class="biz-chip">의료진</span>
+            <span class="biz-chip">위치</span>
+            <span class="biz-chip">진료시간</span>
+            <span class="biz-chip">예약</span>
+          </div>
+        </div>
+        <div class="biz-open__step hin">
+          <p class="biz-open__phase">Phase 02 — 본 홈페이지</p>
+          <h3 class="biz-open__t">진료 콘텐츠를 더해 확장합니다.</h3>
+          <p class="biz-open__d">진료과별 안내와 세부 페이지를 채워 본 홈페이지로 넓힙니다. 처음부터 다시 만들지 않습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 업종 포트폴리오 — 2026-08-15 세영. 이미지 자리만 비워 둔다.
+     포트폴리오가 이미 있는 것으로 두고 쓴다 — 자료를 아직 못 찾아 이미지만 못 넣은 상태다.
+     ⚠ '준비 중'·'공개 동의' 같은 유예 문구는 붙이지 않는다(2026-08-15 세영).
+     ⚠ 비율은 portfolio.html 의 .work__thumb 와 같은 1:1 이다.
+       사진이 들어오면 .pfslot__thumb 에 background-image 만 얹으면 된다. -->
+<section class="sec sec--tight">
+  <div class="container">
+    <p class="eyebrow">포트폴리오</p>
+    <div class="sechead sechead--stack" style="margin-top:28px">
+      <h2 class="sechead__title" data-anim="lines">병원 홈페이지 포트폴리오.</h2>
+      <p class="sechead__lead" data-anim="lines">실제로 만들어 지금 운영 중인 병원 홈페이지입니다. 진료과를 어떻게 나눴고 상담까지 어떤 길로 이어지는지 직접 확인해 보세요.</p>
+    </div>
+    <div class="pfslot" style="margin-top:56px">
+      <div class="pfslot__item" data-fade><div class="pfslot__thumb"></div></div>
+      <div class="pfslot__item" data-fade data-delay=".08"><div class="pfslot__thumb"></div></div>
+      <div class="pfslot__item" data-fade data-delay=".16"><div class="pfslot__thumb"></div></div>
+    </div>
+    <div class="btns" style="margin-top:48px">
+      <a class="btn" href="portfolio.html">포트폴리오 전체 보기</a>
+      <a class="btn" href="inquiry.html">제작 문의</a>
+    </div>
+  </div>
+</section>
+
+<!-- 제작비 — brainmedi 의 '공개 견적' 태도만 가져왔다(금액은 쓰지 않는다, 2026-08-14 세영 결정).
+     대신 무엇이 비용을 정하는지 먼저 말하고 제작비 안내 페이지로 보낸다. -->
+<section class="sec invert sec--tight">
+  <div class="container">
+    <div class="sechead sechead--full">
+      <h2 class="sechead__title" data-anim="lines">무엇이 비용을 정하는지 먼저 알려드립니다.</h2>
+      <p class="sechead__lead" data-anim="lines">병원마다 필요한 것이 다릅니다. 금액보다 기준을 먼저 알려드립니다.</p>
+    </div>
+    <div class="cols" style="margin-top:64px">
+      <div class="col" data-fade>
+        <div class="rule"></div>
+        <div class="col__label"><span>페이지 수</span></div>
+        <p class="col__body">진료과와 의료진이 늘어나면 만들 페이지도 늘어납니다.</p>
+      </div>
+      <div class="col" data-fade data-delay=".08">
+        <div class="rule"></div>
+        <div class="col__label"><span>기능 범위</span></div>
+        <p class="col__body">예약·상담·알림 연동은 병원에서 쓰는 서비스에 따라 달라집니다.</p>
+      </div>
+      <div class="col" data-fade data-delay=".16">
+        <div class="rule"></div>
+        <div class="col__label"><span>운영 범위</span></div>
+        <p class="col__body">원고 작성과 촬영을 어디까지 맡기시는지에 따라 달라집니다.</p>
+      </div>
+    </div>
+    <div class="btns" style="margin-top:48px">
+      <a class="btn" href="price-guide.html" style="border-color:color-mix(in srgb,var(--bg) 30%,transparent);color:var(--bg)">제작비 안내 보기</a>
+      <a class="btn" href="plan.html" style="border-color:color-mix(in srgb,var(--bg) 30%,transparent);color:var(--bg)">제작 플랜 비교</a>
+    </div>
+  </div>
+</section>
+
+<!-- 무료 진단 — 이 페이지의 핵심 CTA.
+     crossdesign 의 진단·경쟁 비교(리드 마그넷)를 가져오되 성과 캡처는 쓰지 않는다.
+     구조: crossdesign 의 STEP 행(번호 열 + 내용 열 + 태그 칩) + urdv 의 좌측 고정. -->
+<!-- 제작 이후 — 2026-08-14 세영 확인 / 2026-08-15 표기 변경.
+     ⭐ 사이트 표기에서 모회사명을 쓰지 않는다(2026-08-15 세영). 방문자는 하오웹을 보러 온 것이지
+       모회사를 궁금해하지 않는다. 브랜딩·촬영·영상·편집디자인·마케팅이 전부 **하오웹 안에서**
+       이어진다고만 말한다. '같은 회사' 라는 표현도 쓰지 않는다 — 두 회사를 구분해야 나오는 말이다.
+     이 페이지의 주인공은 어디까지나 **홈페이지 제작**이다 — 나머지는 '이어지는 것'으로만 둔다. -->
+<section class="sec sec--tight">
+  <div class="container">
+    <p class="eyebrow">제작 이후</p>
+    <div class="sechead sechead--stack" style="margin-top:28px">
+      <h2 class="sechead__title" data-anim="lines">홈페이지에서 끝나지 않습니다.</h2>
+      <p class="sechead__lead" data-anim="lines">사진·안내물·마케팅이 필요하면 하오웹에서 이어받습니다.</p>
+    </div>
+    <div class="cols" style="margin-top:64px">
+      <div class="col" data-fade>
+        <div class="col__img"><img src="assets/img/design/d008.jpg" alt="직접 제작한 안내 브로슈어" loading="lazy"></div>
+        <div class="col__label"><span>브랜드·편집디자인</span></div>
+        <p class="col__body">로고와 브랜드 정비부터 카탈로그·브로슈어·상세페이지까지.</p>
+      </div>
+      <div class="col" data-fade data-delay=".08">
+        <div class="col__img"><img src="assets/img/studio/s052.jpg" alt="직접 촬영한 병원 전경" loading="lazy"></div>
+        <div class="col__label"><span>촬영·영상</span></div>
+        <p class="col__body">제품·공간·인물 촬영과 영상. 홈페이지 화면에 쓸 장면을 기준으로 찍습니다.</p>
+      </div>
+      <div class="col" data-fade data-delay=".16">
+        <div class="col__img"><img src="assets/img/design/d094.jpg" alt="직접 제작한 병원 홍보물" loading="lazy"></div>
+        <div class="col__label"><span>마케팅</span></div>
+        <p class="col__body">오픈 이후 광고와 콘텐츠로 사람을 데려오는 일까지 함께 진행할 수 있습니다.</p>
+      </div>
+    </div>
+        <!-- ⭐ 실적 — 2026-08-16 세영 확인. 출처는 `haoc.co.kr` 이다.
+         ⛔ 예전에 쓰던 건수는 **지원사업 실적**이라 뺐다. 경위는 `_TODO.md` 참조 — 되살리지 말 것.
+         ⚠ 이건 **인쇄물 제작 실적**이다. 무엇을 만든 건수인지(카탈로그·브로슈어·패키지)를
+           반드시 함께 적는다 — 빼면 홈페이지 건수로 읽힌다. -->
+    <p class="note" style="margin-top:48px">카탈로그·브로슈어·패키지 등 <b>4,500건 이상</b>을 제작했고, <b>재의뢰율 98%</b>를 기록하고 있습니다.</p>
+    <div class="btns" style="margin-top:40px">
+      <a class="btn" href="graphic-design.html">그래픽·편집디자인</a>
+      <a class="btn" href="studio.html">사진·영상 촬영</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--wide">
+  <div class="container">
+    <div class="biz-diag">
+      <div class="biz-diag__aside">
+        <p class="eyebrow">무료 진단</p>
+        <h2 class="sechead__title" style="margin-top:24px" data-anim="lines">현재 홈페이지를 먼저 확인합니다.</h2>
+        <p class="sechead__lead" style="margin-top:24px;max-width:none" data-anim="lines">지금 홈페이지와 같은 지역·진료과 병원을 함께 보고, 무엇을 고칠지 정리해 드립니다.</p>
+        <!-- 한 줄 진입 — pointweb 의 "사이트 URL만 주시면 담당자가 직접 봅니다" 이식.
+             입력한 주소를 무료 제안 폼의 '현재 홈페이지 주소'로 넘긴다(실제로 동작한다). -->
+        <form class="biz-quick" data-quick="diagnosis.html">
+          <div class="biz-quick__f">
+            <label class="sr-only" for="hq-site">병원 홈페이지 주소</label>
+            <input id="hq-site" name="site" type="text" placeholder="병원 홈페이지 주소 (예: clinic.co.kr)" autocomplete="url">
+          </div>
+          <button class="btn btn--brand" type="submit">무료 진단 신청하기</button>
+        </form>
+        <p class="biz-quick__note">주소만 남겨주셔도 됩니다. 연락처는 다음 화면에서.</p>
+        <div class="btns" style="margin-top:24px">
+          <a class="btn" href="free-proposal.html">무료 홈페이지 제안받기</a>
+        </div>
+
+      </div>
+
+      <div class="biz-diag__rows" data-hin>
+        <div class="biz-diag__row hin">
+          <p class="biz-diag__step">STEP<b>01</b><i aria-hidden="true"></i></p>
+          <div>
+            <h3 class="biz-diag__t">현재 홈페이지 확인</h3>
+            <p class="biz-diag__d">모바일 대응·정보구조·콘텐츠·예약 동선·검색 구조를 먼저 확인합니다.</p>
+            <div class="biz-chips">
+              <span class="biz-chip">모바일 대응</span>
+              <span class="biz-chip">정보구조</span>
+              <span class="biz-chip">콘텐츠</span>
+              <span class="biz-chip">예약 동선</span>
+              <span class="biz-chip">검색 구조</span>
+            </div>
+          </div>
+        </div>
+        <div class="biz-diag__row hin">
+          <p class="biz-diag__step">STEP<b>02</b><i aria-hidden="true"></i></p>
+          <div>
+            <h3 class="biz-diag__t">경쟁 병원 비교</h3>
+            <p class="biz-diag__d">같은 지역·진료과의 병원 홈페이지와 비교해, 지금 무엇이 빠져 있는지 확인합니다.</p>
+          </div>
+        </div>
+        <div class="biz-diag__row hin">
+          <p class="biz-diag__step">STEP<b>03</b><i aria-hidden="true"></i></p>
+          <div>
+            <h3 class="biz-diag__t">유지·개선 정리</h3>
+            <p class="biz-diag__d">전부 새로 만들 필요는 없습니다. 유지할 부분과 고칠 부분을 나눠 정리합니다.</p>
+          </div>
+        </div>
+        <div class="biz-diag__row hin">
+          <p class="biz-diag__step">STEP<b>04</b><i aria-hidden="true"></i></p>
+          <div>
+            <h3 class="biz-diag__t">개선 제안</h3>
+            <p class="biz-diag__d">필요한 페이지·콘텐츠·기능·운영 범위를 정리해 제안드립니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec invert sec--tight">
+  <div class="container">
+    <div class="sechead">
+      <h2 class="sechead__title" data-anim="lines">병원 홈페이지 자주 묻는 질문.</h2>
+      <p class="sechead__lead" data-anim="lines">개원 일정과 의료광고 기준, 예약 연동과 직접 관리에 대해 자주 받는 질문입니다.</p>
+    </div>
+    <div class="faq">
+      <details class="faq__item">
+        <summary><span class="faq__q" aria-hidden="true"></span>개원 일정이 촉박한데 가능한가요?<i aria-hidden="true"></i></summary>
+        <div class="faq__a"><p>개원 전에는 병원명·진료과·의료진·위치·진료시간·예약을 먼저 공개합니다. 진료 콘텐츠는 일정에 맞춰 같은 주소에서 넓혀 갑니다.</p></div>
+      </details>
+      <details class="faq__item">
+        <summary><span class="faq__q" aria-hidden="true"></span>병원에서 직접 수정할 수 있나요?<i aria-hidden="true"></i></summary>
+        <div class="faq__a"><p>의료진·진료시간·휴진·공지·팝업·이벤트·비급여처럼 자주 바뀌는 내용은 병원에서 직접 관리합니다. 구조·디자인 변경은 유지보수에서 진행합니다.</p></div>
+      </details>
+      <details class="faq__item">
+        <summary><span class="faq__q" aria-hidden="true"></span>의료광고 심의는 어떻게 되나요?<i aria-hidden="true"></i></summary>
+        <div class="faq__a"><p>사전심의 대상은 매체 기준으로 정해집니다. 병원 홈페이지와 블로그·SNS 광고는 기준이 다릅니다. 대상 여부는 진행 시점에 함께 확인합니다.</p></div>
+      </details>
+      <details class="faq__item">
+        <summary><span class="faq__q" aria-hidden="true"></span>예약 시스템을 연동할 수 있나요?<i aria-hidden="true"></i></summary>
+        <div class="faq__a"><p>쓰시는 예약 서비스가 있으면 연동을 검토하고, 없으면 예약 폼과 전화 동선으로 구성합니다. 접수되면 담당자에게 알림톡·SMS로 전달됩니다.</p></div>
+      </details>
+      <details class="faq__item">
+        <summary><span class="faq__q" aria-hidden="true"></span>진료과가 많은데 구조를 어떻게 잡나요?<i aria-hidden="true"></i></summary>
+        <div class="faq__a"><p>진료과별 페이지로 증상·치료 안내를 나누고, 증상에서 진료과로 찾아 들어오는 경로를 만듭니다. 진료과가 늘어도 같은 구조에 더하면 됩니다.</p></div>
+      </details>
+      <details class="faq__item">
+        <summary><span class="faq__q" aria-hidden="true"></span>제작비는 얼마인가요?<i aria-hidden="true"></i></summary>
+        <div class="faq__a"><p>페이지 수·기능·운영 범위에 따라 달라집니다. 기준은 제작비 안내에 있고, 병원에 맞는 범위는 진단과 상담에서 정리합니다.</p></div>
+      </details>
+    </div>
+    <div class="btns" style="margin-top:48px">
+      <a class="btn" href="renewal.html" style="border-color:color-mix(in srgb,var(--bg) 30%,transparent);color:var(--bg)">홈페이지 리뉴얼</a>
+      <a class="btn" href="ai-content.html" style="border-color:color-mix(in srgb,var(--bg) 30%,transparent);color:var(--bg)">AI 활용 전문 콘텐츠</a>
+    </div>
+  </div>
+</section>
+
+<section class="oneline">
+  <div class="oneline__stick">
+    <div style="text-align:center">
+      <p class="eyebrow" style="margin-bottom:24px">GET STARTED</p>
+      <p class="oneline__t" data-anim>병원 홈페이지 제작 상담</p>
+      <div class="btns" style="justify-content:center;margin-top:48px">
+        <a class="btn btn--brand" href="free-proposal.html">무료 홈페이지 제안받기</a>
+        <a class="btn" href="inquiry.html">병원 홈페이지 상담</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<a class="ctab" href="free-proposal.html" data-ctab aria-label="병원 홈페이지 무료 진단">
+  <span class="ctab__label" aria-hidden="true"><i>무</i><i>료</i><i>진</i><i>단</i></span>
+  <span class="ctab__full" aria-hidden="true">병원 홈페이지 무료 진단</span>
+  <span class="ctab__arr" aria-hidden="true">→</span>
+</a>
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__mark" data-mark="HAOWEB">HAOWEB</div>
+    <div class="footer__grid">
+      <div>
+        <h4 class="footer__h">Sitemap</h4>
+        <div class="footer__nav2"><a class="footer__ul" href="website.html">홈페이지 제작센터</a><a class="footer__ul" href="renewal.html">홈페이지 리뉴얼</a><a class="footer__ul" href="diagnosis.html">현재 홈페이지 진단</a><a class="footer__ul" href="search-ai.html">AI 가시성</a><a class="footer__ul" href="global.html">글로벌 홈페이지</a><a class="footer__ul" href="portfolio.html">포트폴리오</a><a class="footer__ul" href="plan.html">제작 플랜</a><a class="footer__ul" href="free-proposal.html">무료 홈페이지 제안</a><a class="footer__ul" href="inquiry.html">제작 문의</a><a class="footer__ul" href="about.html">회사소개</a></div>
+      </div>
+      <div>
+        <h4 class="footer__h">Brand</h4>
+        <div class="footer__info">
+          <p style="font-size:14px;line-height:1.7;margin:0">홈페이지 제작 브랜드.
+          제작 이후 브랜드·편집디자인, 촬영·영상, 마케팅까지 하오웹에서 이어집니다.</p>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__h">Information</h4>
+        <dl class="footer__info">
+          <div><dt>전화</dt><dd><a href="tel:070-4212-9972">070-4212-9972</a></dd></div>
+          <div><dt>이메일</dt><dd><a href="mailto:web@haodesign.co.kr">web@haodesign.co.kr</a></dd></div>
+          <div><dt>사업자 정보</dt><dd>오픈 시 안내됩니다.</dd></div>
+          <div><dt>서비스</dt><dd>홈페이지 제작 · 리뉴얼</dd></div>
+        </dl>
+      </div>
+      <div>
+        <h4 class="footer__h">Contact</h4>
+        <div class="footer__list">
+          <a class="footer__ul" href="free-proposal.html">무료 홈페이지 제안받기</a>
+          <a class="footer__ul" href="inquiry.html">제작 문의</a>
+        </div>
+        <h4 class="footer__h" style="margin-top:28px">Policy</h4>
+        <div class="footer__list">
+          <span>개인정보처리방침은 오픈 시 게시됩니다.</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 HAOWEB. 홈페이지 제작 · 리뉴얼</p>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
