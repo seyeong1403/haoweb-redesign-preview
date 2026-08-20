@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="dark">
+<html lang="ko">
 <head>
   <meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
@@ -11,151 +11,115 @@
 <meta property="og:description" content="고객의 질문에 답하는 콘텐츠 구조를 만듭니다.">
 <meta property="og:site_name" content="HAOWEB">
 <link rel="icon" href="assets/img/logo-on-dark.png">
-<link rel="stylesheet" href="assets/css/base.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="assets/css/hao.css">
+<link rel="stylesheet" href="assets/css/hao-legacy.css">
 </head>
 <body>
-<svg class="maskdefs" width="0" height="0" aria-hidden="true" focusable="false">
-  <defs>
-    <clipPath id="hao-mask" clipPathUnits="userSpaceOnUse">
-      <text data-hao-mask x="0" y="0" text-anchor="middle"
-            font-family="'Pretendard Variable', Pretendard, sans-serif"
-            font-weight="800" font-size="200" letter-spacing="-0.03em">HAO</text>
-    </clipPath>
-  </defs>
-</svg>
-<nav class="nav" data-nav>
-  <div class="nav__inner">
-    <a class="nav__logo" href="index.html" aria-label="하오웹 홈">
-      <img src="assets/img/logo-on-dark.png" alt="하오웹" width="120" height="26">
+<a class="sr-only" href="#main">본문 바로가기</a>
+<header class="hd">
+  <div class="hd__in">
+    <a class="hd__logo" href="index.html" aria-label="하오웹 홈">
+      <img class="on-light" src="assets/img/logo-on-light.png" alt="하오웹" width="110">
+      <img class="on-dark" src="assets/img/logo-on-dark.png" alt="" aria-hidden="true" width="110">
     </a>
-    <div class="nav__links">
-    <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="website.html" aria-haspopup="true" aria-expanded="false">AI 가시성 홈페이지 제작</a>
-      <div class="mm" data-mmpanel>
-        <div class="mm__inner">
-          <p class="mm__eyebrow">AI 가시성 홈페이지 제작</p>
-          <div class="mm__grid"><a class="mm__link" href="website.html">홈페이지 제작센터</a><a class="mm__link" href="company.html">기업 홈페이지</a><a class="mm__link" href="hospital.html">병원 홈페이지</a><a class="mm__link" href="franchise.html">프랜차이즈 홈페이지</a><a class="mm__link" href="shop.html">쇼핑몰</a><a class="mm__link" href="lawyer.html">변호사·법률 홈페이지</a><a class="mm__link" href="landing.html">랜딩페이지</a><a class="mm__link" href="content-production.html">홈페이지 콘텐츠 제작</a><a class="mm__link" href="process.html">제작 과정</a><a class="mm__link" href="plan.html">제작 플랜</a><a class="mm__link" href="price-guide.html">제작비 안내</a></div>
-        </div>
-      </div>
+    <nav aria-label="주 메뉴">
+      <ul class="gnb">
+      <li class="gnb__li">
+        <a class="gnb__a" href="website.html">AI 가시성 홈페이지 제작</a>
+        <div class="gnb__sub"><a class="gnb__suba" href="website.html">홈페이지 제작센터</a><a class="gnb__suba" href="company.html">기업 홈페이지</a><a class="gnb__suba" href="hospital.html">병원 홈페이지</a><a class="gnb__suba" href="franchise.html">프랜차이즈 홈페이지</a><a class="gnb__suba" href="shop.html">쇼핑몰</a><a class="gnb__suba" href="lawyer.html">변호사·법률 홈페이지</a><a class="gnb__suba" href="landing.html">랜딩페이지</a><a class="gnb__suba" href="content-production.html">홈페이지 콘텐츠 제작</a><a class="gnb__suba" href="process.html">제작 과정</a><a class="gnb__suba" href="plan.html">제작 플랜</a><a class="gnb__suba" href="price-guide.html">제작비 안내</a></div>
+      </li>
+      <li class="gnb__li">
+        <a class="gnb__a" href="renewal.html">AI 가시성 홈페이지 리뉴얼</a>
+        <div class="gnb__sub"><a class="gnb__suba" href="renewal.html">홈페이지 리뉴얼</a><a class="gnb__suba" href="diagnosis.html">현재 홈페이지 진단</a><a class="gnb__suba" href="free-proposal.html">무료 홈페이지 제안</a></div>
+      </li>
+      <li class="gnb__li">
+        <a class="gnb__a" href="global.html">글로벌 홈페이지</a>
+        <div class="gnb__sub"><a class="gnb__suba" href="global.html">글로벌 홈페이지</a><a class="gnb__suba" href="global-vn.html">베트남</a><a class="gnb__suba" href="global-cn.html">중국</a><a class="gnb__suba" href="global-th.html">태국</a><a class="gnb__suba" href="global-jp.html">일본</a><a class="gnb__suba" href="global-en.html">영문</a></div>
+      </li>
+      <li class="gnb__li">
+        <a class="gnb__a" href="included.html">무료서비스</a>
+        <div class="gnb__sub"><a class="gnb__suba" href="included.html">무료서비스</a><a class="gnb__suba" href="free-proposal.html">무료 홈페이지 제안</a><a class="gnb__suba" href="diagnosis.html">현재 홈페이지 진단</a></div>
+      </li>
+      <li class="gnb__li">
+        <a class="gnb__a" href="portfolio.html">포트폴리오</a>
+        <div class="gnb__sub"><a class="gnb__suba" href="portfolio.html">포트폴리오</a><a class="gnb__suba" href="interview.html">고객 인터뷰</a></div>
+      </li>
+      <li class="gnb__li">
+        <a class="gnb__a" href="ai-content.html" aria-current="page">AI 콘텐츠</a>
+        <div class="gnb__sub"><a class="gnb__suba" href="ai-content.html">AI 활용 전문 콘텐츠</a><a class="gnb__suba" href="search-ai.html">AI 가시성</a><a class="gnb__suba" href="seo.html">SEO</a><a class="gnb__suba" href="aeo.html" aria-current="page">AEO</a><a class="gnb__suba" href="geo.html">GEO</a><a class="gnb__suba" href="columns.html">하오웹 칼럼</a></div>
+      </li>
+      <li class="gnb__li">
+        <a class="gnb__a" href="graphic-design.html">디자인·촬영·마케팅</a>
+        <div class="gnb__sub"><a class="gnb__suba" href="graphic-design.html">그래픽·편집디자인</a><a class="gnb__suba" href="studio.html">사진·영상 촬영</a><a class="gnb__suba" href="marketing.html">광고·마케팅</a></div>
+      </li>
+      <li class="gnb__li">
+        <a class="gnb__a" href="maintenance.html">유지보수</a>
+        <div class="gnb__sub"><a class="gnb__suba" href="maintenance.html">유지보수</a><a class="gnb__suba" href="content-operation.html">콘텐츠 운영</a></div>
+      </li>
+      <li class="gnb__li">
+        <a class="gnb__a" href="inquiry.html">고객지원</a>
+        <div class="gnb__sub"><a class="gnb__suba" href="inquiry.html">제작 문의</a><a class="gnb__suba" href="faq.html">FAQ</a><a class="gnb__suba" href="about.html">회사소개</a></div>
+      </li>
+      </ul>
+    </nav>
+    <div class="hd__cta">
+      <a class="btn" href="inquiry.html">제작 문의</a>
+      <a class="btn btn--point" href="free-proposal.html">무료 제안받기</a>
     </div>
-    <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="renewal.html" aria-haspopup="true" aria-expanded="false">AI 가시성 홈페이지 리뉴얼</a>
-      <div class="mm" data-mmpanel>
-        <div class="mm__inner">
-          <p class="mm__eyebrow">AI 가시성 홈페이지 리뉴얼</p>
-          <div class="mm__grid"><a class="mm__link" href="renewal.html">홈페이지 리뉴얼</a><a class="mm__link" href="diagnosis.html">현재 홈페이지 진단</a><a class="mm__link" href="free-proposal.html">무료 홈페이지 제안</a></div>
-        </div>
-      </div>
-    </div>
-    <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="global.html" aria-haspopup="true" aria-expanded="false">글로벌 홈페이지</a>
-      <div class="mm" data-mmpanel>
-        <div class="mm__inner">
-          <p class="mm__eyebrow">글로벌 홈페이지</p>
-          <div class="mm__grid"><a class="mm__link" href="global.html">글로벌 홈페이지</a><a class="mm__link" href="global-vn.html">베트남</a><a class="mm__link" href="global-cn.html">중국</a><a class="mm__link" href="global-th.html">태국</a><a class="mm__link" href="global-jp.html">일본</a><a class="mm__link" href="global-en.html">영문</a></div>
-        </div>
-      </div>
-    </div>
-    <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="included.html" aria-haspopup="true" aria-expanded="false">무료서비스</a>
-      <div class="mm" data-mmpanel>
-        <div class="mm__inner">
-          <p class="mm__eyebrow">무료서비스</p>
-          <div class="mm__grid"><a class="mm__link" href="included.html">무료서비스</a><a class="mm__link" href="free-proposal.html">무료 홈페이지 제안</a><a class="mm__link" href="diagnosis.html">현재 홈페이지 진단</a></div>
-        </div>
-      </div>
-    </div>
-    <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="portfolio.html" aria-haspopup="true" aria-expanded="false">포트폴리오</a>
-      <div class="mm" data-mmpanel>
-        <div class="mm__inner">
-          <p class="mm__eyebrow">포트폴리오</p>
-          <div class="mm__grid"><a class="mm__link" href="portfolio.html">포트폴리오</a><a class="mm__link" href="interview.html">고객 인터뷰</a></div>
-        </div>
-      </div>
-    </div>
-    <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="ai-content.html" aria-current="page" aria-haspopup="true" aria-expanded="false">AI 콘텐츠</a>
-      <div class="mm" data-mmpanel>
-        <div class="mm__inner">
-          <p class="mm__eyebrow">AI 콘텐츠</p>
-          <div class="mm__grid"><a class="mm__link" href="ai-content.html">AI 활용 전문 콘텐츠</a><a class="mm__link" href="search-ai.html">AI 가시성</a><a class="mm__link" href="seo.html">SEO</a><a class="mm__link" href="aeo.html" aria-current="page">AEO</a><a class="mm__link" href="geo.html">GEO</a><a class="mm__link" href="columns.html">하오웹 칼럼</a></div>
-        </div>
-      </div>
-    </div>
-    <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="graphic-design.html" aria-haspopup="true" aria-expanded="false">디자인·촬영·마케팅</a>
-      <div class="mm" data-mmpanel>
-        <div class="mm__inner">
-          <p class="mm__eyebrow">디자인·촬영·마케팅</p>
-          <div class="mm__grid"><a class="mm__link" href="graphic-design.html">그래픽·편집디자인</a><a class="mm__link" href="studio.html">사진·영상 촬영</a><a class="mm__link" href="marketing.html">광고·마케팅</a></div>
-        </div>
-      </div>
-    </div>
-    <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="maintenance.html" aria-haspopup="true" aria-expanded="false">유지보수</a>
-      <div class="mm" data-mmpanel>
-        <div class="mm__inner">
-          <p class="mm__eyebrow">유지보수</p>
-          <div class="mm__grid"><a class="mm__link" href="maintenance.html">유지보수</a><a class="mm__link" href="content-operation.html">콘텐츠 운영</a></div>
-        </div>
-      </div>
-    </div>
-    <div class="nav__group" data-navgroup>
-      <a class="nav__link" href="inquiry.html" aria-haspopup="true" aria-expanded="false">고객지원</a>
-      <div class="mm" data-mmpanel>
-        <div class="mm__inner">
-          <p class="mm__eyebrow">고객지원</p>
-          <div class="mm__grid"><a class="mm__link" href="inquiry.html">제작 문의</a><a class="mm__link" href="faq.html">FAQ</a><a class="mm__link" href="about.html">회사소개</a></div>
-        </div>
-      </div>
-    </div>
-    </div>
-    <button class="nav__burger" data-burger aria-expanded="false" aria-label="메뉴 열기"><svg class="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg><svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    <button class="hd__burger" aria-expanded="false" aria-label="메뉴 열기"><svg class="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg><svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
   </div>
-</nav>
-<div class="navpanel" data-navpanel data-open="false">
-  <div class="navpanel__inner">
-      <div class="navpanel__group">
-        <p class="navpanel__h">AI 가시성 홈페이지 제작</p>
-        <a class="navpanel__link" href="website.html">홈페이지 제작센터</a><a class="navpanel__link" href="company.html">기업 홈페이지</a><a class="navpanel__link" href="hospital.html">병원 홈페이지</a><a class="navpanel__link" href="franchise.html">프랜차이즈 홈페이지</a><a class="navpanel__link" href="shop.html">쇼핑몰</a><a class="navpanel__link" href="lawyer.html">변호사·법률 홈페이지</a><a class="navpanel__link" href="landing.html">랜딩페이지</a><a class="navpanel__link" href="content-production.html">홈페이지 콘텐츠 제작</a><a class="navpanel__link" href="process.html">제작 과정</a><a class="navpanel__link" href="plan.html">제작 플랜</a><a class="navpanel__link" href="price-guide.html">제작비 안내</a>
-      </div>      <div class="navpanel__group">
-        <p class="navpanel__h">AI 가시성 홈페이지 리뉴얼</p>
-        <a class="navpanel__link" href="renewal.html">홈페이지 리뉴얼</a><a class="navpanel__link" href="diagnosis.html">현재 홈페이지 진단</a><a class="navpanel__link" href="free-proposal.html">무료 홈페이지 제안</a>
-      </div>      <div class="navpanel__group">
-        <p class="navpanel__h">글로벌 홈페이지</p>
-        <a class="navpanel__link" href="global.html">글로벌 홈페이지</a><a class="navpanel__link" href="global-vn.html">베트남</a><a class="navpanel__link" href="global-cn.html">중국</a><a class="navpanel__link" href="global-th.html">태국</a><a class="navpanel__link" href="global-jp.html">일본</a><a class="navpanel__link" href="global-en.html">영문</a>
-      </div>      <div class="navpanel__group">
-        <p class="navpanel__h">무료서비스</p>
-        <a class="navpanel__link" href="included.html">무료서비스</a><a class="navpanel__link" href="free-proposal.html">무료 홈페이지 제안</a><a class="navpanel__link" href="diagnosis.html">현재 홈페이지 진단</a>
-      </div>      <div class="navpanel__group">
-        <p class="navpanel__h">포트폴리오</p>
-        <a class="navpanel__link" href="portfolio.html">포트폴리오</a><a class="navpanel__link" href="interview.html">고객 인터뷰</a>
-      </div>      <div class="navpanel__group">
-        <p class="navpanel__h">AI 콘텐츠</p>
-        <a class="navpanel__link" href="ai-content.html">AI 활용 전문 콘텐츠</a><a class="navpanel__link" href="search-ai.html">AI 가시성</a><a class="navpanel__link" href="seo.html">SEO</a><a class="navpanel__link" href="aeo.html" aria-current="page">AEO</a><a class="navpanel__link" href="geo.html">GEO</a><a class="navpanel__link" href="columns.html">하오웹 칼럼</a>
-      </div>      <div class="navpanel__group">
-        <p class="navpanel__h">디자인·촬영·마케팅</p>
-        <a class="navpanel__link" href="graphic-design.html">그래픽·편집디자인</a><a class="navpanel__link" href="studio.html">사진·영상 촬영</a><a class="navpanel__link" href="marketing.html">광고·마케팅</a>
-      </div>      <div class="navpanel__group">
-        <p class="navpanel__h">유지보수</p>
-        <a class="navpanel__link" href="maintenance.html">유지보수</a><a class="navpanel__link" href="content-operation.html">콘텐츠 운영</a>
-      </div>      <div class="navpanel__group">
-        <p class="navpanel__h">고객지원</p>
-        <a class="navpanel__link" href="inquiry.html">제작 문의</a><a class="navpanel__link" href="faq.html">FAQ</a><a class="navpanel__link" href="about.html">회사소개</a>
+</header>
+<div class="mnav">
+  <div class="box1">
+      <div class="mnav__g">
+        <p class="mnav__t">AI 가시성 홈페이지 제작</p>
+        <div class="mnav__list"><a class="mnav__a" href="website.html">홈페이지 제작센터</a><a class="mnav__a" href="company.html">기업 홈페이지</a><a class="mnav__a" href="hospital.html">병원 홈페이지</a><a class="mnav__a" href="franchise.html">프랜차이즈 홈페이지</a><a class="mnav__a" href="shop.html">쇼핑몰</a><a class="mnav__a" href="lawyer.html">변호사·법률 홈페이지</a><a class="mnav__a" href="landing.html">랜딩페이지</a><a class="mnav__a" href="content-production.html">홈페이지 콘텐츠 제작</a><a class="mnav__a" href="process.html">제작 과정</a><a class="mnav__a" href="plan.html">제작 플랜</a><a class="mnav__a" href="price-guide.html">제작비 안내</a></div>
+      </div>
+      <div class="mnav__g">
+        <p class="mnav__t">AI 가시성 홈페이지 리뉴얼</p>
+        <div class="mnav__list"><a class="mnav__a" href="renewal.html">홈페이지 리뉴얼</a><a class="mnav__a" href="diagnosis.html">현재 홈페이지 진단</a><a class="mnav__a" href="free-proposal.html">무료 홈페이지 제안</a></div>
+      </div>
+      <div class="mnav__g">
+        <p class="mnav__t">글로벌 홈페이지</p>
+        <div class="mnav__list"><a class="mnav__a" href="global.html">글로벌 홈페이지</a><a class="mnav__a" href="global-vn.html">베트남</a><a class="mnav__a" href="global-cn.html">중국</a><a class="mnav__a" href="global-th.html">태국</a><a class="mnav__a" href="global-jp.html">일본</a><a class="mnav__a" href="global-en.html">영문</a></div>
+      </div>
+      <div class="mnav__g">
+        <p class="mnav__t">무료서비스</p>
+        <div class="mnav__list"><a class="mnav__a" href="included.html">무료서비스</a><a class="mnav__a" href="free-proposal.html">무료 홈페이지 제안</a><a class="mnav__a" href="diagnosis.html">현재 홈페이지 진단</a></div>
+      </div>
+      <div class="mnav__g">
+        <p class="mnav__t">포트폴리오</p>
+        <div class="mnav__list"><a class="mnav__a" href="portfolio.html">포트폴리오</a><a class="mnav__a" href="interview.html">고객 인터뷰</a></div>
+      </div>
+      <div class="mnav__g">
+        <p class="mnav__t">AI 콘텐츠</p>
+        <div class="mnav__list"><a class="mnav__a" href="ai-content.html">AI 활용 전문 콘텐츠</a><a class="mnav__a" href="search-ai.html">AI 가시성</a><a class="mnav__a" href="seo.html">SEO</a><a class="mnav__a" href="aeo.html" aria-current="page">AEO</a><a class="mnav__a" href="geo.html">GEO</a><a class="mnav__a" href="columns.html">하오웹 칼럼</a></div>
+      </div>
+      <div class="mnav__g">
+        <p class="mnav__t">디자인·촬영·마케팅</p>
+        <div class="mnav__list"><a class="mnav__a" href="graphic-design.html">그래픽·편집디자인</a><a class="mnav__a" href="studio.html">사진·영상 촬영</a><a class="mnav__a" href="marketing.html">광고·마케팅</a></div>
+      </div>
+      <div class="mnav__g">
+        <p class="mnav__t">유지보수</p>
+        <div class="mnav__list"><a class="mnav__a" href="maintenance.html">유지보수</a><a class="mnav__a" href="content-operation.html">콘텐츠 운영</a></div>
+      </div>
+      <div class="mnav__g">
+        <p class="mnav__t">고객지원</p>
+        <div class="mnav__list"><a class="mnav__a" href="inquiry.html">제작 문의</a><a class="mnav__a" href="faq.html">FAQ</a><a class="mnav__a" href="about.html">회사소개</a></div>
       </div>
   </div>
 </div>
-<main>
-<section class="subhero subhero--full subhero--grad" style="height:70svh">
-<div class="subhero__scrim" aria-hidden="true"></div>
-  <div class="subhero__dots" aria-hidden="true"></div>
-  <div class="subhero__inner">
-    <p class="subhero__crumb">AI 가시성</p>
-    <p class="subhero__title" data-anim data-anim-hero>AEO</p>
-    <h1 class="h1__ko" data-fade data-anim-hero data-delay=".06">답변 엔진 최적화</h1>
-    <p class="subhero__kr" data-fade data-anim-hero>Answering the question — 고객의 질문에 답하는 콘텐츠 구조를 만듭니다.</p>
-    <p class="subhero__aside" data-fade data-anim-hero data-delay=".16">고객은 회사 이름이 아니라 질문으로 검색합니다. 그 질문에 답하는 문장이 페이지에 있으면 검색과 AI 답변에 노출될 가능성이 높아집니다.</p>
+<main id="main">
+<section class="shero">
+  <div class="box1">
+    <div class="shero__b">
+      <img src="assets/img/subhero/ai.jpg" alt="" loading="eager">
+      <p class="shero__crumb">AI 가시성 · AEO</p>
+      <h1 class="shero__t" data-ani="up">답변 엔진 최적화</h1>
+      <p class="shero__lead" data-ani="up" data-delay=".08">Answering the question — 고객의 질문에 답하는 콘텐츠 구조를 만듭니다.</p>
+    </div>
+    <p class="shero__aside" data-ani="up">고객은 회사 이름이 아니라 질문으로 검색합니다. 그 질문에 답하는 문장이 페이지에 있으면 검색과 AI 답변에 노출될 가능성이 높아집니다.</p>
   </div>
 </section>
 
@@ -270,52 +234,78 @@
   </div>
 </section>
 </main>
-<a class="ctab" href="free-proposal.html" data-ctab aria-label="무료 홈페이지 제안받기">
-  <span class="ctab__label" aria-hidden="true"><i>무</i><i>료</i><i>제</i><i>안</i></span>
-  <span class="ctab__full" aria-hidden="true">무료 홈페이지 제안받기</span>
-  <span class="ctab__arr" aria-hidden="true">→</span>
-</a>
-<footer class="footer">
-  <div class="footer__inner">
-    <div class="footer__mark" data-mark="HAOWEB">HAOWEB</div>
-    <div class="footer__grid">
-      <div>
-        <h4 class="footer__h">Sitemap</h4>
-        <div class="footer__nav2"><a class="footer__ul" href="website.html">홈페이지 제작센터</a><a class="footer__ul" href="renewal.html">홈페이지 리뉴얼</a><a class="footer__ul" href="diagnosis.html">현재 홈페이지 진단</a><a class="footer__ul" href="search-ai.html">AI 가시성</a><a class="footer__ul" href="global.html">글로벌 홈페이지</a><a class="footer__ul" href="portfolio.html">포트폴리오</a><a class="footer__ul" href="plan.html">제작 플랜</a><a class="footer__ul" href="free-proposal.html">무료 홈페이지 제안</a><a class="footer__ul" href="inquiry.html">제작 문의</a><a class="footer__ul" href="about.html">회사소개</a></div>
+<div class="qpop">
+  <div class="qpop__hd">제작상담
+    <button class="qpop__close" type="button" aria-label="상담 안내 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <a class="qpop__tel" href="tel:070-4212-9972">070-4212-9972</a>
+  <p class="qpop__time">평일 09:30 ~ 18:30<br>주말, 공휴일 휴무</p>
+  <div class="qpop__grid">
+    <a class="qpop__b" href="inquiry.html">제작 문의</a>
+    <a class="qpop__b" href="included.html">무료서비스</a>
+    <a class="qpop__b" href="portfolio.html">포트폴리오</a>
+    <a class="qpop__b" href="free-proposal.html">무료 제안</a>
+  </div>
+</div>
+<form class="qbar" action="inquiry.html" method="get">
+  <div class="qbar__brand">
+    <span class="qbar__label">빠른상담</span>
+    <a class="qbar__tel" href="tel:070-4212-9972">070-4212-9972</a>
+  </div>
+  <div class="qbar__form">
+    <label class="sr-only" for="qb-co">회사명</label>
+    <input id="qb-co" type="text" name="company" placeholder="회사명">
+    <label class="sr-only" for="qb-nm">이름</label>
+    <input id="qb-nm" type="text" name="name" placeholder="이름">
+    <label class="sr-only" for="qb-tel">연락처</label>
+    <input id="qb-tel" type="tel" name="tel" placeholder="연락처">
+    <label class="sr-only" for="qb-em">이메일</label>
+    <input id="qb-em" type="email" name="email" placeholder="이메일">
+    <span class="qbar__agree"><a href="inquiry.html">개인정보 수집 동의</a></span>
+    <button class="qbar__submit" type="submit">빠른상담 신청</button>
+  </div>
+</form>
+<footer class="ft">
+  <div class="box1">
+    <div class="ft__top">
+      <div class="ft__logo"><img src="assets/img/logo-on-dark.png" alt="하오웹" width="120"></div>
+      <div class="ft__links">
+        <a href="inquiry.html">제작 문의</a>
+        <a href="free-proposal.html">무료 홈페이지 제안받기</a>
+        <a href="diagnosis.html">현재 홈페이지 진단</a>
       </div>
+    </div>
+    <div class="ft__grid">
       <div>
-        <h4 class="footer__h">Brand</h4>
-        <div class="footer__info">
-          <p style="font-size:14px;line-height:1.7;margin:0">홈페이지 제작 브랜드.
-          제작 이후 브랜드·편집디자인, 촬영·영상, 마케팅까지 하오웹에서 이어집니다.</p>
+        <h4 class="ft__h">Brand</h4>
+        <div class="ft__info">
+          <p>홈페이지 제작 브랜드. 제작 이후 브랜드·편집디자인, 촬영·영상, 마케팅까지 하오웹에서 이어집니다.</p>
         </div>
-      </div>
-      <div>
-        <h4 class="footer__h">Information</h4>
-        <dl class="footer__info">
-          <div><dt>전화</dt><dd><a href="tel:070-4212-9972">070-4212-9972</a></dd></div>
-          <div><dt>이메일</dt><dd><a href="mailto:web@haodesign.co.kr">web@haodesign.co.kr</a></dd></div>
-          <div><dt>사업자 정보</dt><dd>오픈 시 안내됩니다.</dd></div>
-          <div><dt>서비스</dt><dd>홈페이지 제작 · 리뉴얼</dd></div>
+        <h4 class="ft__h" style="margin-top:28px">Information</h4>
+        <dl class="ft__info">
+          <div><dt>전화</dt> <dd><a href="tel:070-4212-9972">070-4212-9972</a></dd></div>
+          <div><dt>이메일</dt> <dd><a href="mailto:web@haodesign.co.kr">web@haodesign.co.kr</a></dd></div>
+          <div><dt>사업자 정보</dt> <dd>오픈 시 안내됩니다.</dd></div>
+          <div><dt>서비스</dt> <dd>홈페이지 제작 · 리뉴얼</dd></div>
         </dl>
       </div>
       <div>
-        <h4 class="footer__h">Contact</h4>
-        <div class="footer__list">
-          <a class="footer__ul" href="free-proposal.html">무료 홈페이지 제안받기</a>
-          <a class="footer__ul" href="inquiry.html">제작 문의</a>
+        <h4 class="ft__h">Sitemap</h4>
+        <div class="ft__nav"><a href="website.html">홈페이지 제작센터</a><a href="renewal.html">홈페이지 리뉴얼</a><a href="diagnosis.html">현재 홈페이지 진단</a><a href="search-ai.html">AI 가시성</a><a href="global.html">글로벌 홈페이지</a><a href="portfolio.html">포트폴리오</a><a href="plan.html">제작 플랜</a><a href="free-proposal.html">무료 홈페이지 제안</a><a href="inquiry.html">제작 문의</a><a href="about.html">회사소개</a></div>
+      </div>
+      <div>
+        <h4 class="ft__h">Contact</h4>
+        <div class="ft__nav ft__nav--col">
+          <a href="free-proposal.html">무료 홈페이지 제안받기</a>
+          <a href="inquiry.html">제작 문의</a>
         </div>
-        <h4 class="footer__h" style="margin-top:28px">Policy</h4>
-        <div class="footer__list">
-          <span>개인정보처리방침은 오픈 시 게시됩니다.</span>
-        </div>
+        <h4 class="ft__h" style="margin-top:28px">Policy</h4>
+        <div class="ft__info"><p>개인정보처리방침은 오픈 시 게시됩니다.</p></div>
       </div>
     </div>
-    <div class="footer__bottom">
-      <p>© 2026 HAOWEB. 홈페이지 제작 · 리뉴얼</p>
-    </div>
+    <p class="ft__copy">© 2026 HAOWEB. 홈페이지 제작 · 리뉴얼</p>
   </div>
 </footer>
-<script src="assets/js/site.js"></script>
+<script src="assets/js/hao.js"></script>
 </body>
 </html>

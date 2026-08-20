@@ -1,0 +1,544 @@
+@charset "utf-8";
+/* ============================================================
+   HAOWEB — 이식 레이어
+   옛 조각(47페이지)의 클래스를 바로웹 레퍼런스 기하값으로 다시 입힌다.
+   2026-08-19. 세영: "디자인을 완전히 새롭게 … 텍스트는 글자 하나 남기지 말고 다."
+
+   ⭐ 왜 마크업을 갈아엎지 않았나 — 조각 47장에 고유 클래스가 268개다. 손으로 다시 쓰면
+     **문장이 조용히 사라진다.** 글을 한 글자도 잃지 않는 것이 최우선이라
+     마크업은 그대로 두고 여기서 **레퍼런스의 골격·여백·밀도만 다시 씌운다.**
+   ⚠ 값은 `hao.css` 의 토큰만 쓴다. 여기서 새 숫자를 만들지 말 것 —
+     만들면 레퍼런스 실측값과 어긋나 밀도가 페이지마다 달라진다.
+   ⚠ 이 파일은 `hao.css` **뒤에** 실린다. 순서를 바꾸면 토큰이 아직 없어 전부 깨진다.
+   ============================================================ */
+
+/* ---------- 1. 레이아웃 ---------- */
+.container { width: var(--box-w); max-width: var(--box-1); margin-inline: auto; }
+/* ⚠ 컨테이너 안에 컨테이너를 또 쓴 곳이 있다. 그대로 두면 96% 의 96% 가 되어
+   그 블록만 좌측선이 27px 안쪽으로 밀린다(company.html 에서 실제로 어긋났다). */
+.container .container, .box1 .container, .box2 .container { width: 100%; max-width: none; }
+.sec--wide > .container { max-width: var(--box-2); }
+.sec--tight { padding: var(--sec-y-sm) 0; }
+.sec--flush { padding: 0; }
+/* ⚠ 옛 디자인에서 화면 끝까지 뻗던 블록. 그대로 두면 좌우 여백이 0 이라
+   목록 오른쪽 끝 글자가 화면 밖으로 잘린다(2026-08-19 website 의 센터 목록). */
+.fullbleed { width: var(--box-w); max-width: var(--box-2); margin-inline: auto; }
+
+/* ⚠ 옛 디자인은 `.invert` 를 **검은 면**으로 썼다(112곳). 레퍼런스는 헤더·하단바·푸터
+   말고는 전부 밝은 면이고, 회색 두 단계(#f9f9f9 · #f5f5f5)로만 리듬을 만든다.
+   그래서 어두운 면을 밝은 회색으로 바꿨다. 조각에 박혀 있던 「흰 글자」 인라인 지정은
+   따로 전부 걷어냈다(2026-08-19) — 안 걷어내면 밝은 바탕에 흰 글자가 되어 사라진다. */
+.invert { background: var(--bg-3); color: var(--ink); }
+
+/* ---------- 2. 섹션 머리 ----------
+   레퍼런스 서브페이지는 **가운데 정렬 국문 제목 + 설명 문장**이다.
+   영문 대제목(Poppins 800)은 홈 전용이라 서브페이지에는 쓰지 않는다. */
+.sechead { text-align: center; margin-bottom: 56px; }
+.sechead--full, .sechead--stack { text-align: center; }
+.sechead__title {
+  font-size: var(--fs-h3); font-weight: 800; line-height: 1.35; letter-spacing: -1.5px;
+  color: var(--ink);
+}
+.sechead__lead {
+  margin-top: 20px; max-width: 62ch; margin-inline: auto;
+  font-size: var(--fs-lead); font-weight: 300; line-height: 1.6; letter-spacing: 0;
+  color: var(--ink-2);
+}
+.sechead__title b, .sechead__lead b { color: var(--point); font-weight: 700; }
+
+.eyebrow {
+  font-family: var(--font-en); font-size: var(--fs-sm); font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--point);
+}
+.askq { font-size: var(--fs-lead-b); font-weight: 700; color: var(--point); text-align: center; }
+/* 섹션 첫머리에 홀로 놓인 라벨은 가운데로 — 레퍼런스는 섹션 머리를 통째로 가운데 정렬한다. */
+.container > .eyebrow, .box1 > .eyebrow, .box2 > .eyebrow { text-align: center; }
+
+.statement { text-align: center; max-width: 74ch; margin-inline: auto; }
+.statement p {
+  font-size: var(--fs-h3); font-weight: 700; line-height: 1.5; letter-spacing: -1.5px;
+}
+.note {
+  max-width: 74ch; margin-inline: auto; text-align: center;
+  font-size: var(--fs-body); line-height: 1.7; color: var(--ink-3);
+}
+.note b { color: var(--point); }
+.bigsay { text-align: center; font-size: var(--fs-h3); font-weight: 800; letter-spacing: -1.5px; }
+.bigsay__sub { text-align: center; max-width: 62ch; margin: 18px auto 0; color: var(--ink-2); }
+
+/* 좌우로 갈라져 있던 큰 머리 — 레퍼런스에 없는 형태라 가운데로 모은다. */
+.bighead { text-align: center; margin-bottom: 56px; }
+.bighead__title {
+  font-family: var(--font-en); font-size: var(--fs-display); font-weight: 800;
+  line-height: 1.1; letter-spacing: -2.5px;
+}
+.bighead__right { margin-top: 24px; }
+.bighead__ko { font-size: var(--fs-lead-b); font-weight: 800; color: var(--ink-2); }
+.bighead__lead {
+  margin-top: 16px; max-width: 62ch; margin-inline: auto;
+  font-size: var(--fs-lead); font-weight: 300; line-height: 1.6; letter-spacing: 0; color: var(--ink-2);
+}
+
+/* ---------- 3. 버튼 ---------- */
+.btn--brand { background: var(--point); border-color: var(--point); color: #fff; }
+.btn--brand:hover { background: var(--point-hover); border-color: var(--point-hover); }
+.btn--block { width: 100%; }
+.btns { justify-content: center; }
+
+/* ---------- 4. 칸·카드 ---------- */
+.cols { display: grid; gap: 20px; grid-template-columns: repeat(3, 1fr); }
+.cols--2 { grid-template-columns: repeat(2, 1fr); }
+.cols--4 { grid-template-columns: repeat(4, 1fr); }
+.cols--5 { grid-template-columns: repeat(5, 1fr); }
+.col {
+  background: #fff; border: 1px solid var(--line-2); border-radius: var(--r-card);
+  padding: 32px 28px;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.col:hover { border-color: var(--line); box-shadow: 0 14px 34px rgba(0, 0, 0, .06); }
+.col__label { font-size: var(--fs-card); font-weight: 700; letter-spacing: -1px; }
+.col__body { margin-top: 14px; font-size: var(--fs-body); line-height: 1.7; color: var(--ink-2); }
+.col__img { margin: -32px -28px 22px; border-radius: var(--r-card) var(--r-card) 0 0; overflow: hidden; }
+.col__img img { width: 100%; object-fit: cover; aspect-ratio: 16 / 10; }
+/* 옛 디자인의 짧은 가로 장식선 — 레퍼런스에 없다. 자리만 차지하므로 감춘다. */
+.rule { display: none; }
+
+.cardgrid { display: grid; gap: 20px; grid-template-columns: repeat(3, 1fr); }
+.cardgrid--2 { grid-template-columns: repeat(2, 1fr); }
+.card__no { font-family: var(--font-en); font-size: 40px; font-weight: 800; color: var(--point); line-height: 1; }
+
+.panels { display: grid; gap: 20px; grid-template-columns: repeat(2, 1fr); }
+.panel {
+  background: #fff; border: 1px solid var(--line-2); border-radius: var(--r-card); padding: 34px 32px;
+}
+.panel--sub { background: var(--bg-2); border-color: transparent; }
+/* ⚠ `.panel--sub .panel--fill` 을 **같이 단 곳이 있다.** 순서가 반대면 --sub 의 회색 바탕이
+   이기고 --fill 의 흰 글자만 남아 **글자가 통째로 사라진다**(2026-08-19 company·hospital·
+   franchise·landing 에서 실제로 그랬다). --fill 을 뒤에 두고, 회색 면 안에서도 이기게 못 박는다. */
+.panel--fill, .invert .panel--fill, .sec--gray .panel--fill {
+  background: var(--point); border-color: var(--point); color: #fff;
+}
+.panel__label { font-size: var(--fs-card); font-weight: 700; letter-spacing: -1px; }
+.panel__body { margin-top: 14px; font-size: var(--fs-body); line-height: 1.7; color: var(--ink-2); }
+.panel--fill .panel__body { color: rgba(255, 255, 255, .92); }
+.panel--fill .deflist dt, .panel--fill .deflist dd { color: #fff; }
+.panel--fill .deflist > div { border-bottom-color: rgba(255, 255, 255, .28); }
+
+/* 회색 면 안에서는 카드가 바탕과 같은 색이 되어 사라진다 — 흰색으로 띄운다. */
+.invert .col, .sec--gray .col, .invert .panel--sub, .sec--gray .panel--sub { background: #fff; }
+/* ⚠ 이 줄은 **위 규칙보다 뒤에 있어야 한다.** `.panel--sub .panel--fill` 을 같이 단 칸이
+   회색 면 안에 있으면 바로 위 `.invert .panel--sub`(같은 특이도)가 이겨서 흰 바탕이 되고,
+   --fill 의 흰 글자만 남아 글자가 사라진다(2026-08-19 hospital·company 에서 실제로 그랬다). */
+.invert .panel--fill, .sec--gray .panel--fill, .panel--fill {
+  background: var(--point); border-color: var(--point); color: #fff;
+}
+
+@media (max-width: 1024px) {
+  .cols, .cardgrid { grid-template-columns: repeat(2, 1fr); }
+  .cols--4, .cols--5 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .cols, .cols--2, .cols--4, .cols--5, .cardgrid, .cardgrid--2, .panels { grid-template-columns: 1fr; }
+}
+
+/* ---------- 5. 단계 ---------- */
+.steps { display: grid; gap: 20px; grid-template-columns: repeat(4, 1fr); }
+.steps--5 { grid-template-columns: repeat(5, 1fr); }
+.step__no { font-family: var(--font-en); font-size: 46px; font-weight: 800; line-height: 1; color: var(--point); }
+.step__t { margin-top: 20px; font-size: var(--fs-card); font-weight: 700; letter-spacing: -1px; }
+.step__d { margin-top: 12px; font-size: var(--fs-body); line-height: 1.7; color: var(--ink-2); }
+
+.timeline { display: grid; gap: 20px; grid-template-columns: repeat(4, 1fr); }
+.timeline--3 { grid-template-columns: repeat(3, 1fr); }
+/* 단계 사이를 잇던 가로선 — 레퍼런스에 없다. */
+.timeline__line { display: none; }
+.tstep { background: var(--bg-2); border-radius: var(--r-card); padding: 34px 28px; }
+.sec--gray .tstep, .invert .tstep { background: #fff; }
+.tstep__no { font-family: var(--font-en); font-size: 46px; font-weight: 800; line-height: 1; color: var(--point); }
+.tstep__t { margin-top: 20px; font-size: var(--fs-card); font-weight: 700; letter-spacing: -1px; }
+.tstep__d { margin-top: 12px; font-size: var(--fs-body); line-height: 1.7; color: var(--ink-2); }
+.tstep__out { margin-top: 16px; font-size: var(--fs-sm); color: var(--ink-3); }
+.tstep__out i { font-style: normal; font-weight: 700; color: var(--point); margin-right: 8px; }
+@media (max-width: 1024px) { .steps, .steps--5, .timeline, .timeline--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .steps, .steps--5, .timeline, .timeline--3 { grid-template-columns: 1fr; } }
+
+/* ---------- 6. 정의 목록 ---------- */
+.deflist { display: grid; }
+.deflist > div {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 20px;
+  padding: 18px 0; border-bottom: 1px solid var(--line-2);
+}
+.deflist dt { font-weight: 700; }
+.deflist dt b { display: inline-block; min-width: 34px; font-family: var(--font-en); color: var(--point); }
+.deflist dd { color: var(--ink-2); }
+.deflist--sm { font-size: var(--fs-sm); }
+@media (max-width: 640px) { .deflist > div { grid-template-columns: 1fr; gap: 4px; } }
+
+/* ---------- 7. 칼럼 본문 ---------- */
+.article { max-width: 82ch; margin-inline: auto; }
+.article__title { font-size: var(--fs-h3); font-weight: 800; letter-spacing: -1.5px; }
+.article__h { margin-top: 56px; margin-bottom: 18px; font-size: var(--fs-card); font-weight: 800; letter-spacing: -1px; }
+.article > p { margin-top: 16px; font-size: var(--fs-body); line-height: 1.9; color: var(--ink-2); }
+.article__items { display: grid; gap: 16px; margin-top: 24px; }
+.article__items .step { background: var(--bg-2); }
+.sec--gray .article__items .step, .invert .article__items .step { background: #fff; }
+
+/* ---------- 8. FAQ ---------- */
+.faq__item { border-bottom: 1px solid var(--line); }
+.faq__item summary {
+  display: flex; align-items: center; gap: 16px; padding: 24px 0; cursor: pointer;
+  font-size: var(--fs-lead-b); font-weight: 600; letter-spacing: -1px; list-style: none;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after {
+  content: ""; margin-left: auto; flex: none; width: 12px; height: 12px;
+  border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3);
+  rotate: 45deg; transition: rotate var(--dur) var(--ease);
+}
+.faq__item[open] summary::after { rotate: -135deg; }
+/* ⚠ `line-height` 를 1 로 못 박아야 한다. 본문 1.7 을 물려받으면 24px 가 되어
+   30px 원 안에서 글자가 눌리고 원 자체도 타원으로 찌그러진다(2026-08-19 실제로 그랬다). */
+.faq__q {
+  flex: none; align-self: center;
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 50%; line-height: 1;
+  background: var(--point); color: #fff; font-family: var(--font-en); font-size: 14px; font-weight: 700;
+}
+.faq__a { padding: 0 0 26px 46px; font-size: var(--fs-body); line-height: 1.8; color: var(--ink-2); }
+.qcats { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 40px; }
+.qcats .chip b { margin-left: 6px; font-family: var(--font-en); }
+@media (max-width: 768px) { .faq__a { padding-left: 0; } }
+
+/* ---------- 9. 목록 행 ---------- */
+/* ⚠ `.rows` 는 섹션 **밖에** 놓인 곳이 있다(website·columns·global·content-production).
+   컨테이너가 없어 화면 끝까지 뻗어 좌측선이 다른 섹션과 어긋난다 — 여기서 폭을 준다. */
+.rows { width: var(--box-w); max-width: var(--box-1); margin-inline: auto; border-top: 1px solid var(--line); }
+.rows.fullbleed { max-width: var(--box-2); }
+.row__face { display: block; }
+.row__link { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; align-items: center; gap: 20px; }
+.row__cat { font-family: var(--font-en); font-size: var(--fs-sm); color: var(--point); }
+.row__title { font-size: var(--fs-card); font-weight: 700; letter-spacing: -1px; }
+.row__meta { font-family: var(--font-en); font-size: var(--fs-sm); color: var(--ink-3); }
+/* ⭐ 2026-08-20 — 행 위로 글자가 흐르던 띠는 레퍼런스에 없어 걷어냈지만,
+   그 안의 영문 라벨은 세영 지시로 되살렸다(hao.js 가 속성 값을 글자로 넣는다).
+   흐르지 않고 행 오른쪽에 조용히 선다. */
+/* ⚠ 절대 배치로 오른쪽에 붙이면 이미 오른쪽에 있는 `.row__meta` 와 **글자가 겹친다**
+   (2026-08-20 website 에서 「PROFESSIONAL CENTER」가 「분야·절차 → 상담 전화」 위에 겹쳤다).
+   행을 두 칸으로 나눠 라벨에 자기 자리를 준다. */
+.rows .row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 28px;
+  padding: 22px 0;
+}
+.row__marquee {
+  font-family: var(--font-en); font-size: var(--fs-xs); letter-spacing: 1px;
+  color: var(--ink-3); white-space: nowrap;
+  transition: color var(--dur) var(--ease);
+}
+.row:hover .row__marquee { color: var(--point); }
+@media (max-width: 900px) {
+  .rows .row { grid-template-columns: 1fr; gap: 6px; }
+  .row__over { order: -1; }
+}
+@media (max-width: 768px) { .row__link { grid-template-columns: 1fr; gap: 4px; } }
+
+.sitemap { display: grid; }
+.sitemap__row {
+  display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 20px;
+  padding: 18px 0; border-bottom: 1px solid var(--line-2);
+}
+.sitemap__row--sub { padding-left: 20px; color: var(--ink-2); }
+@media (max-width: 640px) { .sitemap__row { grid-template-columns: 1fr; gap: 4px; } }
+
+/* ---------- 10. 작업물 격자 ---------- */
+.work { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.work__item { min-width: 0; }
+.work__link { display: block; }
+.work__thumb {
+  border-radius: var(--r-card); overflow: hidden; aspect-ratio: 4 / 3; margin: 0;
+  background: var(--bg-3) center top / cover no-repeat;
+  transition: transform .6s var(--ease);
+}
+.work__link:hover .work__thumb { transform: scale(1.03); }
+.work__text { margin-top: 16px; }
+.work__name { font-size: var(--fs-body); font-weight: 700; }
+.work__name i { font-style: normal; }
+.work__meta { margin-top: 4px; font-size: var(--fs-sm); color: var(--ink-3); }
+.work__live { color: var(--point); font-weight: 700; margin-left: 6px; }
+.viewsw-wrap { display: flex; justify-content: center; margin-bottom: 24px; }
+.viewsw { display: flex; gap: 6px; }
+.viewsw__btn {
+  width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.viewsw__btn[aria-pressed="true"] { background: var(--point); border-color: var(--point); color: #fff; }
+.viewsw__btn svg { width: 20px; height: 20px; }
+/* ⚠ 카드 보기와 목록 보기는 **같은 22곳을 두 번** 그린다. 이 두 줄이 없으면
+   포트폴리오에 같은 목록이 두 벌 쌓인다(옛 base.css 에 있던 규칙을 그대로 가져왔다). */
+[data-view="grid"] .rows { display: none; }
+[data-view="list"] .work { display: none; }
+
+/* ⚠ `.dwork__img` 는 감싸는 상자가 아니라 **`<img>` 그 자체**다(조각을 잘못 보고
+   상자로 잡았더니 사진이 전부 회색 빈 칸으로 나왔다 — 2026-08-19).
+   구조: button.dwork__item > img.dwork__img + span.dwork__cap( span.dwork__t + span.dwork__c ) */
+/* ⚠ 레일과 그 제목은 `.container` **밖**에 있다. 그대로 두면 화면 왼쪽 끝에 딱 붙어
+   다른 섹션과 좌측선이 어긋난다. 왼쪽만 컨테이너에 맞추고 오른쪽은 화면 끝까지 흐르게 —
+   레퍼런스 갤러리도 그 형태다. */
+.drail, .drail-head { padding-inline: max(2%, calc((100% - var(--box-1)) / 2)); }
+.drail {
+  display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px;
+  scroll-snap-type: x mandatory; scrollbar-width: thin;
+}
+.drail > .dwork__item { flex: none; width: 300px; scroll-snap-align: start; }
+.drail-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 18px; }
+.drail-head__t b { color: var(--point); font-family: var(--font-en); margin-left: 6px; }
+.dwork__item { padding: 0; text-align: left; background: none; border: 0; }
+.dwork__img {
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: var(--r-card); background: var(--bg-3);
+  transition: transform .6s var(--ease);
+}
+.dwork__item:hover .dwork__img { transform: scale(1.03); }
+.dwork__img--crop { object-position: top; }
+.dwork__cap { display: block; margin-top: 12px; }
+.dwork__t { display: block; font-size: var(--fs-body); font-weight: 700; }
+.dwork__c { display: block; margin-top: 2px; font-size: var(--fs-sm); color: var(--ink-3); }
+.pfslot__item { min-width: 0; }
+.pfslot__thumb { border-radius: var(--r-card); overflow: hidden; aspect-ratio: 4 / 3; background: var(--bg-3); }
+.pfslot__thumb img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 1024px) { .work { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) { .work { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+
+/* ---------- 11. 화면 예시(목업) ---------- */
+.mockrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.mockrow--rev > .mock { order: -1; }
+.mock {
+  background: #fff; border: 1px solid var(--line-2); border-radius: var(--r-card);
+  padding: 24px; box-shadow: 0 14px 34px rgba(0, 0, 0, .05);
+}
+.mock__head { font-size: var(--fs-sm); color: var(--ink-3); padding-bottom: 12px; border-bottom: 1px solid var(--line-2); }
+.mock__row { padding: 14px 0; border-bottom: 1px solid var(--line-2); }
+.mock__row--top { background: var(--bg-2); border-radius: 10px; padding: 14px 16px; border-bottom: 0; }
+.mock__t { font-size: var(--fs-body); font-weight: 700; }
+.mock__u { font-size: var(--fs-xs); color: var(--point); }
+.mock__rank { font-family: var(--font-en); font-size: var(--fs-xs); color: var(--ink-3); }
+.mock__q { font-size: var(--fs-body); font-weight: 700; }
+.mock__ask { font-size: var(--fs-sm); color: var(--ink-3); }
+.mock__ans { margin-top: 12px; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-2); }
+.mock__src { margin-top: 10px; font-size: var(--fs-xs); color: var(--point); }
+.mockrow__txt .sechead { text-align: left; margin-bottom: 0; }
+.mockrow__txt .sechead__lead { margin-inline: 0; }
+@media (max-width: 900px) { .mockrow { grid-template-columns: 1fr; gap: 24px; } .mockrow--rev > .mock { order: 0; } }
+
+/* ---------- 12. 비교·선택 ---------- */
+/* 상자 · 기호 · 상자 · 기호 · 상자 — 다섯 칸이다(3칸으로 잡으면 줄이 접힌다). */
+.eqrow {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 16px; align-items: center;
+}
+.eqbox { background: var(--bg-2); border-radius: var(--r-card); padding: 26px 24px; }
+.eqbox--out { background: #fff; border: 1px solid var(--line-2); }
+.sec--gray .eqbox, .invert .eqbox { background: #fff; }
+.eqbox__t { font-size: var(--fs-body); font-weight: 700; }
+.eqbox__d { margin-top: 8px; font-size: var(--fs-sm); color: var(--ink-2); }
+.eqop { font-family: var(--font-en); font-size: 24px; color: var(--point); text-align: center; }
+.opt { background: var(--bg-2); border-radius: var(--r-card); padding: 24px; }
+.sec--gray .opt, .invert .opt { background: #fff; }
+.opt__t { font-size: var(--fs-body); font-weight: 700; }
+.opt__d { margin-top: 8px; font-size: var(--fs-sm); color: var(--ink-2); }
+@media (max-width: 768px) { .eqrow { grid-template-columns: 1fr; } .eqop { display: none; } }
+
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; }
+.split__title { font-family: var(--font-en); font-size: var(--fs-display); font-weight: 800; line-height: 1.1; letter-spacing: -2.5px; }
+.split__quote { margin-top: 22px; font-size: var(--fs-h3); font-weight: 800; letter-spacing: -1.5px; }
+.split__body { margin-top: 18px; font-size: var(--fs-lead); font-weight: 300; line-height: 1.6; letter-spacing: 0; color: var(--ink-2); }
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: 32px; } }
+
+.ba { background: var(--bg-2); border-radius: var(--r-card); padding: 26px 24px; }
+.ba--after { background: #fff; border: 1px solid var(--point); }
+.ba__tag {
+  display: inline-flex; align-items: center; height: 28px; padding: 0 12px;
+  border-radius: var(--r-pill); background: var(--point); color: #fff;
+  font-size: var(--fs-xs); font-weight: 700;
+}
+.ba__result { margin-top: 14px; font-weight: 700; }
+.ba__notes { margin-top: 10px; font-size: var(--fs-sm); color: var(--ink-2); }
+
+.dgr { display: grid; gap: 12px; }
+.dgr__row {
+  display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 16px; align-items: center;
+  background: #fff; border: 1px solid var(--line-2); border-radius: 12px; padding: 18px 20px;
+}
+.dgr__no { font-family: var(--font-en); font-weight: 800; color: var(--point); }
+.dgr__t { font-weight: 700; }
+.dgr__d { font-size: var(--fs-sm); color: var(--ink-2); }
+.dgr__en { font-family: var(--font-en); font-size: var(--fs-xs); color: var(--ink-3); }
+.dgr__badge {
+  display: inline-flex; align-items: center; height: 28px; padding: 0 12px;
+  border-radius: var(--r-pill); font-size: var(--fs-xs); font-weight: 700;
+  background: var(--bg-3); color: var(--ink-2);
+}
+.dgr__badge--ok { background: #e8f5e9; color: #2e7d32; }
+.dgr__badge--warn { background: #fdeceb; color: var(--point); }
+@media (max-width: 768px) { .dgr__row { grid-template-columns: 1fr; gap: 6px; } }
+
+/* ---------- 13. 플랜 ---------- */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.plan { background: #fff; border: 1px solid var(--line-2); border-radius: var(--r-card); padding: 38px 32px; }
+.plan--rec { background: var(--point); border-color: var(--point); color: #fff; }
+.plan__name { font-family: var(--font-en); font-size: var(--fs-body); font-weight: 700; color: var(--point); }
+.plan--rec .plan__name { color: #fff; }
+.plan__rec {
+  display: inline-flex; align-items: center; height: 24px; padding: 0 10px; margin-left: 6px;
+  border-radius: var(--r-pill); background: #fff; color: var(--point);
+  font-family: var(--font); font-size: var(--fs-xs); font-weight: 700;
+}
+.plan__scale { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.plan__scale b { font-family: var(--font-en); font-size: 48px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+.plan__scale i { font-family: var(--font-en); font-style: normal; font-size: var(--fs-sm); color: var(--ink-3); }
+.plan__scale s { text-decoration: none; font-size: var(--fs-sm); color: var(--ink-3); }
+.plan--rec .plan__scale i, .plan--rec .plan__scale s { color: rgba(255, 255, 255, .82); }
+/* 「250만원부터」와 「제작 기간 4—6주」가 한 줄에 붙어 나오던 것 —
+   둘은 다른 정보라 굵기와 크기로 갈라 놓는다. */
+.plan__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.plan__price b { font-size: var(--fs-lead-b); font-weight: 800; }
+.plan__price i {
+  font-style: normal; font-size: var(--fs-sm); font-weight: 400; color: var(--ink-3);
+}
+.plan--rec .plan__price i { color: rgba(255, 255, 255, .85); }
+.plan__eyebrow { margin-top: 26px; font-size: var(--fs-sm); font-weight: 700; color: var(--ink-3); }
+.plan__list { margin-top: 14px; display: grid; gap: 8px; font-size: var(--fs-sm); line-height: 1.6; color: var(--ink-2); }
+.plan--rec .plan__list, .plan--rec .plan__eyebrow { color: rgba(255, 255, 255, .95); }
+@media (max-width: 1024px) { .plans { grid-template-columns: 1fr; } }
+
+/* ---------- 14. 업종 페이지 전용 ---------- */
+.biz-herocta { margin-top: 32px; }
+.biz-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.biz-chip {
+  display: inline-flex; align-items: center; height: 40px; padding: 0 18px;
+  border: 1px solid var(--line); border-radius: var(--r-pill);
+  font-size: var(--fs-sm); color: var(--ink-2); background: #fff;
+}
+.biz-bands { display: grid; gap: 14px; }
+.biz-band {
+  display: grid; grid-template-columns: 66px minmax(0, 1fr); gap: 22px; align-items: start;
+  background: #fff; border: 1px solid var(--line-2); border-radius: var(--r-card); padding: 28px 30px;
+}
+/* ⚠ 자식이 셋이다(번호 · 라벨+제목 묶음 · 설명). 2열 격자에 그냥 두면 설명이
+   66px 짜리 첫 칸으로 흘러 **글자가 한 줄에 서너 자씩 세로로 쌓인다**(2026-08-19 실제로 그랬다).
+   번호를 두 줄에 걸치게 하고 설명을 둘째 칸으로 못 박는다. */
+.biz-band__no {
+  grid-row: 1 / span 2;
+  font-family: var(--font-en); font-size: 34px; font-weight: 800; line-height: 1; color: var(--point);
+}
+.biz-band__d { grid-column: 2; }
+.biz-band__label { font-size: var(--fs-sm); color: var(--ink-3); }
+.biz-band__t { margin-top: 6px; font-size: var(--fs-card); font-weight: 700; letter-spacing: -1px; }
+.biz-band__d { margin-top: 10px; font-size: var(--fs-body); line-height: 1.7; color: var(--ink-2); }
+
+.biz-incl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.biz-incl__item { background: #fff; border: 1px solid var(--line-2); border-radius: var(--r-card); padding: 26px 24px; }
+.biz-incl__head { display: flex; align-items: center; gap: 10px; }
+.biz-incl__no { font-family: var(--font-en); font-size: var(--fs-sm); font-weight: 700; color: var(--point); }
+.biz-incl__ico { width: 26px; height: 26px; color: var(--point); }
+.biz-incl__t { margin-top: 12px; font-size: var(--fs-body); font-weight: 700; }
+.biz-incl__d { margin-top: 8px; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-2); }
+
+.biz-diag { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 44px; align-items: start; }
+.biz-diag__aside { position: sticky; top: calc(var(--header-h) + 40px); }
+.biz-diag__rows { display: grid; gap: 12px; }
+.biz-diag__row {
+  display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 18px;
+  background: #fff; border: 1px solid var(--line-2); border-radius: 14px; padding: 20px 22px;
+}
+.biz-diag__step { font-family: var(--font-en); font-size: var(--fs-sm); font-weight: 700; color: var(--point); }
+.biz-diag__t { font-weight: 700; }
+.biz-diag__d { margin-top: 6px; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-2); }
+
+.biz-flow, .biz-open__steps, .biz-grid__grid, .crg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.biz-flow__step, .biz-open__step, .biz-grid__item, .crg__item {
+  background: #fff; border: 1px solid var(--line-2); border-radius: var(--r-card); padding: 26px 24px;
+}
+.biz-flow__no, .biz-grid__no, .crg__no, .biz-open__phase {
+  font-family: var(--font-en); font-size: var(--fs-sm); font-weight: 700; color: var(--point);
+}
+.biz-flow__t, .biz-grid__t, .crg__t, .biz-open__t { margin-top: 10px; font-size: var(--fs-body); font-weight: 700; }
+.biz-flow__d, .crg__d, .biz-open__d { margin-top: 8px; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-2); }
+.crg__key { font-size: var(--fs-xs); color: var(--ink-3); }
+.crg__link { margin-top: 12px; font-size: var(--fs-sm); color: var(--point); font-weight: 700; }
+/* ⚠ 여기서 `.drail` 을 같이 잡지 말 것. 위(10번)에서 가로 레일로 정해 놨는데
+   이 줄이 뒤에 있어 grid 로 덮어써 **촬영 실적이 세로로 54장 쌓였다**(2026-08-19). */
+.biz-open__rail { display: grid; gap: 14px; }
+.drail-head__t { font-size: var(--fs-card); font-weight: 700; letter-spacing: -1px; }
+.biz-open__aside { margin-bottom: 24px; }
+
+.biz-quick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.biz-quick__f { display: grid; gap: 6px; }
+.biz-quick__note { grid-column: 1 / -1; font-size: var(--fs-sm); color: var(--ink-3); }
+@media (max-width: 1024px) {
+  .biz-incl, .biz-flow, .biz-open__steps, .biz-grid__grid, .crg { grid-template-columns: repeat(2, 1fr); }
+  .biz-diag { grid-template-columns: 1fr; gap: 28px; }
+  .biz-diag__aside { position: static; }
+}
+@media (max-width: 640px) {
+  .biz-incl, .biz-flow, .biz-open__steps, .biz-grid__grid, .crg, .biz-quick { grid-template-columns: 1fr; }
+  .biz-band { grid-template-columns: 1fr; gap: 10px; }
+}
+
+/* ---------- 15. 폼 ---------- */
+.field { display: grid; gap: 8px; }
+.field input, .field select, .field textarea {
+  width: 100%; min-height: 54px; padding: 14px 16px;
+  border: 1px solid var(--line); border-radius: 8px; background: #fff;
+  font: inherit; font-size: var(--fs-sm); color: var(--ink);
+}
+.field textarea { min-height: 132px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--point); outline: none; }
+.form__label { font-size: var(--fs-sm); font-weight: 700; }
+.form__hint, .form__note { font-size: var(--fs-xs); color: var(--ink-3); }
+.form__group { display: grid; gap: 16px; }
+.form__step { font-family: var(--font-en); font-size: var(--fs-sm); font-weight: 700; color: var(--point); }
+.form__q { font-size: var(--fs-body); font-weight: 700; }
+.form__alert { font-size: var(--fs-sm); color: var(--point); }
+
+/* ---------- 16. 마무리 한 문장 ----------
+   옛 디자인은 300lvh 짜리 고정 스크롤이었다. 레퍼런스에 그런 장치가 없어 평범한 섹션으로 낮춘다. */
+.oneline { padding: var(--sec-y) 0; background: var(--bg-2); text-align: center; }
+.oneline__stick { width: var(--box-w); max-width: var(--box-1); margin-inline: auto; }
+.oneline__t { font-size: var(--fs-display); font-weight: 800; letter-spacing: -2.5px; line-height: 1.15; }
+.oneline__lead { margin: 20px auto 0; max-width: 62ch; font-size: var(--fs-lead); font-weight: 300; line-height: 1.6; letter-spacing: 0; color: var(--ink-2); }
+
+/* ---------- 17. 서브 히어로 아래 문장·버튼 ---------- */
+.shero__aside {
+  margin: 44px auto 0; max-width: 74ch; text-align: center;
+  font-size: var(--fs-lead); font-weight: 300; line-height: 1.6; letter-spacing: 0; color: var(--ink-2);
+}
+.shero__btns { margin-top: 34px; }
+
+/* ---------- 17-b. 옛 스크롤 리빌 (about.html 한 곳) ----------
+   500lvh 짜리 고정 스크롤 + 글자 마스크였다. 레퍼런스에 그런 장치가 없어
+   **평범한 사진 섹션**으로 낮춘다. 글자는 한 줄도 건드리지 않았다. */
+.reveal { padding: var(--sec-y) 0; }
+.reveal__stick { position: static; height: auto; }
+.reveal__frame {
+  width: var(--box-w); max-width: var(--box-2); margin-inline: auto;
+  border-radius: var(--r-card); overflow: hidden; clip-path: none;
+}
+.reveal__frame img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; }
+.reveal__copy { margin-top: 56px; text-align: center; }
+.reveal__grid { display: block; }
+.reveal__t { font-size: var(--fs-h3); font-weight: 800; line-height: 1.35; letter-spacing: -1.5px; }
+.reveal__p {
+  margin: 20px auto 0; max-width: 62ch;
+  font-size: var(--fs-lead); font-weight: 300; line-height: 1.6; letter-spacing: 0; color: var(--ink-2);
+}
+.reveal__flow { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 24px; }
+.reveal__flow span {
+  display: inline-flex; align-items: center; height: 36px; padding: 0 16px;
+  border: 1px solid var(--line); border-radius: var(--r-pill);
+  font-size: var(--fs-sm); color: var(--ink-2);
+}
+
+/* ---------- 18. 레퍼런스에 없는 옛 장치 ----------
+   ⚠ 지우는 것이 아니라 **감추는** 것이다. 글자는 문서에 그대로 남아 있고,
+     되살릴 일이 생기면 이 블록만 지우면 된다. */
+.subhero__dots, .subhero__scrim, .reveal__bg { display: none; }
