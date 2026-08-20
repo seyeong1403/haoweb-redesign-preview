@@ -983,3 +983,52 @@ body.is-lbox { overflow: hidden; }
   background: var(--bg-2); border: 1px solid var(--line-2);
   font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-2);
 }
+
+/* ---------- 27. 워드마크 밴드 (옛 디자인에서 되가져옴) ----------
+   ⭐ 2026-08-20 세영: "기존에 백업해 놨던 하오웹 디자인에서 캡쳐한 부분 디자인은
+   가져와도 괜찮을 거 같아." — 이 밴드와 아래 실적 그리드 둘이다.
+   값은 백업(`하오웹 지난자료\haoweb-renewal-redesign-디자인백업-20260819`)의 실측값 그대로다.
+
+   ⭐ 효과의 정체는 `mix-blend-mode: lighten` 하나다.
+     lighten 은 위아래 두 색 중 **밝은 쪽**을 남긴다 →
+       흰 바탕(255) vs 사진 → 흰색이 이겨 바탕은 그대로 희고,
+       검정 글자(0)  vs 사진 → 사진이 이겨 **글자 자리에만 사진이 비친다.**
+   ⚠⚠ 그래서 **글자는 #000, 바탕은 #fff 여야 한다.** 포인트 컬러를 쓰면 효과가 깨진다 —
+      색을 하오웹 것으로 바꾸는 규칙이 여기에만 적용되지 않는 이유다.
+   ⚠⚠ `.txtsec__bgs` 의 검은 바탕을 지우지 말 것. 어둡게 만드는 것은 opacity 가 아니라
+      **검은 바탕과의 합성**이다. 이게 없으면 밝은 사진에서 글자가 흰 바탕에 묻혀 사라진다. */
+.txtsec { position: relative; overflow: hidden; height: 910px; padding: 0; }
+.txtsec__bgs { position: absolute; inset: 0; overflow: hidden; background: #000; }
+/* 세로로 긴 사진을 쓴다 — 위로 흐르려면 섹션보다 길어야 한다.
+   height:auto 로 원본 비율을 지키고 넘치는 부분은 부모가 자른다. */
+.txtsec__bg {
+  position: absolute; top: 0; left: 0; width: 100%; height: auto; min-height: 100%;
+  object-fit: cover; object-position: top center;
+  opacity: 0; transition: opacity 1.1s ease;
+}
+.txtsec__bg.is-on { opacity: .7; animation: txtsecUp 26s linear infinite; }
+@keyframes txtsecUp { from { transform: translateY(0); } to { transform: translateY(calc(-100% + 910px)); } }
+/* ⚠ blend 는 **이 래퍼**에 건다. 자식에 걸면 흰 바탕까지 같이 섞여 사진이 통째로 비친다. */
+.txtsec__wrap { position: absolute; inset: 0; z-index: 2; mix-blend-mode: lighten; }
+.txtsec__inner {
+  width: 100%; height: 100%; background: #fff; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+}
+/* ⚠ line-height 는 **1** 이어야 한다. 1.06 을 줬더니 두 줄 합이 섹션(910)을 넘쳐
+   아랫줄이 잘리고 아래가 비었다(옛 디자인에서 실제로 겪은 것). */
+.txtsec__line {
+  font-family: var(--font-en);
+  font-size: 440px; font-weight: 700; line-height: 1;
+  color: #000; text-align: center; white-space: nowrap;
+  will-change: transform;
+  animation: txtsecFlowL 16.5s linear infinite;
+}
+.txtsec__line[data-wb="-1"] { animation-name: txtsecFlowR; }
+@keyframes txtsecFlowL { from { transform: translateX(0); } to { transform: translateX(-100vw); } }
+@keyframes txtsecFlowR { from { transform: translateX(0); } to { transform: translateX(100vw); } }
+@media (prefers-reduced-motion: reduce) {
+  .txtsec__line, .txtsec__bg.is-on { animation: none; }
+}
+@media (max-width: 1200px) { .txtsec { height: 620px; } .txtsec__line { font-size: 300px; } }
+@media (max-width: 900px)  { .txtsec { height: 380px; } .txtsec__line { font-size: 170px; } }
+@media (max-width: 560px)  { .txtsec { height: 260px; } .txtsec__line { font-size: 120px; } }

@@ -352,6 +352,41 @@
     });
   })();
 
+  /* ---------- 9-e. 워드마크 밴드 (옛 디자인에서 되가져옴) ----------
+     ⭐ 2026-08-20 세영 지시. 글자 안으로 사진이 비치는 그 밴드다.
+     ⚠ 흐르는 속도는 **화면 폭과 상관없이 일정**해야 한다(실측 87.2px/s) —
+       duration 을 CSS 에 못 박으면 넓은 화면에서 훨씬 빨라진다. */
+  (function wordband() {
+    var sec = $('.txtsec');
+    if (!sec) return;
+    var lines = $$('[data-wb]', sec);
+    if (lines.length) {
+      var SPEED = 87.2;
+      var apply = function () {
+        var d = ((window.innerWidth || 1440) / SPEED).toFixed(2) + 's';
+        lines.forEach(function (el) { el.style.animationDuration = d; });
+      };
+      apply();
+      window.addEventListener('resize', apply);
+    }
+    // 배경 사진을 한 장씩 넘긴다. 두 줄은 **같은 사진**을 공유한다(섹션에 배경은 하나뿐이다).
+    var bgs = $$('.txtsec__bg', sec);
+    if (bgs.length > 1 && !reduce) {
+      var i = 0;
+      setInterval(function () {
+        var r = sec.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > (window.innerHeight || 900)) return;   // 화면 밖이면 쉰다
+        bgs[i].classList.remove('is-on');
+        i = (i + 1) % bgs.length;
+        var n = bgs[i];
+        n.style.animation = 'none';
+        void n.offsetWidth;          // ⚠ 리플로를 강제해야 흐름 애니메이션이 처음부터 다시 돈다
+        n.style.animation = '';
+        n.classList.add('is-on');
+      }, 4200);
+    }
+  })();
+
   /* ---------- 10. 준비 끝 표시 ----------
      ⚠ 검수 도구(_text.py·_check.py)가 **스크립트가 끝나기 전에 읽어** 여기서 만든 글자를
        놓치는 일이 있었다(2026-08-20 website 의 영문 라벨 6개). 신호를 남겨 기다리게 한다. */
