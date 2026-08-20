@@ -900,3 +900,67 @@ body { padding-bottom: var(--qbar-h); }
 .dl dt { font-weight: 700; }
 .dl dd { color: var(--ink-2); }
 @media (max-width: 640px) { .dl > div { grid-template-columns: 1fr; gap: 6px; } }
+
+/* ---------- 26. 작업물 크게 보기 ----------
+   촬영·편집디자인 실적을 누르면 열린다. 레퍼런스의 팝업(어두운 막 + 흰 카드)과 같은 형태.
+   ⚠ 마크업은 hao.js 가 열 때 한 번만 만든다 — 미리 넣어 두면 빈 `src` 인 <img> 가
+     검수에서 깨진 이미지로 잡히고 모바일 문서 폭도 민다. */
+.lbox {
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; align-items: center; justify-content: center; padding: 4vh 4vw;
+  background: rgba(0, 0, 0, .72);
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--dur) var(--ease), visibility var(--dur);
+}
+.lbox.is-open { opacity: 1; visibility: visible; }
+body.is-lbox { overflow: hidden; }
+.lbox__wrap {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, .8fr);
+  width: 100%; max-width: 1200px; max-height: 92vh;
+  background: #fff; border-radius: var(--r-card); overflow: hidden;
+}
+.lbox__figure { display: flex; align-items: center; justify-content: center; background: var(--bg-3); min-height: 0; }
+.lbox__img { width: 100%; height: 100%; max-height: 92vh; object-fit: contain; }
+.lbox__info { padding: 40px 36px; overflow-y: auto; }
+.lbox__cat { font-size: var(--fs-sm); color: var(--point); font-weight: 700; }
+.lbox__title { margin-top: 10px; font-size: var(--fs-h3); font-weight: 800; letter-spacing: -1.5px; }
+.lbox__desc { margin-top: 16px; font-size: var(--fs-body); line-height: 1.8; color: var(--ink-2); }
+.lbox__label {
+  margin-top: 34px; font-family: var(--font-en); font-size: var(--fs-xs);
+  font-weight: 700; letter-spacing: 1px; color: var(--ink-3);
+}
+.lbox__rows { margin-top: 12px; }
+.lbox__rows > div {
+  display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 16px;
+  padding: 14px 0; border-bottom: 1px solid var(--line-2); font-size: var(--fs-sm);
+}
+.lbox__rows b { font-weight: 700; }
+.lbox__rows span { color: var(--ink-2); }
+.lbox__rows a { color: var(--point); font-weight: 700; }
+.lbox__close, .lbox__nav {
+  position: absolute; display: flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255, 255, 255, .14); color: #fff; font-size: 26px; line-height: 1;
+  transition: background var(--dur) var(--ease);
+}
+.lbox__close:hover, .lbox__nav:hover { background: var(--point); }
+.lbox__close { top: 3vh; right: 3vw; }
+.lbox__nav--prev { left: 1vw; top: 50%; translate: 0 -50%; }
+.lbox__nav--next { right: 1vw; top: 50%; translate: 0 -50%; }
+@media (max-width: 900px) {
+  .lbox { padding: 0; }
+  .lbox__wrap { grid-template-columns: 1fr; max-height: 100vh; border-radius: 0; }
+  .lbox__img { max-height: 46vh; }
+  .lbox__info { padding: 26px 22px 90px; }
+  .lbox__nav { bottom: 18px; top: auto; translate: none; }
+  .lbox__nav--prev { left: 22px; }
+  .lbox__nav--next { right: 22px; }
+  .lbox__close { top: auto; bottom: 18px; right: 50%; translate: 50% 0; }
+}
+
+/* 문의 폼의 안내 문구 — 받는 곳이 생기기 전까지는 이것만 뜬다 */
+[data-form-note] {
+  margin-top: 20px; padding: 18px 20px; border-radius: 12px;
+  background: var(--bg-2); border: 1px solid var(--line-2);
+  font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-2);
+}

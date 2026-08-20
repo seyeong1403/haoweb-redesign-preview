@@ -224,6 +224,134 @@
     });
   })();
 
+  /* ---------- 9-b. 업종 페이지의 빠른 문의 ----------
+     주소만 받아 무료 제안/진단 폼으로 값을 들고 넘어간다.
+     ⚠ 접수 기능이 아직 없다 — **여기서 접수하는 척하지 않는다.** 이동만 시킨다. */
+  (function quick() {
+    var forms = $$('[data-quick]');
+    var site = document.getElementById('dg-site') || document.getElementById('fp-site');
+    if (!forms.length && !site) return;
+    forms.forEach(function (f) {
+      f.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var input = f.querySelector('input');
+        var v = input && input.value ? input.value.trim() : '';
+        var url = f.getAttribute('data-quick') || 'free-proposal.html';
+        location.href = v ? url + '?site=' + encodeURIComponent(v) : url;
+      });
+    });
+    if (site && !site.value) {
+      var m = /[?&]site=([^&]*)/.exec(location.search);
+      if (m && m[1]) {
+        try { site.value = decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (err) { /* 잘못된 인코딩은 무시 */ }
+      }
+    }
+  })();
+
+  /* ---------- 9-c. 문의 폼 ----------
+     ⚠ 받는 곳이 아직 없다. 보낸 척하지 말고 **안내 문구만** 띄운다. */
+  (function forms() {
+    $$('[data-form]').forEach(function (f) {
+      f.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var note = $('[data-form-note]', f);
+        if (note) { note.hidden = false; note.scrollIntoView({block: 'nearest'}); }
+      });
+    });
+  })();
+
+  /* ---------- 9-d. 작업물 크게 보기 ----------
+     촬영·편집디자인 실적 189칸은 누르면 크게 열린다. 새 골격으로 오면서 이 동작이
+     빠져 **눌러도 아무 일이 없었다**(2026-08-20 검수에서 잡았다).
+     이동 범위는 그 칸이 놓인 레일 하나 — 분류가 섞이지 않는다. */
+  (function lightbox() {
+    var grid = $('[data-lbox]');
+    if (!grid) return;
+    var lb = null, imgEl, catEl, titleEl, descEl, rowsEl;
+    var list = [], idx = -1, opener = null;
+
+    // ⚠ 미리 만들어 두지 않는다. 빈 src 인 <img> 가 검수에서 깨진 이미지로 잡힌다.
+    function build() {
+      lb = document.createElement('div');
+      lb.className = 'lbox';
+      lb.setAttribute('role', 'dialog');
+      lb.setAttribute('aria-modal', 'true');
+      lb.innerHTML =
+        '<div class="lbox__wrap">' +
+          '<div class="lbox__figure"><img class="lbox__img" src="" alt=""></div>' +
+          '<div class="lbox__info">' +
+            '<span class="lbox__cat"></span>' +
+            '<h3 class="lbox__title"></h3>' +
+            '<p class="lbox__desc"></p>' +
+            '<p class="lbox__label">PROJECT INFO</p>' +
+            '<div class="lbox__rows"></div>' +
+          '</div>' +
+        '</div>' +
+        '<button type="button" class="lbox__close" aria-label="닫기">&times;</button>' +
+        '<button type="button" class="lbox__nav lbox__nav--prev" aria-label="이전 작업">&#8249;</button>' +
+        '<button type="button" class="lbox__nav lbox__nav--next" aria-label="다음 작업">&#8250;</button>';
+      document.body.appendChild(lb);
+      imgEl = $('.lbox__img', lb); catEl = $('.lbox__cat', lb);
+      titleEl = $('.lbox__title', lb); descEl = $('.lbox__desc', lb); rowsEl = $('.lbox__rows', lb);
+      $('.lbox__close', lb).addEventListener('click', close);
+      $('.lbox__nav--prev', lb).addEventListener('click', function () { show(idx - 1); });
+      $('.lbox__nav--next', lb).addEventListener('click', function () { show(idx + 1); });
+      lb.addEventListener('click', function (e) {
+        if (e.target === lb || e.target.classList.contains('lbox__wrap') ||
+            e.target.classList.contains('lbox__figure')) close();
+      });
+    }
+    function scope(card) {
+      var rail = (card && card.closest) ? (card.closest('[data-rail]') || grid) : grid;
+      return $$('.dwork__item', rail).filter(function (c) { return !c.hidden; });
+    }
+    function row(label, value) {
+      return value ? '<div><b>' + label + '</b><span>' + value + '</span></div>' : '';
+    }
+    function show(i) {
+      if (!list.length) return;
+      idx = (i % list.length + list.length) % list.length;
+      var c = list[idx], img = c.querySelector('img');
+      imgEl.src = c.getAttribute('data-large') || (img && img.getAttribute('src')) || '';
+      imgEl.alt = (img && img.getAttribute('alt')) || '';
+      catEl.textContent = ($('.dwork__c', c) || {}).textContent || '';
+      titleEl.textContent = ($('.dwork__t', c) || {}).textContent || '';
+      descEl.textContent = c.getAttribute('data-desc') || '';
+      rowsEl.innerHTML =
+        row('제작물', c.getAttribute('data-deliver')) +
+        row('작업 범위', c.getAttribute('data-scope')) +
+        row('진행', '하오웹에서 직접 제작') +
+        '<div><b>문의</b><span><a href="inquiry.html">제작 문의하기 &rarr;</a></span></div>';
+      $('.lbox__info', lb).scrollTop = 0;
+    }
+    function close() {
+      if (!lb) return;
+      lb.classList.remove('is-open');
+      document.body.classList.remove('is-lbox');
+      if (opener) opener.focus();
+      opener = null;
+    }
+    grid.addEventListener('click', function (e) {
+      var card = e.target.closest ? e.target.closest('.dwork__item') : null;
+      if (!card) return;
+      if (!lb) build();
+      list = scope(card);
+      var i = list.indexOf(card);
+      if (i < 0) return;
+      opener = card;
+      lb.classList.add('is-open');
+      document.body.classList.add('is-lbox');
+      show(i);
+      $('.lbox__close', lb).focus();
+    });
+    window.addEventListener('keydown', function (e) {
+      if (!lb || !lb.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(idx - 1);
+      else if (e.key === 'ArrowRight') show(idx + 1);
+    });
+  })();
+
   /* ---------- 10. 준비 끝 표시 ----------
      ⚠ 검수 도구(_text.py·_check.py)가 **스크립트가 끝나기 전에 읽어** 여기서 만든 글자를
        놓치는 일이 있었다(2026-08-20 website 의 영문 라벨 6개). 신호를 남겨 기다리게 한다. */
