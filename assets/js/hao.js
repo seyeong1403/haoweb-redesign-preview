@@ -387,6 +387,18 @@
     }
   })();
 
+  /* ---------- 9-f. 스크롤바 폭 ----------
+     화면을 꽉 채우는 블록(`.fullbleed`)이 `100vw` 를 쓰면 **스크롤바 폭만큼 삐져나가**
+     가로로 밀린다. 실제 폭을 재서 CSS 에 넘긴다(2026-08-20 데스크톱에서 8px 밀렸다). */
+  (function scrollbar() {
+    var set = function () {
+      var w = window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.setProperty('--sbw', (w > 0 ? w : 0) + 'px');
+    };
+    set();
+    window.addEventListener('resize', set);
+  })();
+
   /* ---------- 10. 준비 끝 표시 ----------
      ⚠ 검수 도구(_text.py·_check.py)가 **스크립트가 끝나기 전에 읽어** 여기서 만든 글자를
        놓치는 일이 있었다(2026-08-20 website 의 영문 라벨 6개). 신호를 남겨 기다리게 한다. */

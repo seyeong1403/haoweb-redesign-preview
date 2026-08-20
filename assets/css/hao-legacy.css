@@ -20,9 +20,24 @@
 .sec--wide > .container { max-width: var(--box-2); }
 .sec--tight { padding: var(--sec-y-sm) 0; }
 .sec--flush { padding: 0; }
-/* ⚠ 옛 디자인에서 화면 끝까지 뻗던 블록. 그대로 두면 좌우 여백이 0 이라
-   목록 오른쪽 끝 글자가 화면 밖으로 잘린다(2026-08-19 website 의 센터 목록). */
-.fullbleed { width: var(--box-w); max-width: var(--box-2); margin-inline: auto; }
+/* ⭐ 2026-08-20 세영: "메인에 work 기존처럼 좌우 꽉차게 넣을 수 있어?"
+   컨테이너 안에 있어도 **화면 좌우로 뚫고 나간다**(옛 디자인 방식 그대로).
+   ⚠ `100vw` 는 스크롤바 폭까지 포함해 가로 스크롤을 만든다 — `html` 에 `overflow-x: clip`
+     을 걸어 막았다(`hidden` 이 아니다. hidden 은 sticky 를 죽인다).
+   ⚠ 글자가 화면 끝에 붙지 않게 좌우 여백은 반드시 줄 것. 안 주면 목록 오른쪽 끝이
+     잘린다(2026-08-19 website 의 센터 목록에서 실제로 겪었다). */
+/* ⚠ `100vw` 는 **스크롤바 폭까지 포함한다.** 그대로 쓰면 데스크톱에서 8px 이 삐져나가
+   가로로 밀린다(2026-08-20 실측). hao.js 가 `--sbw` 에 실제 스크롤바 폭을 넣어 준다. */
+.fullbleed {
+  width: calc(100vw - var(--sbw, 0px));
+  max-width: calc(100vw - var(--sbw, 0px));
+  margin-inline: calc(50% - (100vw - var(--sbw, 0px)) / 2);
+}
+.work.fullbleed { padding-inline: 48px; }
+.rows.fullbleed { padding-inline: 48px; }
+@media (max-width: 900px) {
+  .work.fullbleed, .rows.fullbleed { padding-inline: 4%; }
+}
 
 /* ⚠ 옛 디자인은 `.invert` 를 **검은 면**으로 썼다(112곳). 레퍼런스는 헤더·하단바·푸터
    말고는 전부 밝은 면이고, 회색 두 단계(#f9f9f9 · #f5f5f5)로만 리듬을 만든다.
@@ -213,7 +228,6 @@
 /* ⚠ `.rows` 는 섹션 **밖에** 놓인 곳이 있다(website·columns·global·content-production).
    컨테이너가 없어 화면 끝까지 뻗어 좌측선이 다른 섹션과 어긋난다 — 여기서 폭을 준다. */
 .rows { width: var(--box-w); max-width: var(--box-1); margin-inline: auto; border-top: 1px solid var(--line); }
-.rows.fullbleed { max-width: var(--box-2); }
 .row__face { display: block; }
 .row__link { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; align-items: center; gap: 20px; }
 .row__cat { font-family: var(--font-en); font-size: var(--fs-sm); color: var(--point-ink); }

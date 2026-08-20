@@ -117,7 +117,10 @@
 /* ---------- 3. 바탕 ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+/* ⚠ `overflow-x: clip` 이지 `hidden` 이 아니다. hidden 은 스크롤 컨테이너를 만들어
+   **`position: sticky` 를 죽인다**(왼쪽 고정 제목·업종 진단 안내가 안 붙는다).
+   화면 폭을 뚫고 나가는 `.fullbleed` 때문에 가로 스크롤이 생기는 것만 막는다. */
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
